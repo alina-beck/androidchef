@@ -6,31 +6,31 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class RecipeDAO {
 
-    private static SQLiteDatabase db;
-    private static DbHelper dbHelper;
+    private SQLiteDatabase db;
+    private DbHelper dbHelper;
 
     public RecipeDAO(Context context) {
         dbHelper = DbHelper.getInstance(context);
     }
 
-    public void open() {
+    private void open() {
         db = dbHelper.getWritableDatabase();
     }
 
-    public static void close() {
+    private void close() {
         dbHelper.close();
     }
 
-    public static boolean insertRecipe(Recipe recipe) {
+    public boolean insertRecipe(Recipe recipe) {
+        open();
         ContentValues values = prepareContentValues(recipe);
         long result = db.insert(DbHelper.TABLE_RECIPES, null, values);
         close();
 
-        return result != -1;
-
+        return (result != -1);
     }
 
-    private static ContentValues prepareContentValues (Recipe recipe) {
+    private ContentValues prepareContentValues (Recipe recipe) {
         ContentValues values = new ContentValues();
 
         values.put(DbHelper.COLUMN_TITLE, recipe.getTitle());

@@ -15,6 +15,6 @@ public class NewRecipeActivity extends FragmentActivity {
         }
 
         NewRecipeFragment newRecipeFragment = new NewRecipeFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, newRecipeFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_new_recipe, newRecipeFragment).commit();
     }
 }
