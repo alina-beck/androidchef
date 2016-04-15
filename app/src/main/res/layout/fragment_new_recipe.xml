@@ -11,13 +11,17 @@
         android:layout_height="wrap_content"/>
 
     <EditText
+        android:id="@+id/input_recipe_title"
         android:hint="@string/enter_title"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/button_save_recipe"
         android:text="@string/save"
+
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
-public class NewRecipeFragment extends Fragment {
+public class NewRecipeFragment extends Fragment implements View.OnClickListener {
 
     public NewRecipeFragment() {
         // Required empty public constructor
@@ -14,7 +16,17 @@ public class NewRecipeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_new_recipe, container, false);
+        View view = inflater.inflate(R.layout.fragment_new_recipe, container, false);
+
+        Button button = (Button) view.findViewById(R.id.button_save_recipe);
+        button.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick (View view) {
+        NewRecipePresenter.onClick(view);
     }
 
 }
