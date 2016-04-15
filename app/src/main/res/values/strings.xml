@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AndroidChef</string>
+
+    <string name="title">Title</string>
+    <string name="enter_title">Enter a title for your recipe</string>
+    <string name="save">Save</string>
+    <string name="new_recipe">New Recipe</string>
 </resources>
