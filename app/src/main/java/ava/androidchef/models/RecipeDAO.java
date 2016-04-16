@@ -1,8 +1,10 @@
-package ava.androidchef;
+package ava.androidchef.models;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import ava.androidchef.database.DbHelper;
 
 public class RecipeDAO {
 

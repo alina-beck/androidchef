@@ -1,4 +1,4 @@
-package ava.androidchef;
+package ava.androidchef.models;
 
 public class Recipe {
     private String title;

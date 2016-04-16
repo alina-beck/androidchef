@@ -1,4 +1,4 @@
-package ava.androidchef;
+package ava.androidchef.features.onboarding;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import ava.androidchef.R;
+import ava.androidchef.features.addrecipe.NewRecipeActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
 

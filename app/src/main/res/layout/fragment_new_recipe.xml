@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ava.androidchef.NewRecipeFragment">
+    tools:context=".features.addrecipe.NewRecipeFragment">
 
     <TextView
         android:text="@string/title"

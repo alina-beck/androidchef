@@ -1,4 +1,7 @@
-package ava.androidchef;
+package ava.androidchef.features.addrecipe;
+
+import ava.androidchef.models.Recipe;
+import ava.androidchef.models.RecipeDAO;
 
 public class NewRecipePresenter {
 

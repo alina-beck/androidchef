@@ -1,7 +1,9 @@
-package ava.androidchef;
+package ava.androidchef.features.addrecipe;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+
+import ava.androidchef.R;
 
 public class NewRecipeActivity extends FragmentActivity {
 
