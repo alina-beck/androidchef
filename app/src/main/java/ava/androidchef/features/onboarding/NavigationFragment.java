@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import ava.androidchef.R;
 import ava.androidchef.features.addrecipe.NewRecipeActivity;
+import ava.androidchef.features.allrecipes.AllRecipesActivity;
 import ava.androidchef.features.weeklymenu.WeeklyMenuActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
@@ -28,6 +29,9 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         Button button2 = (Button) view.findViewById(R.id.button_get_menu);
         button2.setOnClickListener(this);
 
+        Button button3 = (Button) view.findViewById(R.id.button_all_recipes);
+        button3.setOnClickListener(this);
+
         return view;
     }
 
@@ -41,6 +45,10 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
             case R.id.button_get_menu:
                 Intent intent2 = new Intent(getActivity(), WeeklyMenuActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.button_all_recipes:
+                Intent intent3 = new Intent(getActivity(), AllRecipesActivity.class);
+                startActivity(intent3);
                 break;
         }
     }

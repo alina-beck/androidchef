@@ -5,7 +5,8 @@
     <string name="enter_title">Enter a title for your recipe</string>
     <string name="save">Save</string>
     <string name="new_recipe">New Recipe</string>
-    <string name="get_menu">Get Menu</string>
+    <string name="create_random_menu">Create random Menu</string>
     <string name="weekly_menu">Weekly Menu</string>
-    
+    <string name="show_all_recipes">Show all Recipes</string>
+
 </resources>
