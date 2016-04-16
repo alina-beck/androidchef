@@ -42,11 +42,21 @@ public class RecipeDAO {
         return values;
     }
 
-    public ArrayList<Recipe> fetchWeeklyMenu () {
+    public ArrayList<Recipe> getAllRecipes() {
+        String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES;
+        return fetchRecipes(sqlQuery);
+    }
+
+    public ArrayList<Recipe> getRandomMenu(int days) {
+        String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " order by random() limit " + days;
+        return fetchRecipes(sqlQuery);
+    }
+
+    private ArrayList<Recipe> fetchRecipes(String sqlQuery) {
         ArrayList<Recipe> recipes = new ArrayList<>();
 
         open();
-        Cursor cursor = db.rawQuery("select * from " + DbHelper.TABLE_RECIPES + " order by random() limit 7", null);
+        Cursor cursor = db.rawQuery(sqlQuery, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

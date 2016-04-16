@@ -15,7 +15,7 @@ public class WeeklyMenuPresenter {
 
     public void onFragmentCreate() {
         RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity());
-        recipes = recipeDAO.fetchWeeklyMenu();
+        recipes = recipeDAO.getRandomMenu(7);
 
         fragment.displayWeeklyMenu(recipes);
     }
