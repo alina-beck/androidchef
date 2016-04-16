@@ -3,8 +3,8 @@ package ava.androidchef.models;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
+// might be used for testing purposes, TODO: delete (and replace) MockData before publishing
 public class MockData {
     private static MockData singletonMockData;
     private Context appContext;

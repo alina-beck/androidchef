@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import ava.androidchef.models.MockData;
 import ava.androidchef.models.Recipe;
+import ava.androidchef.models.RecipeDAO;
 
 public class WeeklyMenuFragment extends ListFragment {
 
@@ -19,9 +20,10 @@ public class WeeklyMenuFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recipes = MockData.getInstance(getActivity()).getRecipes();
+        RecipeDAO recipeDAO = new RecipeDAO(getActivity());
+        recipes = recipeDAO.fetchWeeklyMenu();
 
-        ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(getActivity(), android.R.layout.simple_list_item_1, recipes);
+        ArrayAdapter<Recipe> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, recipes);
         setListAdapter(adapter);
     }
 }
