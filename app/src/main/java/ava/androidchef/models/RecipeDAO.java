@@ -69,8 +69,9 @@ public class RecipeDAO {
     }
 
     private Recipe getRecipeFromCursor(Cursor cursor) {
+        int id = cursor.getInt(0);
         String title = cursor.getString(1);
 
-        return new Recipe(title);
+        return new Recipe(id, title);
     }
 }
