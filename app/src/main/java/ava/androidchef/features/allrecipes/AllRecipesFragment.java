@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
+import ava.androidchef.R;
 import ava.androidchef.features.weeklymenu.WeeklyMenuPresenter;
 import ava.androidchef.models.Recipe;
 
@@ -25,7 +26,7 @@ public class AllRecipesFragment extends ListFragment {
     }
 
     public void displayAllRecipes(ArrayList<Recipe> recipes) {
-        ArrayAdapter<Recipe> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, recipes);
+        AllRecipesArrayAdapter adapter = new AllRecipesArrayAdapter(getActivity(), R.layout.list_item_edit, recipes);
         setListAdapter(adapter);
     }
 }

@@ -8,5 +8,7 @@
     <string name="create_random_menu">Create random Menu</string>
     <string name="weekly_menu">Weekly Menu</string>
     <string name="show_all_recipes">Show all Recipes</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 </resources>
