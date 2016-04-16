@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import ava.androidchef.R;
 import ava.androidchef.features.addrecipe.NewRecipeActivity;
+import ava.androidchef.features.weeklymenu.WeeklyMenuActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
 
@@ -34,10 +35,12 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.button_new_recipe:
-                Intent intent = new Intent(getActivity(), NewRecipeActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(getActivity(), NewRecipeActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.button_get_menu:
+                Intent intent2 = new Intent(getActivity(), WeeklyMenuActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

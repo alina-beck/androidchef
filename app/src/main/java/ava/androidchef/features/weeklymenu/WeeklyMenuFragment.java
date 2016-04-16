@@ -1,21 +1,27 @@
 package ava.androidchef.features.weeklymenu;
 
-import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.app.ListFragment;
+import android.widget.ArrayAdapter;
 
-import ava.androidchef.R;
+import java.util.ArrayList;
+
+import ava.androidchef.models.MockData;
+import ava.androidchef.models.Recipe;
 
 public class WeeklyMenuFragment extends ListFragment {
+
+    private ArrayList<Recipe> recipes;
 
     public WeeklyMenuFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_weekly_menu, container, false);
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        recipes = MockData.getInstance(getActivity()).getRecipes();
 
+        ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(getActivity(), android.R.layout.simple_list_item_1, recipes);
+        setListAdapter(adapter);
+    }
 }

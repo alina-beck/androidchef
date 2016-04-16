@@ -19,7 +19,7 @@ public class MockData {
         }
     }
 
-    public static MockData getSingletonMockData(Context context) {
+    public static MockData getInstance(Context context) {
         if (singletonMockData == null) {
             singletonMockData = new MockData(context.getApplicationContext());
         }
