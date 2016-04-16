@@ -6,7 +6,6 @@
     <string name="save">Save</string>
     <string name="new_recipe">New Recipe</string>
     <string name="get_menu">Get Menu</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weekly_menu">Weekly Menu</string>
+    
 </resources>
