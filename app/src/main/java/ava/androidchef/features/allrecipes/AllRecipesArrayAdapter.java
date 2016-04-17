@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -34,16 +35,20 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
         }
 
         final ViewSwitcher switcher = (ViewSwitcher) view.findViewById(R.id.list_item_view_switcher);
-        switcher.setDisplayedChild(0);
 
         TextView listItemTitle = (TextView) switcher.getCurrentView().findViewById(R.id.list_item_text);
-        listItemTitle.setText(recipes.get(position).getTitle());
+        if (listItemTitle != null) {
+            listItemTitle.setText(recipes.get(position).getTitle());
+        }
 
         Button editButton = (Button) view.findViewById(R.id.button_edit);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switcher.setDisplayedChild(1);
+
+                EditText updateTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
+                updateTitle.setText(recipes.get(position).getTitle());
             }
         });
 

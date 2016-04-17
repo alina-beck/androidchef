@@ -21,7 +21,10 @@
         <activity
             android:name=".features.weeklymenu.WeeklyMenuActivity"
             android:label="@string/weekly_menu" />
-        <activity android:name=".features.allrecipes.AllRecipesActivity"></activity>
+        <activity
+            android:name=".features.allrecipes.AllRecipesActivity"
+            android:label="@string/show_all_recipes"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
