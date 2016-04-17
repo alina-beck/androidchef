@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 
 import ava.androidchef.R;
 import ava.androidchef.models.Recipe;
 
-public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> implements View.OnClickListener {
+public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
 
     private ArrayList<Recipe> recipes;
     private Context context;
@@ -25,35 +26,45 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> implements View
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.list_item_edit, parent, false);
         }
 
-        TextView listItemTitle = (TextView) view.findViewById(R.id.list_item_text);
+        final ViewSwitcher switcher = (ViewSwitcher) view.findViewById(R.id.list_item_view_switcher);
+        switcher.setDisplayedChild(0);
+
+        TextView listItemTitle = (TextView) switcher.getCurrentView().findViewById(R.id.list_item_text);
         listItemTitle.setText(recipes.get(position).getTitle());
 
         Button editButton = (Button) view.findViewById(R.id.button_edit);
-        editButton.setOnClickListener(this);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switcher.setDisplayedChild(1);
+            }
+        });
+
+        Button saveButton = (Button) view.findViewById(R.id.button_update);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            // TODO: update in database
+            @Override
+            public void onClick(View v) {
+                switcher.setDisplayedChild(0);
+            }
+        });
 
         Button deleteButton = (Button) view.findViewById(R.id.button_delete);
-        deleteButton.setOnClickListener(this);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            // TODO: delete from database
+            @Override
+            public void onClick(View v) {
+                remove(recipes.get(position));
+            }
+        });
 
         return view;
     }
-
-    // TODO: update and delete in database; change textview to edittext
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.button_edit:
-                break;
-            case R.id.button_delete:
-                break;
-        }
-    }
-
-
 }
