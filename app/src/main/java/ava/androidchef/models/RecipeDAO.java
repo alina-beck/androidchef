@@ -34,7 +34,7 @@ public class RecipeDAO {
         return (result != -1);
     }
 
-    public int updateRecipe(Recipe recipe) {
+    public boolean updateRecipe(Recipe recipe) {
         open();
         ContentValues values = prepareContentValues(recipe);
         String whereClause = DbHelper.COLUMN_ID + "=" + recipe.getId();
@@ -42,16 +42,16 @@ public class RecipeDAO {
         int update = db.update(DbHelper.TABLE_RECIPES, values, whereClause, null);
         close();
 
-        return update;
+        return (update == 1);
     }
 
-    public int deleteRecipe(int id) {
+    public boolean deleteRecipe(int id) {
         open();
         String whereClause = DbHelper.COLUMN_ID + "=" + id;
         int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
         close();
 
-        return delete;
+        return (delete == 1);
     }
 
     public ArrayList<Recipe> getAllRecipes() {

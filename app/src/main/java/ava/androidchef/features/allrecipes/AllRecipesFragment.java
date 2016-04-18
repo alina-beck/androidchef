@@ -31,13 +31,21 @@ public class AllRecipesFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
-    public void makeToast(int update) {
-        if (update == 1) {
+    public void makeToast(boolean update) {
+        if (update) {
             Toast.makeText(getActivity(), "updated in database", Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(getActivity(), "error when saving", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void saveButtonClicked(int id, String newTitle) {
+        presenter.onSaveButtonClick(id, newTitle);
+    }
+
+    public void deleteButtonClicked(int id) {
+        presenter.onDeleteButtonClick(id);
     }
 
 }

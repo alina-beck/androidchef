@@ -1,7 +1,6 @@
 package ava.androidchef.features.allrecipes;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
-
 import java.util.ArrayList;
-
 import ava.androidchef.R;
 import ava.androidchef.models.Recipe;
 
@@ -59,11 +56,8 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText updateTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
-                Recipe recipe = recipes.get(position);
-                recipe.setTitle(updateTitle.getText().toString());
-                AllRecipesPresenter presenter = new AllRecipesPresenter(fragment);
-                presenter.onSaveButtonClick(recipe);
+                EditText newTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
+                fragment.saveButtonClicked(recipes.get(position).getId(), newTitle.getText().toString());
 
                 switcher.setDisplayedChild(0);
                 notifyDataSetChanged();
@@ -75,9 +69,7 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = recipes.get(position).getId();
-                AllRecipesPresenter presenter = new AllRecipesPresenter(fragment);
-                presenter.onDeleteButtonClick(id);
+                fragment.deleteButtonClicked(recipes.get(position).getId());
 
                 remove(recipes.get(position));
                 notifyDataSetChanged();
