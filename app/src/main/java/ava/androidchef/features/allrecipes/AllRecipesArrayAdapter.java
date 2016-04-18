@@ -1,6 +1,7 @@
 package ava.androidchef.features.allrecipes;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
 
     private ArrayList<Recipe> recipes;
     private Context context;
+    private AllRecipesFragment fragment;
 
-    public AllRecipesArrayAdapter(Context context, int layout, ArrayList<Recipe> recipes) {
+    public AllRecipesArrayAdapter(Context context, int layout, ArrayList<Recipe> recipes, AllRecipesFragment fragment) {
         super(context, layout, recipes);
         this.recipes = recipes;
         this.context = context;
+        this.fragment = fragment;
     }
 
     @Override
@@ -57,7 +60,15 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
             // TODO: update in database
             @Override
             public void onClick(View v) {
+                EditText updateTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
+                Recipe recipe = recipes.get(position);
+                recipe.setTitle(updateTitle.getText().toString());
+                AllRecipesPresenter presenter = new AllRecipesPresenter(fragment);
+                presenter.onSaveButtonClick(recipe);
+
                 switcher.setDisplayedChild(0);
+                notifyDataSetChanged();
+
             }
         });
 

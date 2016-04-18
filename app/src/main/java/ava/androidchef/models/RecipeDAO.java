@@ -34,12 +34,15 @@ public class RecipeDAO {
         return (result != -1);
     }
 
-    private ContentValues prepareContentValues (Recipe recipe) {
-        ContentValues values = new ContentValues();
+    public int updateRecipe(Recipe recipe) {
+        open();
+        ContentValues values = prepareContentValues(recipe);
+        String whereClause = DbHelper.COLUMN_ID + "=" + recipe.getId();
 
-        values.put(DbHelper.COLUMN_TITLE, recipe.getTitle());
+        int update = db.update(DbHelper.TABLE_RECIPES, values, whereClause, null);
+        close();
 
-        return values;
+        return update;
     }
 
     public ArrayList<Recipe> getAllRecipes() {
@@ -73,5 +76,13 @@ public class RecipeDAO {
         String title = cursor.getString(1);
 
         return new Recipe(id, title);
+    }
+
+    private ContentValues prepareContentValues (Recipe recipe) {
+        ContentValues values = new ContentValues();
+
+        values.put(DbHelper.COLUMN_TITLE, recipe.getTitle());
+
+        return values;
     }
 }

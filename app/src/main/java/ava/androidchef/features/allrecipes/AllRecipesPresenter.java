@@ -22,5 +22,11 @@ public class AllRecipesPresenter {
         fragment.displayAllRecipes(recipes);
     }
 
+    public void onSaveButtonClick(Recipe recipe) {
+        RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity());
+        int update = recipeDAO.updateRecipe(recipe);
+        fragment.makeToast(update);
+    }
+
 
 }
