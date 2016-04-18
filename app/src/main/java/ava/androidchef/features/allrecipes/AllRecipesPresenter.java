@@ -28,5 +28,11 @@ public class AllRecipesPresenter {
         fragment.makeToast(update);
     }
 
+    public void onDeleteButtonClick(int id) {
+        RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity());
+        int delete = recipeDAO.deleteRecipe(id);
+        fragment.makeToast(delete);
+    }
+
 
 }

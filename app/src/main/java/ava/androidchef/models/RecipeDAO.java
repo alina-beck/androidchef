@@ -45,6 +45,15 @@ public class RecipeDAO {
         return update;
     }
 
+    public int deleteRecipe(int id) {
+        open();
+        String whereClause = DbHelper.COLUMN_ID + "=" + id;
+        int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
+        close();
+
+        return delete;
+    }
+
     public ArrayList<Recipe> getAllRecipes() {
         String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES;
         return fetchRecipes(sqlQuery);

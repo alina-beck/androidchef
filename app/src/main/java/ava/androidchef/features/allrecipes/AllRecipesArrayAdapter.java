@@ -57,7 +57,6 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
 
         Button saveButton = (Button) view.findViewById(R.id.button_update);
         saveButton.setOnClickListener(new View.OnClickListener() {
-            // TODO: update in database
             @Override
             public void onClick(View v) {
                 EditText updateTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
@@ -74,10 +73,14 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
 
         Button deleteButton = (Button) view.findViewById(R.id.button_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
-            // TODO: delete from database
             @Override
             public void onClick(View v) {
+                int id = recipes.get(position).getId();
+                AllRecipesPresenter presenter = new AllRecipesPresenter(fragment);
+                presenter.onDeleteButtonClick(id);
+
                 remove(recipes.get(position));
+                notifyDataSetChanged();
             }
         });
 
