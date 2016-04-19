@@ -19,7 +19,9 @@ public class WeeklyMenuFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.presenter = new WeeklyMenuPresenter(this);
+        String buttonClicked = getActivity().getIntent().getExtras().getString("buttonClicked");
+
+        this.presenter = new WeeklyMenuPresenter(this, buttonClicked);
         presenter.onFragmentCreate();
     }
 

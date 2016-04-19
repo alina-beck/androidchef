@@ -11,5 +11,6 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="my_recipes">My Recipes</string>
+    <string name="show_current_menu">Show current menu</string>
 
 </resources>

@@ -23,14 +23,17 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-        Button button1 = (Button) view.findViewById(R.id.button_new_recipe);
-        button1.setOnClickListener(this);
+        Button newRecipe = (Button) view.findViewById(R.id.button_new_recipe);
+        newRecipe.setOnClickListener(this);
 
-        Button button2 = (Button) view.findViewById(R.id.button_get_menu);
-        button2.setOnClickListener(this);
+        Button createMenu = (Button) view.findViewById(R.id.button_create_menu);
+        createMenu.setOnClickListener(this);
 
-        Button button3 = (Button) view.findViewById(R.id.button_all_recipes);
-        button3.setOnClickListener(this);
+        Button currentMenu = (Button) view.findViewById(R.id.button_current_menu);
+        currentMenu.setOnClickListener(this);
+
+        Button allRecipes = (Button) view.findViewById(R.id.button_all_recipes);
+        allRecipes.setOnClickListener(this);
 
         return view;
     }
@@ -42,13 +45,19 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                 Intent intent1 = new Intent(getActivity(), NewRecipeActivity.class);
                 startActivity(intent1);
                 break;
-            case R.id.button_get_menu:
+            case R.id.button_create_menu:
                 Intent intent2 = new Intent(getActivity(), WeeklyMenuActivity.class);
+                intent2.putExtra("buttonClicked", "createMenu");
                 startActivity(intent2);
                 break;
-            case R.id.button_all_recipes:
-                Intent intent3 = new Intent(getActivity(), AllRecipesActivity.class);
+            case R.id.button_current_menu:
+                Intent intent3 = new Intent(getActivity(), WeeklyMenuActivity.class);
+                intent3.putExtra("buttonClicked", "currentMenu");
                 startActivity(intent3);
+                break;
+            case R.id.button_all_recipes:
+                Intent intent4 = new Intent(getActivity(), AllRecipesActivity.class);
+                startActivity(intent4);
                 break;
         }
     }

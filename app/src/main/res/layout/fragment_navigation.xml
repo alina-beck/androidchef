@@ -14,8 +14,15 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/button_get_menu"
+        android:id="@+id/button_create_menu"
         android:text="@string/create_random_menu"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/button_current_menu"
+        android:text="@string/show_current_menu"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
