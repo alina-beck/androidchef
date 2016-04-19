@@ -19,11 +19,11 @@ public class AllRecipesPresenter {
 
     public void onSaveButtonClick(int id, String newTitle) {
         Recipe recipe = new Recipe(id, newTitle);
-        fragment.makeToast(recipeDAO.updateRecipe(recipe));
+        fragment.displayToast(recipeDAO.updateRecipe(recipe));
     }
 
     public void onDeleteButtonClick(int id) {
-        fragment.makeToast(recipeDAO.deleteRecipe(id));
+        fragment.displayToast(recipeDAO.deleteRecipe(id));
     }
 
 

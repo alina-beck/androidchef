@@ -23,7 +23,7 @@
             android:label="@string/weekly_menu" />
         <activity
             android:name=".features.allrecipes.AllRecipesActivity"
-            android:label="@string/show_all_recipes"
+            android:label="@string/my_recipes"
             android:windowSoftInputMode="adjustPan"/>
     </application>
 

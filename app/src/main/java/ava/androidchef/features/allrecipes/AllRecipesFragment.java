@@ -31,7 +31,7 @@ public class AllRecipesFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
-    public void makeToast(boolean update) {
+    public void displayToast(boolean update) {
         if (update) {
             Toast.makeText(getActivity(), "updated in database", Toast.LENGTH_LONG).show();
         }

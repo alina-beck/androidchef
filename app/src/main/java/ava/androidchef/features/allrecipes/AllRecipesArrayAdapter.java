@@ -60,6 +60,7 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
                 fragment.saveButtonClicked(recipes.get(position).getId(), newTitle.getText().toString());
 
                 switcher.setDisplayedChild(0);
+                recipes.get(position).setTitle(newTitle.getText().toString());
                 notifyDataSetChanged();
 
             }
