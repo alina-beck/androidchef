@@ -1,11 +1,6 @@
 package ava.androidchef.features.weeklymenu;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.util.ArrayList;
-import java.util.Map;
-
 import ava.androidchef.models.Recipe;
 import ava.androidchef.models.RecipeDAO;
 
@@ -20,7 +15,7 @@ public class WeeklyMenuPresenter {
     public void onFragmentCreate(String buttonClicked) {
 
         ArrayList<Recipe> recipes;
-        SharedPreferences currentMenu = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+        WeeklyMenuDAO weeklyMenuDAO = new WeeklyMenuDAO(fragment.getActivity());
 
         switch (buttonClicked) {
             case "createMenu":
@@ -28,31 +23,12 @@ public class WeeklyMenuPresenter {
                 recipes = recipeDAO.getRandomMenu(7);
 
                 fragment.displayWeeklyMenu(recipes);
-
-                SharedPreferences.Editor editor = currentMenu.edit();
-
-                for (int i = 0; i < recipes.size(); i++) {
-                    String stringMenu = recipes.get(i).getId() + "," + recipes.get(i).getTitle();
-
-                    editor.putString(Integer.toString(i), stringMenu);
-                    editor.apply();
-                }
+                weeklyMenuDAO.saveMenu(recipes);
                 break;
             case "currentMenu":
-                recipes = new ArrayList<>();
-
-                Map<String, ?> map = currentMenu.getAll();
-                for (int i = 0; i < map.size(); i++) {
-                    String stringRecipe = map.get(Integer.toString(i)).toString();
-                    String[] recipe = stringRecipe.split(",", 2);
-                    recipes.add(new Recipe(Integer.parseInt(recipe[0]), recipe[1]));
-                }
-
+                recipes = weeklyMenuDAO.getMenu();
                 fragment.displayWeeklyMenu(recipes);
                 break;
         }
-
     }
-
-
 }
