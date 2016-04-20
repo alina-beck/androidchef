@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import ava.androidchef.models.Recipe;
 import ava.androidchef.models.RecipeDAO;
 
@@ -38,7 +40,13 @@ public class WeeklyMenuPresenter {
                 break;
             case "currentMenu":
                 recipes = new ArrayList<>();
-                recipes.add(new Recipe("testworks"));
+
+                Map<String, ?> map = currentMenu.getAll();
+                for (int i = 0; i < map.size(); i++) {
+                    String stringRecipe = map.get(Integer.toString(i)).toString();
+                    String[] recipe = stringRecipe.split(",", 2);
+                    recipes.add(new Recipe(Integer.parseInt(recipe[0]), recipe[1]));
+                }
 
                 fragment.displayWeeklyMenu(recipes);
                 break;
