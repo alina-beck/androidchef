@@ -41,7 +41,7 @@ public class WeeklyMenuArrayAdapter extends ArrayAdapter<Recipe> {
         replaceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.replaceButtonClicked(recipes.get(position), recipes, getPosition(recipes.get(position)));
+                fragment.replaceButtonClicked(recipes, getPosition(recipes.get(position)));
             }
         });
 

@@ -8,6 +8,7 @@ public class WeeklyMenuPresenter {
 
     private WeeklyMenuFragment fragment;
     private RecipeDAO recipeDAO;
+    private WeeklyMenuDAO weeklyMenuDAO;
 
     public WeeklyMenuPresenter(WeeklyMenuFragment fragment) {
         this.fragment = fragment;
@@ -16,7 +17,7 @@ public class WeeklyMenuPresenter {
     public void onFragmentCreate(String buttonClicked) {
 
         ArrayList<Recipe> recipes;
-        WeeklyMenuDAO weeklyMenuDAO = new WeeklyMenuDAO(fragment.getActivity());
+        this.weeklyMenuDAO = new WeeklyMenuDAO(fragment.getActivity());
         this.recipeDAO = new RecipeDAO(fragment.getActivity());
 
         switch (buttonClicked) {
@@ -33,10 +34,11 @@ public class WeeklyMenuPresenter {
         }
     }
 
-    public void onReplaceButtonClick(Recipe dismissedRecipe, ArrayList<Recipe> currentRecipes, int index) {
-        ArrayList<Recipe> newRecipeArray = recipeDAO.getRandomMenu(1);
-        Recipe newRecipe = newRecipeArray.get(0);
+    public void onReplaceButtonClick(ArrayList<Recipe> currentRecipes, int index) {
+        Recipe newRecipe = recipeDAO.getRandomRecipe(currentRecipes);
+
         currentRecipes.set(index, newRecipe);
         fragment.displayWeeklyMenu(currentRecipes);
+        weeklyMenuDAO.saveMenu(currentRecipes);
     }
 }

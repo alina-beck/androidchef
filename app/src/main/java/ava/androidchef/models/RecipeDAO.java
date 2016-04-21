@@ -64,6 +64,20 @@ public class RecipeDAO {
         return fetchRecipes(sqlQuery);
     }
 
+    public Recipe getRandomRecipe(ArrayList<Recipe> exceptions) {
+
+        String exclude = "";
+        for (int i = 0; i < exceptions.size(); i++) {
+            int id = exceptions.get(i).getId();
+            exclude = exclude.concat(Integer.toString(id) + ", ");
+        }
+        exclude = exclude.substring(0, exclude.length()-2);
+
+        String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " where " +
+                DbHelper.COLUMN_ID + " not in ( " + exclude + " ) order by random() limit 1";
+        return fetchRecipes(sqlQuery).get(0);
+    }
+
     private ArrayList<Recipe> fetchRecipes(String sqlQuery) {
         ArrayList<Recipe> recipes = new ArrayList<>();
 

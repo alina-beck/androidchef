@@ -31,7 +31,7 @@ public class WeeklyMenuFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
-    public void replaceButtonClicked(Recipe dismissedRecipe, ArrayList<Recipe> currentRecipes, int index) {
-        presenter.onReplaceButtonClick(dismissedRecipe, currentRecipes, index);
+    public void replaceButtonClicked(ArrayList<Recipe> currentRecipes, int index) {
+        presenter.onReplaceButtonClick(currentRecipes, index);
     }
 }
