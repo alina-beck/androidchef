@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
+import ava.androidchef.R;
 import ava.androidchef.models.Recipe;
 
 public class WeeklyMenuFragment extends ListFragment {
@@ -26,7 +27,11 @@ public class WeeklyMenuFragment extends ListFragment {
     }
 
     public void displayWeeklyMenu(ArrayList<Recipe> recipes) {
-        ArrayAdapter<Recipe> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, recipes);
+        WeeklyMenuArrayAdapter adapter = new WeeklyMenuArrayAdapter(getActivity(), R.layout.list_item_replace, recipes, this);
         setListAdapter(adapter);
+    }
+
+    public void replaceButtonClicked(Recipe dismissedRecipe, ArrayList<Recipe> currentRecipes, int index) {
+        presenter.onReplaceButtonClick(dismissedRecipe, currentRecipes, index);
     }
 }

@@ -7,6 +7,7 @@ import ava.androidchef.models.RecipeDAO;
 public class WeeklyMenuPresenter {
 
     private WeeklyMenuFragment fragment;
+    private RecipeDAO recipeDAO;
 
     public WeeklyMenuPresenter(WeeklyMenuFragment fragment) {
         this.fragment = fragment;
@@ -16,10 +17,10 @@ public class WeeklyMenuPresenter {
 
         ArrayList<Recipe> recipes;
         WeeklyMenuDAO weeklyMenuDAO = new WeeklyMenuDAO(fragment.getActivity());
+        this.recipeDAO = new RecipeDAO(fragment.getActivity());
 
         switch (buttonClicked) {
             case "createMenu":
-                RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity());
                 recipes = recipeDAO.getRandomMenu(7);
 
                 fragment.displayWeeklyMenu(recipes);
@@ -30,5 +31,12 @@ public class WeeklyMenuPresenter {
                 fragment.displayWeeklyMenu(recipes);
                 break;
         }
+    }
+
+    public void onReplaceButtonClick(Recipe dismissedRecipe, ArrayList<Recipe> currentRecipes, int index) {
+        ArrayList<Recipe> newRecipeArray = recipeDAO.getRandomMenu(1);
+        Recipe newRecipe = newRecipeArray.get(0);
+        currentRecipes.set(index, newRecipe);
+        fragment.displayWeeklyMenu(currentRecipes);
     }
 }
