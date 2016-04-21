@@ -19,6 +19,7 @@ public class RecipeDAO {
 
     private void open() {
         db = dbHelper.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     private void close() {
@@ -37,7 +38,7 @@ public class RecipeDAO {
     public boolean updateRecipe(Recipe recipe) {
         open();
         ContentValues values = prepareContentValues(recipe);
-        String whereClause = DbHelper.COLUMN_ID + "=" + recipe.getId();
+        String whereClause = DbHelper.COL_RECIPE_ID + "=" + recipe.getId();
 
         int update = db.update(DbHelper.TABLE_RECIPES, values, whereClause, null);
         close();
@@ -47,7 +48,7 @@ public class RecipeDAO {
 
     public boolean deleteRecipe(int id) {
         open();
-        String whereClause = DbHelper.COLUMN_ID + "=" + id;
+        String whereClause = DbHelper.COL_RECIPE_ID + "=" + id;
         int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
         close();
 
@@ -74,7 +75,7 @@ public class RecipeDAO {
         exclude = exclude.substring(0, exclude.length()-2);
 
         String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " where " +
-                DbHelper.COLUMN_ID + " not in ( " + exclude + " ) order by random() limit 1";
+                DbHelper.COL_RECIPE_ID + " not in ( " + exclude + " ) order by random() limit 1";
         return fetchRecipes(sqlQuery).get(0);
     }
 
@@ -104,7 +105,7 @@ public class RecipeDAO {
     private ContentValues prepareContentValues (Recipe recipe) {
         ContentValues values = new ContentValues();
 
-        values.put(DbHelper.COLUMN_TITLE, recipe.getTitle());
+        values.put(DbHelper.COL_RECIPE_TITLE, recipe.getTitle());
 
         return values;
     }

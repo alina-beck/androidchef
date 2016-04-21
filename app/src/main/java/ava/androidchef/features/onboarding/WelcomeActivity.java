@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import ava.androidchef.R;
+import ava.androidchef.database.DbHelper;
 
 public class WelcomeActivity extends FragmentActivity {
 
@@ -18,6 +19,6 @@ public class WelcomeActivity extends FragmentActivity {
 
         NavigationFragment navigationFragment = new NavigationFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_welcome, navigationFragment).commit();
-
+        
     }
 }
