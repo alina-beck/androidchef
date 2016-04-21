@@ -2,14 +2,12 @@ package ava.androidchef.features.allrecipes;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ava.androidchef.R;
-import ava.androidchef.features.weeklymenu.WeeklyMenuPresenter;
-import ava.androidchef.models.Recipe;
+import ava.androidchef.models.recipe.Recipe;
 
 public class AllRecipesFragment extends ListFragment {
 

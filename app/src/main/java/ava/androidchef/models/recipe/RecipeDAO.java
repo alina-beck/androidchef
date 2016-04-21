@@ -1,4 +1,4 @@
-package ava.androidchef.models;
+package ava.androidchef.models.recipe;
 
 import android.content.ContentValues;
 import android.content.Context;

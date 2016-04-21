@@ -1,4 +1,4 @@
-package ava.androidchef.models;
+package ava.androidchef.models.recipe;
 
 public class Recipe {
     private int id;

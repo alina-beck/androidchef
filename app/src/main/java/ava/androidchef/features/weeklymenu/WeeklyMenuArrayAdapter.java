@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ava.androidchef.R;
-import ava.androidchef.models.Recipe;
+import ava.androidchef.models.recipe.Recipe;
 
 public class WeeklyMenuArrayAdapter extends ArrayAdapter<Recipe> {
 

@@ -1,8 +1,8 @@
 package ava.androidchef.features.weeklymenu;
 
 import java.util.ArrayList;
-import ava.androidchef.models.Recipe;
-import ava.androidchef.models.RecipeDAO;
+import ava.androidchef.models.recipe.Recipe;
+import ava.androidchef.models.recipe.RecipeDAO;
 
 public class WeeklyMenuPresenter {
 
