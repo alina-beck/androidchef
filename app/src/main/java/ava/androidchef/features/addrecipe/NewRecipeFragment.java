@@ -12,8 +12,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ava.androidchef.R;
+import ava.androidchef.models.ingredient.Ingredient;
+import ava.androidchef.models.ingredient.Unit;
 
 public class NewRecipeFragment extends Fragment implements View.OnClickListener {
 
@@ -26,6 +29,16 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_recipe, container, false);
         this.presenter = new NewRecipePresenter(this);
+
+        LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
+
+        for (int i = 0; i < inputWrapper.getChildCount(); i++) {
+            LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
+            Spinner unitSpinner = (Spinner) ll.findViewById(R.id.spinner_unit);
+
+            ArrayList<Unit> units = Unit.);
+
+        }
 
         Button button = (Button) view.findViewById(R.id.button_save_recipe);
         button.setOnClickListener(this);
