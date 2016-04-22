@@ -13,11 +13,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import ava.androidchef.R;
-import ava.androidchef.models.ingredient.Ingredient;
-import ava.androidchef.models.ingredient.Unit;
+import ava.androidchef.utils.Unit;
 
 public class NewRecipeFragment extends Fragment implements View.OnClickListener {
 

@@ -1,4 +1,4 @@
-package ava.androidchef.models.ingredient;
+package ava.androidchef.utils;
 
 import java.util.ArrayList;
 
