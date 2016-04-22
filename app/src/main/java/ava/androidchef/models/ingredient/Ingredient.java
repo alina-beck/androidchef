@@ -15,4 +15,12 @@ public class Ingredient {
         this.name = name;
         this.unit = unit;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
 }
