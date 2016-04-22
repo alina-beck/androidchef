@@ -28,6 +28,7 @@ public class IngredientDAO {
         open();
         ContentValues values = prepareContentValues(ingredient);
         long result = db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
+        close();
 
         return (result != -1);
     }

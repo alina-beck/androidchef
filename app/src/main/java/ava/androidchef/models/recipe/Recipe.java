@@ -1,13 +1,13 @@
 package ava.androidchef.models.recipe;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import ava.androidchef.models.ingredient.Ingredient;
 
 public class Recipe {
     private int id;
     private String title;
-    private HashMap<Integer, Ingredient> ingredients;
+    private LinkedHashMap<Ingredient, Integer> ingredients;
 
     public Recipe(String title) {
         this(-1, title);
@@ -16,7 +16,7 @@ public class Recipe {
     public Recipe(int id, String title) {
         this.id = id;
         this.title = title;
-        this.ingredients = new HashMap<>();
+        this.ingredients = new LinkedHashMap<>();
     }
 
     public int getId() {
@@ -29,6 +29,10 @@ public class Recipe {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public LinkedHashMap<Ingredient, Integer> getIngredients() {
+        return ingredients;
     }
 
     @Override

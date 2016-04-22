@@ -51,13 +51,13 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         presenter.onButtonClick();
-
-        }
+    }
 
     public String getRecipeInput() {
         EditText inputTitle = (EditText) getView().findViewById(R.id.input_recipe_title);
         return inputTitle.getText().toString();
     }
+
     public ArrayList<ArrayList<String>> getIngredientInput() {
         ArrayList<ArrayList<String>> userIngredientsInput = new ArrayList<>();
 
@@ -68,6 +68,7 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
             EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
             Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
             EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
+
             ArrayList<String> userIngredient1 = new ArrayList<>();
             userIngredient1.add(inputName.getText().toString());
             userIngredient1.add(inputUnit.getSelectedItem().toString());

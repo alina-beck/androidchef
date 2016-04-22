@@ -1,6 +1,7 @@
 package ava.androidchef.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Unit {
     private static final String PIECE = "pc";
@@ -8,11 +9,12 @@ public abstract class Unit {
     private static final String MILLILITRE = "ml";
 
     public static ArrayList<String> getUnits() {
-        ArrayList<String> units = new ArrayList<>();
-        units.add(PIECE);
-        units.add(GRAM);
-        units.add(MILLILITRE);
+        String[] units = {
+                PIECE,
+                GRAM,
+                MILLILITRE
+        };
 
-        return units;
+        return (ArrayList<String>) Arrays.asList(units);
     }
 }
