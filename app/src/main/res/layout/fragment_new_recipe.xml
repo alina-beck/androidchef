@@ -23,7 +23,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <include android:id="@+id/ingredient_input_1" layout="@layout/new_ingredient"/>
+    <LinearLayout
+        android:id="@+id/ingredient_input_wrapper"
+
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <include android:id="@+id/ingredient_input_1" layout="@layout/new_ingredient"/>
+        <include android:id="@+id/ingredient_input_2" layout="@layout/new_ingredient"/>
+        <include android:id="@+id/ingredient_input_3" layout="@layout/new_ingredient"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_save_recipe"

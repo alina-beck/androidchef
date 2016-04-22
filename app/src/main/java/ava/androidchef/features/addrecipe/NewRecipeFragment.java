@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import ava.androidchef.R;
 
@@ -16,7 +20,6 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
     private NewRecipePresenter presenter;
 
     public NewRecipeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -36,9 +39,29 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
 
         }
 
-    public String getUserInput() {
+    public String getRecipeInput() {
         EditText inputTitle = (EditText) getView().findViewById(R.id.input_recipe_title);
         return inputTitle.getText().toString();
+    }
+    public ArrayList<ArrayList<String>> getIngredientInput() {
+        ArrayList<ArrayList<String>> userIngredientsInput = new ArrayList<>();
+
+        LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
+
+        for (int i = 0; i < inputWrapper.getChildCount(); i++) {
+            LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
+            EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
+            Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
+            EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
+            ArrayList<String> userIngredient1 = new ArrayList<>();
+            userIngredient1.add(inputName.getText().toString());
+            userIngredient1.add(inputUnit.getSelectedItem().toString());
+            userIngredient1.add(inputAmount.getText().toString());
+            userIngredientsInput.add(userIngredient1);
+        }
+
+        System.out.println(userIngredientsInput);
+        return userIngredientsInput;
     }
 
     public void saveComplete(boolean didSave) {

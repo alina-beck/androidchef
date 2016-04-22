@@ -15,8 +15,8 @@
         android:id="@+id/spinner_unit"
         android:prompt="@string/choose_unit"
 
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="50dp"
+        android:layout_height="20dp"/>
     <EditText
         android:id="@+id/input_ingredient_amount"
         android:hint="@string/amount"
