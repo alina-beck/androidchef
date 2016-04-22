@@ -19,6 +19,6 @@ public class WelcomeActivity extends FragmentActivity {
 
         NavigationFragment navigationFragment = new NavigationFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_welcome, navigationFragment).commit();
-        
+
     }
 }
