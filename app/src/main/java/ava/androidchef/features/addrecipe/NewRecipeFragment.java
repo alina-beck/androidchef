@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -30,14 +31,17 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
         View view = inflater.inflate(R.layout.fragment_new_recipe, container, false);
         this.presenter = new NewRecipePresenter(this);
 
-        LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
+        LinearLayout inputWrapper = (LinearLayout) view.findViewById(R.id.ingredient_input_wrapper);
 
         for (int i = 0; i < inputWrapper.getChildCount(); i++) {
             LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
             Spinner unitSpinner = (Spinner) ll.findViewById(R.id.spinner_unit);
 
-            ArrayList<Unit> units = Unit.);
+            ArrayList<String> units = Unit.getUnits();
 
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            unitSpinner.setAdapter(adapter);
         }
 
         Button button = (Button) view.findViewById(R.id.button_save_recipe);

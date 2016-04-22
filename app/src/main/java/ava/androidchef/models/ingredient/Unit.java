@@ -7,7 +7,7 @@ public abstract class Unit {
     private static final String GRAM = "g";
     private static final String MILLILITRE = "ml";
 
-    public ArrayList<String> getUnits() {
+    public static ArrayList<String> getUnits() {
         ArrayList<String> units = new ArrayList<>();
         units.add(PIECE);
         units.add(GRAM);
