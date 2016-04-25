@@ -3,8 +3,12 @@ package ava.androidchef.models.ingredient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import ava.androidchef.database.DbHelper;
+import ava.androidchef.models.recipe.Recipe;
 
 public class IngredientDAO {
 
@@ -24,13 +28,24 @@ public class IngredientDAO {
         dbHelper.close();
     }
 
-    public boolean insertIngredient(Ingredient ingredient) {
+    public ArrayList<Long> insertIngredients(Recipe recipe) {
+        ArrayList<Long> ingredientIds = new ArrayList<>();
+
+        LinkedHashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
+        for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
+            ingredientIds.add(insertIngredient(entry.getKey()));
+        }
+
+        return ingredientIds;
+    }
+
+    public long insertIngredient(Ingredient ingredient) {
         open();
         ContentValues values = prepareContentValues(ingredient);
         long result = db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
         close();
 
-        return (result != -1);
+        return result;
     }
 
     private ContentValues prepareContentValues(Ingredient ingredient) {

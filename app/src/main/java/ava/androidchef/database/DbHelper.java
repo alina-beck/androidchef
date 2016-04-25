@@ -27,6 +27,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_RI_ID = "recipes_ingredients_id";
     public static final String COL_RI_RECIPE_ID = "ri_recipe_id";
     public static final String COL_RI_INGREDIENT_ID = "ri_ingredient_id";
+    public static final String COL_RI_AMOUNT = "ri_amount";
 
     // database creation SQL syntax
     public static final String CREATE_DATABASE =
@@ -41,6 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
             COL_RI_ID + " integer primary key, " +
             COL_RI_RECIPE_ID + " integer, " +
             COL_RI_INGREDIENT_ID + " integer, " +
+            COL_RI_AMOUNT + " integer not null, " +
             "foreign key(" + COL_RI_RECIPE_ID + ") references " + TABLE_RECIPES + "(" + COL_RECIPE_ID + "), " +
             "foreign key(" + COL_RI_INGREDIENT_ID + ") references " + TABLE_INGREDIENTS + "(" + COL_INGREDIENT_ID + "));";
 

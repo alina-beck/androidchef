@@ -26,13 +26,14 @@ public class RecipeDAO {
         dbHelper.close();
     }
 
-    public boolean insertRecipe(Recipe recipe) {
+    public long insertRecipe(Recipe recipe) {
         open();
         ContentValues values = prepareContentValues(recipe);
         long result = db.insert(DbHelper.TABLE_RECIPES, null, values);
-        close();
 
-        return (result != -1);
+        close();
+        //TODO: confirm row id equals object id
+        return result;
     }
 
     public boolean updateRecipe(Recipe recipe) {
@@ -102,7 +103,7 @@ public class RecipeDAO {
         return new Recipe(id, title);
     }
 
-    private ContentValues prepareContentValues (Recipe recipe) {
+    private ContentValues prepareContentValues(Recipe recipe) {
         ContentValues values = new ContentValues();
 
         values.put(DbHelper.COL_RECIPE_TITLE, recipe.getTitle());
