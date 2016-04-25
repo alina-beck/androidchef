@@ -29,15 +29,18 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_RI_INGREDIENT_ID = "ri_ingredient_id";
     public static final String COL_RI_AMOUNT = "ri_amount";
 
-    // database creation SQL syntax
-    public static final String CREATE_DATABASE =
+    public static final String CREATE_TABLE_RECIPES =
             "create table " + TABLE_RECIPES + "(" +
             COL_RECIPE_ID + " integer primary key autoincrement, " +
-            COL_RECIPE_TITLE + " text not null); " +
+            COL_RECIPE_TITLE + " text not null);";
+
+    public static final String CREATE_TABLE_INGREDIENTS =
             "create table " + TABLE_INGREDIENTS + "(" +
             COL_INGREDIENT_ID + " integer primary key autoincrement, " +
             COL_INGREDIENT_NAME + " text not null, " +
-            COL_INGREDIENT_UNIT + " text not null); " +
+            COL_INGREDIENT_UNIT + " text not null);";
+
+    public static final String CREATE_TABLE_RI =
             "create table " + TABLE_RECIPES_INGREDIENTS + "(" +
             COL_RI_ID + " integer primary key, " +
             COL_RI_RECIPE_ID + " integer, " +
@@ -59,7 +62,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_DATABASE);
+        db.execSQL(CREATE_TABLE_RECIPES);
+        db.execSQL(CREATE_TABLE_INGREDIENTS);
+        db.execSQL(CREATE_TABLE_RI);
     }
 
     @Override

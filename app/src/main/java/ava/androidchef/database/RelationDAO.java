@@ -49,9 +49,11 @@ public class RelationDAO {
         boolean result = false;
         for (int i = 0; i < ingredientIds.size(); i++) {
             ContentValues values = new ContentValues();
-            values.put(DbHelper.COL_RI_ID, recipeId + ingredientIds.get(i));
+            values.put(DbHelper.COL_RI_ID, Long.valueOf(String.valueOf(recipeId) + String.valueOf(ingredientIds.get(i))));
             values.put(DbHelper.COL_RI_RECIPE_ID, recipeId);
             values.put(DbHelper.COL_RI_INGREDIENT_ID, ingredientIds.get(i));
+            //TODO: replace with real amount
+            values.put(DbHelper.COL_RI_AMOUNT, 42);
             if (db.insert(DbHelper.TABLE_RECIPES_INGREDIENTS, null, values) != -1) {
                 result = true;
             }
