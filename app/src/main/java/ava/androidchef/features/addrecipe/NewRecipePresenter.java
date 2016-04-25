@@ -32,9 +32,7 @@ public class NewRecipePresenter {
 
             recipesIngredients.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
         }
-
-        System.out.println(recipesIngredients);
-
+        
         RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity().getApplicationContext());
 
         boolean didSave = recipeDAO.insertRecipe(recipe);

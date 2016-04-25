@@ -76,7 +76,6 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
             userIngredientsInput.add(userIngredient1);
         }
 
-        System.out.println(userIngredientsInput);
         return userIngredientsInput;
     }
 

@@ -23,7 +23,7 @@ public class Ingredient {
     public String getUnit() {
         return unit;
     }
-    
+
     @Override
     public String toString() {
         return name;

@@ -15,6 +15,6 @@ public abstract class Unit {
                 MILLILITRE
         };
 
-        return (ArrayList<String>) Arrays.asList(units);
+        return (new ArrayList<>(Arrays.asList(units)));
     }
 }
