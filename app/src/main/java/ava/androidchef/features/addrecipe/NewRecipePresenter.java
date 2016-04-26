@@ -1,10 +1,8 @@
 package ava.androidchef.features.addrecipe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import ava.androidchef.database.RelationDAO;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.ingredient.IngredientDAO;
 import ava.androidchef.models.recipe.Recipe;
@@ -32,7 +30,10 @@ public class NewRecipePresenter {
         IngredientDAO ingredientDAO = new IngredientDAO(fragment.getActivity());
         LinkedHashMap<Ingredient, Integer> updatedIngredients = ingredientDAO.insertIngredients(recipesIngredients);
 
-        boolean didSave = relationDAO.insertNewRelation(recipe);
+        recipe.setIngredients(updatedIngredients);
+        RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity());
+
+        boolean didSave = (recipeDAO.insertRecipe(recipe) != -1);
         fragment.saveComplete(didSave);
 
     }

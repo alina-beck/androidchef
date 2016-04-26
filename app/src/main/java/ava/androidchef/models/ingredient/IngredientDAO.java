@@ -35,7 +35,6 @@ public class IngredientDAO {
             Ingredient ingredient = insertIngredient(entry.getKey());
             newIngredients.put(ingredient, entry.getValue());
         }
-
         return newIngredients;
     }
 
@@ -44,7 +43,9 @@ public class IngredientDAO {
         ContentValues values = prepareContentValues(ingredient);
         db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
 
-        Cursor cursor = db.rawQuery("select * from " + DbHelper.TABLE_INGREDIENTS + " order by " + DbHelper.COL_INGREDIENT_ID + " desc limit 1", null);
+        Cursor cursor = db.rawQuery("select * from " + DbHelper.TABLE_INGREDIENTS +
+                " order by " + DbHelper.COL_INGREDIENT_ID + " desc limit 1", null);
+        cursor.moveToLast();
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
         String unit = cursor.getString(2);

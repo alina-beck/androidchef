@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import ava.androidchef.database.DbHelper;
+import ava.androidchef.models.ingredient.Ingredient;
 
 public class RecipeDAO {
 
@@ -30,10 +33,22 @@ public class RecipeDAO {
         open();
         ContentValues values = prepareContentValues(recipe);
         long result = db.insert(DbHelper.TABLE_RECIPES, null, values);
+        insertRelation(recipe);
 
         close();
-        //TODO: confirm row id equals object id
         return result;
+    }
+
+    private void insertRelation(Recipe recipe) {
+        open();
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
+            ContentValues values = new ContentValues();
+            values.put(DbHelper.COL_RI_ID, Integer.parseInt(Integer.toString(recipe.getId()) + Integer.toString(entry.getKey().getId())));
+            values.put(DbHelper.COL_RI_RECIPE_ID, recipe.getId());
+            values.put(DbHelper.COL_RI_INGREDIENT_ID, entry.getKey().getId());
+            values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
+        }
+        close();
     }
 
     public boolean updateRecipe(Recipe recipe) {

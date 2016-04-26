@@ -35,6 +35,10 @@ public class Recipe {
         return ingredients;
     }
 
+    public void setIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     @Override
     public String toString() {
         return title;
