@@ -12,18 +12,15 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_RECIPES = "recipes";
-
     public static final String COL_RECIPE_ID = "recipe_id";
     public static final String COL_RECIPE_TITLE = "recipe_title";
 
     public static final String TABLE_INGREDIENTS = "ingredients";
-
     public static final String COL_INGREDIENT_ID = "ingredient_id";
     public static final String COL_INGREDIENT_NAME = "ingredient_name";
     public static final String COL_INGREDIENT_UNIT = "ingredient_unit";
 
     public static final String TABLE_RECIPES_INGREDIENTS = "recipes_ingredients";
-
     public static final String COL_RI_ID = "recipes_ingredients_id";
     public static final String COL_RI_RECIPE_ID = "ri_recipe_id";
     public static final String COL_RI_INGREDIENT_ID = "ri_ingredient_id";

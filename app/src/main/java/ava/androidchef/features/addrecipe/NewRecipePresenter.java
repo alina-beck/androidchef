@@ -21,16 +21,16 @@ public class NewRecipePresenter {
     public void onButtonClick() {
         String title = fragment.getRecipeInput();
         Recipe recipe = new Recipe (title);
+
         LinkedHashMap<Ingredient, Integer> recipesIngredients = recipe.getIngredients();
-
         ArrayList<ArrayList<String>> ingredients = fragment.getIngredientInput();
-
         for (int i = 0; i < ingredients.size(); i++) {
             Ingredient ingredient = new Ingredient(ingredients.get(i).get(0), ingredients.get(i).get(1));
             recipesIngredients.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
         }
 
-        RelationDAO relationDAO = new RelationDAO(fragment.getActivity());
+        IngredientDAO ingredientDAO = new IngredientDAO(fragment.getActivity());
+        LinkedHashMap<Ingredient, Integer> updatedIngredients = ingredientDAO.insertIngredients(recipesIngredients);
 
         boolean didSave = relationDAO.insertNewRelation(recipe);
         fragment.saveComplete(didSave);
