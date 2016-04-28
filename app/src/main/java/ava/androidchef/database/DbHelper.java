@@ -34,7 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE_INGREDIENTS =
             "create table " + TABLE_INGREDIENTS + "(" +
             COL_INGREDIENT_ID + " integer primary key autoincrement, " +
-            COL_INGREDIENT_NAME + " text not null, " +
+            COL_INGREDIENT_NAME + " text not null unique, " +
             COL_INGREDIENT_UNIT + " text not null);";
 
     public static final String CREATE_TABLE_RI =
