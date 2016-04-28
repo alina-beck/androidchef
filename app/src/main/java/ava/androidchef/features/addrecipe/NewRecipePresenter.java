@@ -11,9 +11,11 @@ import ava.androidchef.models.recipe.RecipeDAO;
 public class NewRecipePresenter {
 
     private NewRecipeFragment fragment;
+    private IngredientDAO ingredientDAO;
 
     public NewRecipePresenter(NewRecipeFragment fragment) {
         this.fragment = fragment;
+        this.ingredientDAO = new IngredientDAO(fragment.getActivity());
     }
 
     public void onButtonClick() {
@@ -27,7 +29,6 @@ public class NewRecipePresenter {
             recipesIngredients.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
         }
 
-        IngredientDAO ingredientDAO = new IngredientDAO(fragment.getActivity());
         LinkedHashMap<Ingredient, Integer> updatedIngredients = ingredientDAO.insertIngredients(recipesIngredients);
 
         recipe.setIngredients(updatedIngredients);
@@ -35,6 +36,9 @@ public class NewRecipePresenter {
 
         boolean didSave = (recipeDAO.insertRecipe(recipe) != -1);
         fragment.saveComplete(didSave);
+    }
 
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredientDAO.getAllIngredients();
     }
 }

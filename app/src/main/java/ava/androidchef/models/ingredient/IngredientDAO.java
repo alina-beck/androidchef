@@ -56,6 +56,36 @@ public class IngredientDAO {
         return new Ingredient(id, name, unit);
     }
 
+    public ArrayList<Ingredient> getAllIngredients() {
+        String sqlQuery = "select * from " + DbHelper.TABLE_INGREDIENTS;
+        return fetchIngredients(sqlQuery);
+    }
+
+    private ArrayList<Ingredient> fetchIngredients(String sqlQuery) {
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+
+        open();
+        Cursor cursor = db.rawQuery(sqlQuery, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ingredients.add(getIngredientfromCursor(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+
+        return ingredients;
+    }
+
+    private Ingredient getIngredientfromCursor(Cursor cursor) {
+        int id = cursor.getInt(0);
+        String name = cursor.getString(1);
+        String unit = cursor.getString(2);
+
+        return new Ingredient(id, name, unit);
+    }
+
     private ContentValues prepareContentValues(Ingredient ingredient) {
         ContentValues values = new ContentValues();
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ava.androidchef.R;
+import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.utils.Unit;
 
 public class NewRecipeFragment extends Fragment implements View.OnClickListener {
@@ -33,8 +35,14 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
 
         for (int i = 0; i < inputWrapper.getChildCount(); i++) {
             LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
-            Spinner unitSpinner = (Spinner) ll.findViewById(R.id.spinner_unit);
 
+            AutoCompleteTextView ingredientAutoComplete = (AutoCompleteTextView) ll.findViewById(R.id.input_ingredient_name);
+            ArrayList<Ingredient> ingredients = presenter.getIngredients();
+
+            ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredients);
+            ingredientAutoComplete.setAdapter(ingredientAdapter);
+
+            Spinner unitSpinner = (Spinner) ll.findViewById(R.id.spinner_unit);
             ArrayList<String> units = Unit.getUnits();
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
