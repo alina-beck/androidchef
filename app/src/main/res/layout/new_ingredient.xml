@@ -2,12 +2,13 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <AutoCompleteTextView
         android:id="@+id/input_ingredient_name"
         android:hint="@string/ingredient"
+        android:completionThreshold="1"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

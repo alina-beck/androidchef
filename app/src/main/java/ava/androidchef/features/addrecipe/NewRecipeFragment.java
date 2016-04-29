@@ -2,6 +2,8 @@ package ava.androidchef.features.addrecipe;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,34 +24,42 @@ import ava.androidchef.utils.Unit;
 public class NewRecipeFragment extends Fragment implements View.OnClickListener {
 
     private NewRecipePresenter presenter;
+    private AutoCompleteTextView currentIngredientInput;
 
     public NewRecipeFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_recipe, container, false);
         this.presenter = new NewRecipePresenter(this);
 
+        // vertical LinearLayout to hold all ingredient input lines
         LinearLayout inputWrapper = (LinearLayout) view.findViewById(R.id.ingredient_input_wrapper);
 
-        for (int i = 0; i < inputWrapper.getChildCount(); i++) {
-            LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
+        // horizontal LinearLayout for the input fields of each ingredient
+        LinearLayout newIngredientLine = (LinearLayout) inputWrapper.findViewById(R.id.ingredient_input);
 
-            AutoCompleteTextView ingredientAutoComplete = (AutoCompleteTextView) ll.findViewById(R.id.input_ingredient_name);
-            ArrayList<Ingredient> ingredients = presenter.getIngredients();
+        // input field for ingredient name
+        AutoCompleteTextView ingredientAutoComplete = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
+        this.currentIngredientInput = ingredientAutoComplete;
+        ingredientAutoComplete.setOnClickListener(this);
 
-            ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredients);
-            ingredientAutoComplete.setAdapter(ingredientAdapter);
+        // put existing ingredients in adapter to display suggestions during input
+        ArrayList<Ingredient> ingredients = presenter.getIngredients();
+        ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredients);
+        ingredientAutoComplete.setAdapter(ingredientAdapter);
 
-            Spinner unitSpinner = (Spinner) ll.findViewById(R.id.spinner_unit);
-            ArrayList<String> units = Unit.getUnits();
+        // dropdown for ingredient unit
+        Spinner unitSpinner = (Spinner) newIngredientLine.findViewById(R.id.spinner_unit);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            unitSpinner.setAdapter(adapter);
-        }
+        // put units in adapter to fill dropdown
+        ArrayList<String> units = Unit.getUnits();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitSpinner.setAdapter(adapter);
 
+        // save button
         Button button = (Button) view.findViewById(R.id.button_save_recipe);
         button.setOnClickListener(this);
 
@@ -58,7 +68,25 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        presenter.onButtonClick();
+        switch(view.getId()) {
+            case R.id.button_save_recipe:
+                presenter.onButtonClick();
+                break;
+            case R.id.input_ingredient_name:
+                // show additional ingredient input line
+                LayoutInflater inflater = LayoutInflater.from(getActivity());
+                LinearLayout inputWrapper = (LinearLayout) view.getRootView().findViewById(R.id.ingredient_input_wrapper);
+                View newIngredientLine = inflater.inflate(R.layout.new_ingredient, null);
+                inputWrapper.addView(newIngredientLine);
+
+                // remove onClickListener from old line
+                currentIngredientInput.setOnClickListener(null);
+
+                // set onClickListener to new line
+                this.currentIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
+                currentIngredientInput.setOnClickListener(this);
+        }
+
     }
 
     public String getRecipeInput() {
