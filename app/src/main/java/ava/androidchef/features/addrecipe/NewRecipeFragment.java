@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,7 +22,8 @@ import ava.androidchef.R;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.utils.Unit;
 
-public class NewRecipeFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
+public class NewRecipeFragment extends Fragment
+        implements View.OnClickListener, View.OnFocusChangeListener, AdapterView.OnItemClickListener {
 
     private NewRecipePresenter presenter;
     private AutoCompleteTextView currentIngredientInput;
@@ -46,9 +48,7 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener,
         ingredientAutoComplete.setOnFocusChangeListener(this);
 
         // put existing ingredients in adapter to display suggestions during input
-        ArrayList<Ingredient> ingredients = presenter.getIngredients();
-        ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredients);
-        ingredientAutoComplete.setAdapter(ingredientAdapter);
+        populateIngredientSuggestions(ingredientAutoComplete);
 
         // dropdown for ingredient unit
         Spinner unitSpinner = (Spinner) firstIngredientLine.findViewById(R.id.spinner_unit);
@@ -82,8 +82,28 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener,
         currentIngredientInput.setOnFocusChangeListener(null);
 
         // set listener to new line
-        this.currentIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
-        currentIngredientInput.setOnFocusChangeListener(this);
+        AutoCompleteTextView newIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
+        newIngredientInput.setOnFocusChangeListener(this);
+        populateIngredientSuggestions(newIngredientInput);
+        newIngredientInput.setOnItemClickListener(this);
+        this.currentIngredientInput = newIngredientInput;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Ingredient selectedIngredient = (Ingredient) parent.getAdapter().getItem(position);
+        Spinner unitSpinner = (Spinner) getView().findViewById(R.id.spinner_unit);
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) unitSpinner.getAdapter();
+        adapter.clear();
+        adapter.add(selectedIngredient.getUnit());
+        adapter.notifyDataSetChanged();
+    }
+
+    private void populateIngredientSuggestions (AutoCompleteTextView ingredientInput) {
+        ArrayList<Ingredient> ingredients = presenter.getIngredients();
+        ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredients);
+        ingredientInput.setAdapter(ingredientAdapter);
+        ingredientInput.setOnItemClickListener(this);
     }
 
     private void populateUnitSpinner(Spinner unitSpinner) {
