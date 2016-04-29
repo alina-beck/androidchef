@@ -21,7 +21,7 @@ import ava.androidchef.R;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.utils.Unit;
 
-public class NewRecipeFragment extends Fragment implements View.OnClickListener {
+public class NewRecipeFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private NewRecipePresenter presenter;
     private AutoCompleteTextView currentIngredientInput;
@@ -43,7 +43,7 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
         // input field for ingredient name
         AutoCompleteTextView ingredientAutoComplete = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
         this.currentIngredientInput = ingredientAutoComplete;
-        ingredientAutoComplete.setOnClickListener(this);
+        ingredientAutoComplete.setOnFocusChangeListener(this);
 
         // put existing ingredients in adapter to display suggestions during input
         ArrayList<Ingredient> ingredients = presenter.getIngredients();
@@ -68,25 +68,23 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.button_save_recipe:
                 presenter.onButtonClick();
-                break;
-            case R.id.input_ingredient_name:
-                // show additional ingredient input line
-                LayoutInflater inflater = LayoutInflater.from(getActivity());
-                LinearLayout inputWrapper = (LinearLayout) view.getRootView().findViewById(R.id.ingredient_input_wrapper);
-                View newIngredientLine = inflater.inflate(R.layout.new_ingredient, null);
-                inputWrapper.addView(newIngredientLine);
+    }
 
-                // remove onClickListener from old line
-                currentIngredientInput.setOnClickListener(null);
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        // show additional ingredient input line
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LinearLayout inputWrapper = (LinearLayout) view.getRootView().findViewById(R.id.ingredient_input_wrapper);
+        View newIngredientLine = inflater.inflate(R.layout.new_ingredient, null);
+        inputWrapper.addView(newIngredientLine);
 
-                // set onClickListener to new line
-                this.currentIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
-                currentIngredientInput.setOnClickListener(this);
-        }
+        // remove listener from old line
+        currentIngredientInput.setOnFocusChangeListener(null);
 
+        // set listener to new line
+        this.currentIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
+        currentIngredientInput.setOnFocusChangeListener(this);
     }
 
     public String getRecipeInput() {
