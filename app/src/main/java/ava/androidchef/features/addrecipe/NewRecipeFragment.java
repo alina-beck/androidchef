@@ -38,10 +38,10 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener,
         LinearLayout inputWrapper = (LinearLayout) view.findViewById(R.id.ingredient_input_wrapper);
 
         // horizontal LinearLayout for the input fields of each ingredient
-        LinearLayout newIngredientLine = (LinearLayout) inputWrapper.findViewById(R.id.ingredient_input);
+        LinearLayout firstIngredientLine = (LinearLayout) inputWrapper.findViewById(R.id.ingredient_input);
 
         // input field for ingredient name
-        AutoCompleteTextView ingredientAutoComplete = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
+        AutoCompleteTextView ingredientAutoComplete = (AutoCompleteTextView) firstIngredientLine.findViewById(R.id.input_ingredient_name);
         this.currentIngredientInput = ingredientAutoComplete;
         ingredientAutoComplete.setOnFocusChangeListener(this);
 
@@ -51,13 +51,8 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener,
         ingredientAutoComplete.setAdapter(ingredientAdapter);
 
         // dropdown for ingredient unit
-        Spinner unitSpinner = (Spinner) newIngredientLine.findViewById(R.id.spinner_unit);
-
-        // put units in adapter to fill dropdown
-        ArrayList<String> units = Unit.getUnits();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        unitSpinner.setAdapter(adapter);
+        Spinner unitSpinner = (Spinner) firstIngredientLine.findViewById(R.id.spinner_unit);
+        populateUnitSpinner(unitSpinner);
 
         // save button
         Button button = (Button) view.findViewById(R.id.button_save_recipe);
@@ -79,12 +74,23 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener,
         View newIngredientLine = inflater.inflate(R.layout.new_ingredient, null);
         inputWrapper.addView(newIngredientLine);
 
+        // fill ingredient unit spinner
+        Spinner unitSpinner = (Spinner) newIngredientLine.findViewById(R.id.spinner_unit);
+        populateUnitSpinner(unitSpinner);
+
         // remove listener from old line
         currentIngredientInput.setOnFocusChangeListener(null);
 
         // set listener to new line
         this.currentIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
         currentIngredientInput.setOnFocusChangeListener(this);
+    }
+
+    private void populateUnitSpinner(Spinner unitSpinner) {
+        ArrayList<String> units = Unit.getUnits();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitSpinner.setAdapter(adapter);
     }
 
     public String getRecipeInput() {
@@ -97,7 +103,7 @@ public class NewRecipeFragment extends Fragment implements View.OnClickListener,
 
         LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
 
-        for (int i = 0; i < inputWrapper.getChildCount(); i++) {
+        for (int i = 0; i < (inputWrapper.getChildCount()-1); i++) {
             LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
             EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
             Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
