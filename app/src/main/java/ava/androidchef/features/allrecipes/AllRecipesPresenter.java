@@ -14,7 +14,7 @@ public class AllRecipesPresenter {
     }
 
     public void onFragmentCreate() {
-        fragment.displayAllRecipes(recipeDAO.getAllRecipes());
+        fragment.displayAllRecipes(recipeDAO.selectAllRecipes());
     }
 
     public void onSaveButtonClick(int id, String newTitle) {

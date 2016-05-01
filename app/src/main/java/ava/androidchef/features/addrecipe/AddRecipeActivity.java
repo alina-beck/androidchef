@@ -5,18 +5,18 @@ import android.os.Bundle;
 
 import ava.androidchef.R;
 
-public class NewRecipeActivity extends FragmentActivity {
+public class AddRecipeActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_recipe);
+        setContentView(R.layout.activity_add_recipe);
 
         if (savedInstanceState != null) {
             return;
         }
 
-        NewRecipeFragment newRecipeFragment = new NewRecipeFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_new_recipe, newRecipeFragment).commit();
+        EnterRecipeFragment enterRecipeFragment = new EnterRecipeFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_enter_recipe, enterRecipeFragment).commit();
     }
 }

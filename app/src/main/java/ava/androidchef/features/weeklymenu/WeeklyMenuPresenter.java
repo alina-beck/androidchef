@@ -22,7 +22,7 @@ public class WeeklyMenuPresenter {
 
         switch (buttonClicked) {
             case "createMenu":
-                recipes = recipeDAO.getRandomMenu(7);
+                recipes = recipeDAO.selectRandomMenu(7);
 
                 fragment.displayWeeklyMenu(recipes);
                 weeklyMenuDAO.saveMenu(recipes);
@@ -35,7 +35,7 @@ public class WeeklyMenuPresenter {
     }
 
     public void onReplaceButtonClick(ArrayList<Recipe> currentRecipes, int index) {
-        Recipe newRecipe = recipeDAO.getRandomRecipe(currentRecipes);
+        Recipe newRecipe = recipeDAO.selectRandomRecipe(currentRecipes);
 
         currentRecipes.set(index, newRecipe);
         fragment.displayWeeklyMenu(currentRecipes);

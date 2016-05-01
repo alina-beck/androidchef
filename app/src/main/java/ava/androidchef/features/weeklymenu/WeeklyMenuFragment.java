@@ -26,7 +26,7 @@ public class WeeklyMenuFragment extends ListFragment {
     }
 
     public void displayWeeklyMenu(ArrayList<Recipe> recipes) {
-        WeeklyMenuArrayAdapter adapter = new WeeklyMenuArrayAdapter(getActivity(), R.layout.list_item_replace, recipes, this);
+        WeeklyMenuArrayAdapter adapter = new WeeklyMenuArrayAdapter(getActivity(), R.layout.list_item_replaceable_recipe, recipes, this);
         setListAdapter(adapter);
     }
 

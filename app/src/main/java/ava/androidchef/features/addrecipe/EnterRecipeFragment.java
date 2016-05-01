@@ -13,25 +13,27 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+
 import ava.androidchef.R;
 import ava.androidchef.models.ingredient.Ingredient;
-import ava.androidchef.utils.AutoCompleteTextViewOnItemClickListener;
+import ava.androidchef.utils.AutoCompleteOnItemClickListener;
 import ava.androidchef.utils.Unit;
 
-public class NewRecipeFragment extends Fragment
+public class EnterRecipeFragment extends Fragment
         implements View.OnClickListener, View.OnFocusChangeListener, AdapterView.OnItemClickListener {
 
-    private NewRecipePresenter presenter;
+    private EnterRecipePresenter presenter;
     private LinearLayout currentIngredientInput;
 
-    public NewRecipeFragment() {
+    public EnterRecipeFragment() {
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_recipe, container, false);
-        this.presenter = new NewRecipePresenter(this);
+        View view = inflater.inflate(R.layout.fragment_enter_recipe, container, false);
+        this.presenter = new EnterRecipePresenter(this);
 
         // vertical LinearLayout to hold all ingredient input lines
         LinearLayout inputWrapper = (LinearLayout) view.findViewById(R.id.ingredient_input_wrapper);
@@ -46,7 +48,7 @@ public class NewRecipeFragment extends Fragment
 
         // put existing ingredients in adapter to display suggestions during input
         populateIngredientSuggestions(ingredientAutoComplete);
-        ingredientAutoComplete.setOnItemClickListener(new AutoCompleteTextViewOnItemClickListener(firstIngredientLine, this));
+        ingredientAutoComplete.setOnItemClickListener(new AutoCompleteOnItemClickListener(firstIngredientLine, this));
 
         // dropdown for ingredient unit
         Spinner unitSpinner = (Spinner) firstIngredientLine.findViewById(R.id.spinner_unit);
@@ -69,7 +71,7 @@ public class NewRecipeFragment extends Fragment
         // show additional ingredient input line
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         LinearLayout inputWrapper = (LinearLayout) view.getRootView().findViewById(R.id.ingredient_input_wrapper);
-        LinearLayout newIngredientLine = (LinearLayout) inflater.inflate(R.layout.new_ingredient, null);
+        LinearLayout newIngredientLine = (LinearLayout) inflater.inflate(R.layout.list_item_enter_ingredient, null);
         inputWrapper.addView(newIngredientLine);
 
         // fill ingredient unit spinner
@@ -83,7 +85,7 @@ public class NewRecipeFragment extends Fragment
         AutoCompleteTextView newIngredientInput = (AutoCompleteTextView) newIngredientLine.findViewById(R.id.input_ingredient_name);
         newIngredientInput.setOnFocusChangeListener(this);
         populateIngredientSuggestions(newIngredientInput);
-        newIngredientInput.setOnItemClickListener(new AutoCompleteTextViewOnItemClickListener(newIngredientLine, this));
+        newIngredientInput.setOnItemClickListener(new AutoCompleteOnItemClickListener(newIngredientLine, this));
         this.currentIngredientInput = newIngredientLine;
     }
 

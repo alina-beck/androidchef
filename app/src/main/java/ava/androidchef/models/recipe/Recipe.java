@@ -19,6 +19,11 @@ public class Recipe {
         this.ingredients = new LinkedHashMap<>();
     }
 
+    @Override
+    public String toString() {
+        return title;
+    }
+
     public int getId() {
         return id;
     }
@@ -37,10 +42,5 @@ public class Recipe {
 
     public void setIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    @Override
-    public String toString() {
-        return title;
     }
 }

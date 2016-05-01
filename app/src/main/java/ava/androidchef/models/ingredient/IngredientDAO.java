@@ -4,11 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import ava.androidchef.database.DbHelper;
-import ava.androidchef.models.recipe.Recipe;
 
 public class IngredientDAO {
 
@@ -17,15 +18,6 @@ public class IngredientDAO {
 
     public IngredientDAO(Context context) {
         dbHelper = DbHelper.getInstance(context);
-    }
-
-    private void open() {
-        db = dbHelper.getWritableDatabase();
-        db.setForeignKeyConstraintsEnabled(true);
-    }
-
-    private void close() {
-        dbHelper.close();
     }
 
     public LinkedHashMap<Ingredient, Integer> insertIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
@@ -56,7 +48,7 @@ public class IngredientDAO {
         return new Ingredient(id, name, unit);
     }
 
-    public ArrayList<Ingredient> getAllIngredients() {
+    public ArrayList<Ingredient> selectAllIngredients() {
         String sqlQuery = "select * from " + DbHelper.TABLE_INGREDIENTS;
         return fetchIngredients(sqlQuery);
     }
@@ -69,7 +61,7 @@ public class IngredientDAO {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ingredients.add(getIngredientfromCursor(cursor));
+            ingredients.add(getIngredientFromCursor(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -78,7 +70,7 @@ public class IngredientDAO {
         return ingredients;
     }
 
-    private Ingredient getIngredientfromCursor(Cursor cursor) {
+    private Ingredient getIngredientFromCursor(Cursor cursor) {
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
         String unit = cursor.getString(2);
@@ -93,5 +85,14 @@ public class IngredientDAO {
         values.put(DbHelper.COL_INGREDIENT_UNIT, ingredient.getUnit());
 
         return values;
+    }
+
+    private void open() {
+        db = dbHelper.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+
+    private void close() {
+        dbHelper.close();
     }
 }

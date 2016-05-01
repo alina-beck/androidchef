@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import ava.androidchef.database.DbHelper;
@@ -20,15 +20,6 @@ public class RecipeDAO {
         dbHelper = DbHelper.getInstance(context);
     }
 
-    private void open() {
-        db = dbHelper.getWritableDatabase();
-        db.setForeignKeyConstraintsEnabled(true);
-    }
-
-    private void close() {
-        dbHelper.close();
-    }
-
     public long insertRecipe(Recipe recipe) {
         open();
         ContentValues values = prepareContentValues(recipe);
@@ -37,18 +28,6 @@ public class RecipeDAO {
 
         close();
         return result;
-    }
-
-    private void insertRelation(Recipe recipe) {
-        open();
-        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
-            ContentValues values = new ContentValues();
-            values.put(DbHelper.COL_RI_ID, Integer.parseInt(Integer.toString(recipe.getId()) + Integer.toString(entry.getKey().getId())));
-            values.put(DbHelper.COL_RI_RECIPE_ID, recipe.getId());
-            values.put(DbHelper.COL_RI_INGREDIENT_ID, entry.getKey().getId());
-            values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
-        }
-        close();
     }
 
     public boolean updateRecipe(Recipe recipe) {
@@ -71,17 +50,17 @@ public class RecipeDAO {
         return (delete == 1);
     }
 
-    public ArrayList<Recipe> getAllRecipes() {
+    public ArrayList<Recipe> selectAllRecipes() {
         String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES;
         return fetchRecipes(sqlQuery);
     }
 
-    public ArrayList<Recipe> getRandomMenu(int days) {
+    public ArrayList<Recipe> selectRandomMenu(int days) {
         String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " order by random() limit " + days;
         return fetchRecipes(sqlQuery);
     }
 
-    public Recipe getRandomRecipe(ArrayList<Recipe> exceptions) {
+    public Recipe selectRandomRecipe(ArrayList<Recipe> exceptions) {
 
         String exclude = "";
         for (int i = 0; i < exceptions.size(); i++) {
@@ -93,6 +72,18 @@ public class RecipeDAO {
         String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " where " +
                 DbHelper.COL_RECIPE_ID + " not in ( " + exclude + " ) order by random() limit 1";
         return fetchRecipes(sqlQuery).get(0);
+    }
+
+    private void insertRelation(Recipe recipe) {
+        open();
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
+            ContentValues values = new ContentValues();
+            values.put(DbHelper.COL_RI_ID, Integer.parseInt(Integer.toString(recipe.getId()) + Integer.toString(entry.getKey().getId())));
+            values.put(DbHelper.COL_RI_RECIPE_ID, recipe.getId());
+            values.put(DbHelper.COL_RI_INGREDIENT_ID, entry.getKey().getId());
+            values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
+        }
+        close();
     }
 
     private ArrayList<Recipe> fetchRecipes(String sqlQuery) {
@@ -124,5 +115,14 @@ public class RecipeDAO {
         values.put(DbHelper.COL_RECIPE_TITLE, recipe.getTitle());
 
         return values;
+    }
+
+    private void open() {
+        db = dbHelper.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+
+    private void close() {
+        dbHelper.close();
     }
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".features.addrecipe.NewRecipeFragment">
+    tools:context=".features.addrecipe.EnterRecipeFragment">
 
     <TextView
         android:text="@string/title"
@@ -32,7 +32,7 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <include android:id="@+id/ingredient_input" layout="@layout/new_ingredient"/>
+            <include android:id="@+id/ingredient_input" layout="@layout/list_item_enter_ingredient"/>
         </LinearLayout>
     </ScrollView>
 

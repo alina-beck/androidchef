@@ -8,12 +8,12 @@ import ava.androidchef.models.ingredient.IngredientDAO;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
 
-public class NewRecipePresenter {
+public class EnterRecipePresenter {
 
-    private NewRecipeFragment fragment;
+    private EnterRecipeFragment fragment;
     private IngredientDAO ingredientDAO;
 
-    public NewRecipePresenter(NewRecipeFragment fragment) {
+    public EnterRecipePresenter(EnterRecipeFragment fragment) {
         this.fragment = fragment;
         this.ingredientDAO = new IngredientDAO(fragment.getActivity());
     }
@@ -39,6 +39,6 @@ public class NewRecipePresenter {
     }
 
     public ArrayList<Ingredient> getIngredients() {
-        return ingredientDAO.getAllIngredients();
+        return ingredientDAO.selectAllIngredients();
     }
 }

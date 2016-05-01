@@ -16,6 +16,11 @@ public class Ingredient {
         this.unit = unit;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public int getId() {
         return id;
     }
@@ -26,10 +31,5 @@ public class Ingredient {
 
     public String getUnit() {
         return unit;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

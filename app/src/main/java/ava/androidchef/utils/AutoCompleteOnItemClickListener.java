@@ -4,12 +4,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
-public class AutoCompleteTextViewOnItemClickListener implements AdapterView.OnItemClickListener {
+public class AutoCompleteOnItemClickListener implements AdapterView.OnItemClickListener {
 
     private LinearLayout selectedLine;
     private AdapterView.OnItemClickListener originalListener;
 
-    public AutoCompleteTextViewOnItemClickListener(LinearLayout selectedLine, AdapterView.OnItemClickListener originalListener) {
+    public AutoCompleteOnItemClickListener(LinearLayout selectedLine, AdapterView.OnItemClickListener originalListener) {
         this.selectedLine = selectedLine;
         this.originalListener = originalListener;
     }

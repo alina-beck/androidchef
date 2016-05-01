@@ -31,7 +31,7 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.list_item_edit, parent, false);
+            view = inflater.inflate(R.layout.list_item_editable_recipe, parent, false);
         }
 
         final ViewSwitcher switcher = (ViewSwitcher) view.findViewById(R.id.list_item_view_switcher);

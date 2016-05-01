@@ -7,28 +7,28 @@
     tools:context=".features.onboarding.NavigationFragment">
 
     <Button
-        android:id="@+id/button_new_recipe"
+        android:id="@+id/button_goto_add_recipe"
         android:text="@string/new_recipe"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/button_create_menu"
+        android:id="@+id/button_goto_create_menu"
         android:text="@string/create_random_menu"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/button_current_menu"
+        android:id="@+id/button_goto_current_menu"
         android:text="@string/show_current_menu"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/button_all_recipes"
+        android:id="@+id/button_goto_all_recipes"
         android:text="@string/show_all_recipes"
 
         android:layout_width="wrap_content"

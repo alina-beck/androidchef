@@ -25,7 +25,7 @@ public class AllRecipesFragment extends ListFragment {
     }
 
     public void displayAllRecipes(ArrayList<Recipe> recipes) {
-        AllRecipesArrayAdapter adapter = new AllRecipesArrayAdapter(getActivity(), R.layout.list_item_edit, recipes, this);
+        AllRecipesArrayAdapter adapter = new AllRecipesArrayAdapter(getActivity(), R.layout.list_item_editable_recipe, recipes, this);
         setListAdapter(adapter);
     }
 

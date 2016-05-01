@@ -31,7 +31,7 @@ public class WeeklyMenuArrayAdapter extends ArrayAdapter<Recipe> {
         View view = convertView;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.list_item_replace, parent, false);
+            view = inflater.inflate(R.layout.list_item_replaceable_recipe, parent, false);
         }
 
         TextView recipeTitle = (TextView) view.findViewById(R.id.list_item_menu_text);
