@@ -1,16 +1,15 @@
 package ava.androidchef.features.addrecipe;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -20,11 +19,11 @@ import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.utils.AutoCompleteOnItemClickListener;
 import ava.androidchef.utils.Unit;
 
-public class EnterIngredientsFragment extends ListFragment
+public class EnterIngredientsFragment extends Fragment
         implements AdapterView.OnItemClickListener, View.OnFocusChangeListener {
 
     private EnterIngredientsPresenter presenter;
-    private LinearLayout lastInputRow;
+    private LinearLayout rows;
 
     public EnterIngredientsFragment() {
     }
@@ -34,6 +33,7 @@ public class EnterIngredientsFragment extends ListFragment
         View view = inflater.inflate(R.layout.fragment_enter_ingredients, container, false);
 
         this.presenter = new EnterIngredientsPresenter(this);
+        this.rows = (LinearLayout) view.findViewById(R.id.ingredient_input_wrapper);
 
         showIngredientInputLine();
 
@@ -49,9 +49,10 @@ public class EnterIngredientsFragment extends ListFragment
         Spinner unitSpinner = (Spinner) ingredientInputLine.findViewById(R.id.spinner_unit);
         populateUnitSpinner(unitSpinner);
 
-        // lastInputRow.setOnFocusChangeListener(null);
-        ingredientInputLine.setOnFocusChangeListener(this);
-        lastInputRow = ingredientInputLine;
+        AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) ingredientInputLine.findViewById(R.id.input_ingredient_name);
+        ingredientNameInput.setOnFocusChangeListener(this);
+
+        rows.addView(ingredientInputLine);
     }
 
     private void populateIngredientSuggestions(LinearLayout ingredientInputLine) {
@@ -81,7 +82,28 @@ public class EnterIngredientsFragment extends ListFragment
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        getListView().setOnFocusChangeListener(null);
+        v.setOnFocusChangeListener(null);
         showIngredientInputLine();
+    }
+
+    public ArrayList<ArrayList<String>> getIngredientInput() {
+        ArrayList<ArrayList<String>> userIngredientsInput = new ArrayList<>();
+
+        LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
+
+        for (int i = 0; i < (inputWrapper.getChildCount()-1); i++) {
+            LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
+            EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
+            Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
+            EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
+
+            ArrayList<String> userIngredient1 = new ArrayList<>();
+            userIngredient1.add(inputName.getText().toString());
+            userIngredient1.add(inputUnit.getSelectedItem().toString());
+            userIngredient1.add(inputAmount.getText().toString());
+            userIngredientsInput.add(userIngredient1);
+        }
+
+        return userIngredientsInput;
     }
 }

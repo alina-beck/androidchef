@@ -18,19 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="300dp">
-        <LinearLayout
-            android:id="@+id/ingredient_input_wrapper"
-
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <include android:id="@+id/ingredient_input" layout="@layout/list_item_enter_ingredient"/>
-        </LinearLayout>
-    </ScrollView>
-
     <Button
         android:id="@+id/button_save_recipe"
         android:text="@string/save"
