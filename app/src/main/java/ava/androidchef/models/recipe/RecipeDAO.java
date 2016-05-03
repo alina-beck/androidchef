@@ -13,15 +13,22 @@ import ava.androidchef.models.ingredient.Ingredient;
 
 public class RecipeDAO {
 
-    private SQLiteDatabase db;
-    private DbHelper dbHelper;
+    private static RecipeDAO singletonInstance;
+    private Context context;
 
-    public RecipeDAO(Context context) {
-        dbHelper = DbHelper.getInstance(context);
+    public static RecipeDAO getInstance(Context context) {
+        if (singletonInstance == null) {
+            singletonInstance = new RecipeDAO(context.getApplicationContext());
+        }
+        return singletonInstance;
+    }
+
+    private RecipeDAO(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     public long insertRecipe(Recipe recipe) {
-        open();
+        SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(recipe);
         long result = db.insert(DbHelper.TABLE_RECIPES, null, values);
         insertRelation(recipe);
@@ -31,7 +38,7 @@ public class RecipeDAO {
     }
 
     public boolean updateRecipe(Recipe recipe) {
-        open();
+        SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(recipe);
         String whereClause = DbHelper.COL_RECIPE_ID + "=" + recipe.getId();
 
@@ -42,7 +49,7 @@ public class RecipeDAO {
     }
 
     public boolean deleteRecipe(int id) {
-        open();
+        SQLiteDatabase db = open();
         String whereClause = DbHelper.COL_RECIPE_ID + "=" + id;
         int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
         close();
@@ -75,7 +82,7 @@ public class RecipeDAO {
     }
 
     private void insertRelation(Recipe recipe) {
-        open();
+        SQLiteDatabase db = open();
         for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
             ContentValues values = new ContentValues();
             values.put(DbHelper.COL_RI_ID, Integer.parseInt(Integer.toString(recipe.getId()) + Integer.toString(entry.getKey().getId())));
@@ -89,7 +96,7 @@ public class RecipeDAO {
     private ArrayList<Recipe> fetchRecipes(String sqlQuery) {
         ArrayList<Recipe> recipes = new ArrayList<>();
 
-        open();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery(sqlQuery, null);
 
         cursor.moveToFirst();
@@ -117,12 +124,15 @@ public class RecipeDAO {
         return values;
     }
 
-    private void open() {
-        db = dbHelper.getWritableDatabase();
+    private SQLiteDatabase open() {
+        DbHelper dbHelper = DbHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.setForeignKeyConstraintsEnabled(true);
+        return db;
     }
 
     private void close() {
+        DbHelper dbHelper = DbHelper.getInstance(context);
         dbHelper.close();
     }
 }

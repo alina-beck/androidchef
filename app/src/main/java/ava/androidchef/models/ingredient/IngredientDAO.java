@@ -13,11 +13,18 @@ import ava.androidchef.database.DbHelper;
 
 public class IngredientDAO {
 
-    private SQLiteDatabase db;
-    private DbHelper dbHelper;
+    private static IngredientDAO singletonInstance;
+    private Context context;
 
-    public IngredientDAO(Context context) {
-        dbHelper = DbHelper.getInstance(context);
+    public static IngredientDAO getInstance(Context context) {
+        if (singletonInstance == null) {
+            singletonInstance = new IngredientDAO(context.getApplicationContext());
+        }
+        return singletonInstance;
+    }
+
+    private IngredientDAO(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     public LinkedHashMap<Ingredient, Integer> insertIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
@@ -31,7 +38,7 @@ public class IngredientDAO {
     }
 
     public Ingredient insertIngredient(Ingredient ingredient) {
-        open();
+        SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(ingredient);
         db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
 
@@ -56,7 +63,7 @@ public class IngredientDAO {
     private ArrayList<Ingredient> fetchIngredients(String sqlQuery) {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
 
-        open();
+        SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery(sqlQuery, null);
 
         cursor.moveToFirst();
@@ -87,12 +94,15 @@ public class IngredientDAO {
         return values;
     }
 
-    private void open() {
-        db = dbHelper.getWritableDatabase();
+    private SQLiteDatabase open() {
+        DbHelper dbHelper = DbHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.setForeignKeyConstraintsEnabled(true);
+        return db;
     }
 
     private void close() {
+        DbHelper dbHelper = DbHelper.getInstance(context);
         dbHelper.close();
     }
 }

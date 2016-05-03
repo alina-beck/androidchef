@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static DbHelper singletonInstance;
+    private static DbHelper singletonInstance;
 
     public static final String DATABASE_NAME = "chef.db";
     public static final int DATABASE_VERSION = 1;
@@ -21,7 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_INGREDIENT_UNIT = "ingredient_unit";
 
     public static final String TABLE_RECIPES_INGREDIENTS = "recipes_ingredients";
-    public static final String COL_RI_ID = "recipes_ingredients_id";
+    public static final String COL_RI_ID = "ri_id";
     public static final String COL_RI_RECIPE_ID = "ri_recipe_id";
     public static final String COL_RI_INGREDIENT_ID = "ri_ingredient_id";
     public static final String COL_RI_AMOUNT = "ri_amount";
@@ -46,15 +46,15 @@ public class DbHelper extends SQLiteOpenHelper {
             "foreign key(" + COL_RI_RECIPE_ID + ") references " + TABLE_RECIPES + "(" + COL_RECIPE_ID + "), " +
             "foreign key(" + COL_RI_INGREDIENT_ID + ") references " + TABLE_INGREDIENTS + "(" + COL_INGREDIENT_ID + "));";
 
-    private DbHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
     public static DbHelper getInstance(Context context) {
         if (singletonInstance == null) {
             singletonInstance = new DbHelper(context.getApplicationContext());
         }
         return singletonInstance;
+    }
+
+    private DbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -67,6 +67,8 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + TABLE_RECIPES);
+        db.execSQL("drop table if exists " + TABLE_INGREDIENTS);
+        db.execSQL("drop table if exists " + TABLE_RECIPES_INGREDIENTS);
         onCreate(db);
     }
 }
