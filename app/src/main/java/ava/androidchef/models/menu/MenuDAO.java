@@ -1,4 +1,4 @@
-package ava.androidchef.features.weeklymenu;
+package ava.androidchef.models.menu;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,17 +8,26 @@ import java.util.Map;
 
 import ava.androidchef.models.recipe.Recipe;
 
-public class WeeklyMenuDAO {
+public class MenuDAO {
 
+    private static MenuDAO singletonInstance;
     private SharedPreferences sharedPreferences;
 
-    public WeeklyMenuDAO(Context context) {
-        this.sharedPreferences = context.getSharedPreferences("weeklyMenu", Context.MODE_PRIVATE);
+    public static MenuDAO getInstance(Context context) {
+        if (singletonInstance == null) {
+            singletonInstance = new MenuDAO(context.getApplicationContext());
+        }
+        return singletonInstance;
     }
 
-    public void saveMenu(ArrayList<Recipe> recipes) {
+    private MenuDAO(Context context) {
+        this.sharedPreferences = context.getSharedPreferences("currentMenu", Context.MODE_PRIVATE);
+    }
+
+    public void saveMenu(Menu menu) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        ArrayList<Recipe> recipes = menu.getRecipes();
         for (int i = 0; i < recipes.size(); i++) {
             String stringMenu = recipes.get(i).getId() + "," + recipes.get(i).getTitle();
 
