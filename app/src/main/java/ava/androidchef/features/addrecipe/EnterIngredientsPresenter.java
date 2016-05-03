@@ -14,7 +14,7 @@ public class EnterIngredientsPresenter {
 
     public EnterIngredientsPresenter(EnterIngredientsFragment fragment) {
         this.fragment = fragment;
-        this.ingredientDAO = new IngredientDAO(fragment.getActivity());
+        this.ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
     }
 
     public LinkedHashMap<Ingredient, Integer> saveIngredients(Recipe recipe) {
@@ -25,8 +25,7 @@ public class EnterIngredientsPresenter {
             recipesIngredients.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
         }
 
-        LinkedHashMap<Ingredient, Integer> updatedIngredients = ingredientDAO.insertIngredients(recipesIngredients);
-        return updatedIngredients;
+        return ingredientDAO.insertIngredients(recipesIngredients);
     }
 
     public ArrayList<Ingredient> getIngredients() {

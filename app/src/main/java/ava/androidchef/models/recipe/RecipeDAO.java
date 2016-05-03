@@ -30,11 +30,13 @@ public class RecipeDAO {
     public long insertRecipe(Recipe recipe) {
         SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(recipe);
-        long result = db.insert(DbHelper.TABLE_RECIPES, null, values);
+        long recipeId = db.insert(DbHelper.TABLE_RECIPES, null, values);
+        close();
+
+        // save Ingredient relations to separate table
         insertRelation(recipe);
 
-        close();
-        return result;
+        return recipeId;
     }
 
     public boolean updateRecipe(Recipe recipe) {

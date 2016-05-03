@@ -15,8 +15,7 @@ public class EnterRecipePresenter {
         String title = fragment.getRecipeInput();
         Recipe recipe = new Recipe (title);
 
-        // recipe.setIngredients(updatedIngredients);
-        RecipeDAO recipeDAO = new RecipeDAO(fragment.getActivity());
+        RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
 
         boolean didSave = (recipeDAO.insertRecipe(recipe) != -1);
         fragment.saveComplete(didSave);

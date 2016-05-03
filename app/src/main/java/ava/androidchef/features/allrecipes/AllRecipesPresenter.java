@@ -10,7 +10,7 @@ public class AllRecipesPresenter {
 
     public AllRecipesPresenter(AllRecipesFragment fragment) {
         this.fragment = fragment;
-        this.recipeDAO = new RecipeDAO(fragment.getActivity());
+        this.recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
     }
 
     public void onFragmentCreate() {

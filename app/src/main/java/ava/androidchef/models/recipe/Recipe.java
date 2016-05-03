@@ -10,13 +10,17 @@ public class Recipe {
     private LinkedHashMap<Ingredient, Integer> ingredients;
 
     public Recipe(String title) {
-        this(-1, title);
+        this(-1, title, new LinkedHashMap<Ingredient, Integer>());
     }
 
     public Recipe(int id, String title) {
+        this(id, title, new LinkedHashMap<Ingredient, Integer>());
+    }
+
+    public Recipe(int id, String title, LinkedHashMap<Ingredient, Integer> ingredients) {
         this.id = id;
         this.title = title;
-        this.ingredients = new LinkedHashMap<>();
+        this.ingredients = ingredients;
     }
 
     @Override
@@ -40,7 +44,4 @@ public class Recipe {
         return ingredients;
     }
 
-    public void setIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
-        this.ingredients = ingredients;
-    }
 }
