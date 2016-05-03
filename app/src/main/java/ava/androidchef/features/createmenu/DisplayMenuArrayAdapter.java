@@ -1,4 +1,4 @@
-package ava.androidchef.features.weeklymenu;
+package ava.androidchef.features.createmenu;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import ava.androidchef.R;
 import ava.androidchef.models.recipe.Recipe;
 
-public class WeeklyMenuArrayAdapter extends ArrayAdapter<Recipe> {
+public class DisplayMenuArrayAdapter extends ArrayAdapter<Recipe> {
 
     private Context context;
     private ArrayList<Recipe> recipes;
-    private WeeklyMenuFragment fragment;
+    private DisplayMenuFragment fragment;
 
-    public WeeklyMenuArrayAdapter(Context context, int layout, ArrayList<Recipe> recipes, WeeklyMenuFragment fragment) {
+    public DisplayMenuArrayAdapter(Context context, int layout, ArrayList<Recipe> recipes, DisplayMenuFragment fragment) {
         super(context, layout, recipes);
         this.context = context;
         this.recipes = recipes;

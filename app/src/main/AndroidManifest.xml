@@ -23,7 +23,7 @@
             android:label="@string/new_recipe" />
 
         <activity
-            android:name=".features.weeklymenu.WeeklyMenuActivity"
+            android:name=".features.createmenu.CreateMenuActivity"
             android:label="@string/weekly_menu" />
 
         <activity
