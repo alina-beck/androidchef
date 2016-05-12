@@ -8,19 +8,21 @@ public class Recipe {
     private int id;
     private String title;
     private LinkedHashMap<Ingredient, Integer> ingredients;
+    private String instructions;
 
-    public Recipe(String title) {
-        this(-1, title, new LinkedHashMap<Ingredient, Integer>());
+    public Recipe(String title, String instructions) {
+        this(-1, title, new LinkedHashMap<Ingredient, Integer>(), instructions);
     }
 
-    public Recipe(int id, String title) {
-        this(id, title, new LinkedHashMap<Ingredient, Integer>());
+    public Recipe(int id, String title, String instructions) {
+        this(id, title, new LinkedHashMap<Ingredient, Integer>(), instructions);
     }
 
-    public Recipe(int id, String title, LinkedHashMap<Ingredient, Integer> ingredients) {
+    public Recipe(int id, String title, LinkedHashMap<Ingredient, Integer> ingredients, String instructions) {
         this.id = id;
         this.title = title;
         this.ingredients = ingredients;
+        this.instructions = instructions;
     }
 
     @Override
@@ -44,4 +46,7 @@ public class Recipe {
         return ingredients;
     }
 
+    public String getInstructions() {
+        return instructions;
+    }
 }

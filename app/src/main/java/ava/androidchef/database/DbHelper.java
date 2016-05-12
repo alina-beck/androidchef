@@ -14,6 +14,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String TABLE_RECIPES = "recipes";
     public static final String COL_RECIPE_ID = "recipe_id";
     public static final String COL_RECIPE_TITLE = "recipe_title";
+    public static final String COL_RECIPE_INSTRUCTIONS = "recipe_instructions";
 
     public static final String TABLE_INGREDIENTS = "ingredients";
     public static final String COL_INGREDIENT_ID = "ingredient_id";
@@ -29,7 +30,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE_RECIPES =
             "create table " + TABLE_RECIPES + "(" +
             COL_RECIPE_ID + " integer primary key autoincrement, " +
-            COL_RECIPE_TITLE + " text not null);";
+            COL_RECIPE_TITLE + " text not null unique, " +
+            COL_RECIPE_INSTRUCTIONS + " text);";
 
     public static final String CREATE_TABLE_INGREDIENTS =
             "create table " + TABLE_INGREDIENTS + "(" +

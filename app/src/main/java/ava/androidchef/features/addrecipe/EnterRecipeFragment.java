@@ -38,9 +38,14 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
                 presenter.onButtonClick();
     }
 
-    public String getRecipeInput() {
+    public String getTitleInput() {
         EditText inputTitle = (EditText) getView().findViewById(R.id.input_recipe_title);
         return inputTitle.getText().toString();
+    }
+
+    public String getInstructionsInput() {
+        EditText inputInstructions = (EditText) getView().findViewById(R.id.input_recipe_instructions);
+        return inputInstructions.getText().toString();
     }
 
     public void saveComplete(boolean didSave) {

@@ -33,7 +33,6 @@ public class RecipeDAO {
         long recipeId = db.insert(DbHelper.TABLE_RECIPES, null, values);
         close();
 
-        // save Ingredient relations to separate table
         insertRelation(recipe);
 
         return recipeId;
@@ -114,14 +113,16 @@ public class RecipeDAO {
     private Recipe getRecipeFromCursor(Cursor cursor) {
         int id = cursor.getInt(0);
         String title = cursor.getString(1);
+        String instructions = cursor.getString(2);
 
-        return new Recipe(id, title);
+        return new Recipe(id, title, instructions);
     }
 
     private ContentValues prepareContentValues(Recipe recipe) {
         ContentValues values = new ContentValues();
 
         values.put(DbHelper.COL_RECIPE_TITLE, recipe.getTitle());
+        values.put(DbHelper.COL_RECIPE_INSTRUCTIONS, recipe.getInstructions());
 
         return values;
     }

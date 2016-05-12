@@ -17,8 +17,9 @@ public class AllRecipesPresenter {
         fragment.displayAllRecipes(recipeDAO.selectAllRecipes());
     }
 
+    // TODO: include recipe instructions
     public void onSaveButtonClick(int id, String newTitle) {
-        Recipe recipe = new Recipe(id, newTitle);
+        Recipe recipe = new Recipe(id, newTitle, "");
         fragment.displayToast(recipeDAO.updateRecipe(recipe));
     }
 

@@ -12,8 +12,9 @@ public class EnterRecipePresenter {
     }
 
     public void onButtonClick() {
-        String title = fragment.getRecipeInput();
-        Recipe recipe = new Recipe (title);
+        String title = fragment.getTitleInput();
+        String instructions = fragment.getInstructionsInput();
+        Recipe recipe = new Recipe (title, instructions);
 
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
 
