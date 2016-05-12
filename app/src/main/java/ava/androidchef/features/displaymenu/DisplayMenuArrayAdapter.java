@@ -36,6 +36,12 @@ public class DisplayMenuArrayAdapter extends ArrayAdapter<Recipe> {
 
         TextView recipeTitle = (TextView) view.findViewById(R.id.list_item_menu_text);
         recipeTitle.setText(recipes.get(position).getTitle());
+        recipeTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+        public void onClick(View v) {
+                fragment.recipeSelected(recipes.get(position));
+            }
+        });
 
         Button replaceButton = (Button) view.findViewById(R.id.button_replace);
         replaceButton.setOnClickListener(new View.OnClickListener() {

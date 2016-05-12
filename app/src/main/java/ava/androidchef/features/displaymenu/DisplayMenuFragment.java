@@ -65,4 +65,8 @@ public class DisplayMenuFragment extends ListFragment {
     public void replaceButtonClicked(ArrayList<Recipe> currentRecipes, int index) {
         presenter.onReplaceButtonClick(currentRecipes, index);
     }
+
+    public void recipeSelected(Recipe selectedRecipe) {
+        ((DisplayMenuActivity) getActivity()).recipeSelected(selectedRecipe);
+    }
 }
