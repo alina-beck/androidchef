@@ -1,10 +1,14 @@
 package ava.androidchef.models.recipe;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.LinkedHashMap;
 
 import ava.androidchef.models.ingredient.Ingredient;
 
-public class Recipe {
+public class Recipe implements Parcelable {
     private int id;
     private String title;
     private LinkedHashMap<Ingredient, Integer> ingredients;
@@ -49,4 +53,37 @@ public class Recipe {
     public String getInstructions() {
         return instructions;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        Bundle ingredientsMap = new Bundle();
+        ingredientsMap.putSerializable("ingredients_map", ingredients);
+
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeBundle(ingredientsMap);
+        dest.writeString(instructions);
+    }
+
+    private Recipe(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.ingredients = (LinkedHashMap<Ingredient, Integer>) in.readBundle().getSerializable("ingredients_map");
+        this.instructions = in.readString();
+    }
+
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }
