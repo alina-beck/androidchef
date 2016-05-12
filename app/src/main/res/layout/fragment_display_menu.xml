@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".features.createmenu.DisplayMenuFragment">
+    tools:context=".features.displaymenu.DisplayMenuFragment">
 
     <TextView
         android:id="@+id/text_menu_title"

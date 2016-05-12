@@ -1,4 +1,4 @@
-package ava.androidchef.features.createmenu;
+package ava.androidchef.features.displaymenu;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -32,8 +32,18 @@ public class DisplayMenuFragment extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-        String buttonClicked = getArguments().getString("button_clicked");
-        presenter.onFragmentCreate(buttonClicked);
+
+        Bundle args = getArguments();
+        String intent;
+
+        if (args != null) {
+            intent = "create_menu";
+        }
+
+        else {
+            intent = "display_menu";
+        }
+        presenter.onFragmentCreate(intent);
     }
 
     public String readMenuTitle() {

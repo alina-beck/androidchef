@@ -1,4 +1,4 @@
-package ava.androidchef.features.createmenu;
+package ava.androidchef.features.displaymenu;
 
 import java.util.ArrayList;
 
@@ -15,22 +15,23 @@ public class DisplayMenuPresenter {
         this.fragment = fragment;
     }
 
-    public void onFragmentCreate(String buttonClicked) {
+    public void onFragmentCreate(String intent) {
 
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
         Menu menu;
 
-        switch (buttonClicked) {
+        switch (intent) {
             case "create_menu":
                 menu = createMenu();
                 menuDAO.saveMenu(menu);
                 break;
-            case "current_menu":
+            case "display_menu":
                 menu = menuDAO.getMenu();
                 break;
             default:
                 menu = null;
         }
+
         if (menu != null) {
             fragment.displayMenu(menu);
         }

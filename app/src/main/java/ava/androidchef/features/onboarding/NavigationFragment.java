@@ -12,6 +12,7 @@ import ava.androidchef.R;
 import ava.androidchef.features.addrecipe.AddRecipeActivity;
 import ava.androidchef.features.allrecipes.AllRecipesActivity;
 import ava.androidchef.features.createmenu.CreateMenuActivity;
+import ava.androidchef.features.displaymenu.DisplayMenuActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
 
@@ -46,11 +47,9 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.button_goto_create_menu:
                 i = new Intent(getActivity(), CreateMenuActivity.class);
-                i.putExtra("button_clicked", "create_menu");
                 break;
             case R.id.button_goto_current_menu:
-                i = new Intent(getActivity(), CreateMenuActivity.class);
-                i.putExtra("button_clicked", "current_menu");
+                i = new Intent(getActivity(), DisplayMenuActivity.class);
                 break;
             case R.id.button_goto_all_recipes:
                 i = new Intent(getActivity(), AllRecipesActivity.class);

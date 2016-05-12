@@ -1,4 +1,4 @@
-package ava.androidchef.features.createmenu;
+package ava.androidchef.features.displaymenu;
 
 import android.content.Context;
 import android.view.LayoutInflater;
