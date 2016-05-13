@@ -28,11 +28,4 @@
         android:lines="6"
         android:scrollbars="vertical"/>
 
-    <Button
-        android:id="@+id/button_save_recipe"
-        android:text="@string/save"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

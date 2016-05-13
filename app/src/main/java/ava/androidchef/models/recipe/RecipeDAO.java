@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import ava.androidchef.database.DbHelper;
@@ -33,8 +34,9 @@ public class RecipeDAO {
         long recipeId = db.insert(DbHelper.TABLE_RECIPES, null, values);
         close();
 
+        recipe.setId(recipeId);
         insertRelation(recipe);
-
+        System.out.println(recipeId + " insertRecipe");
         return recipeId;
     }
 
@@ -49,7 +51,7 @@ public class RecipeDAO {
         return (update == 1);
     }
 
-    public boolean deleteRecipe(int id) {
+    public boolean deleteRecipe(long id) {
         SQLiteDatabase db = open();
         String whereClause = DbHelper.COL_RECIPE_ID + "=" + id;
         int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
@@ -64,7 +66,26 @@ public class RecipeDAO {
     }
 
     public ArrayList<Recipe> selectRandomMenu(int days) {
-        String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " order by random() limit " + days;
+        final String r = DbHelper.TABLE_RECIPES;
+        final String ri = DbHelper.TABLE_RECIPES_INGREDIENTS;
+        final String i = DbHelper.TABLE_INGREDIENTS;
+
+        String chosenColumns =
+                r + "." + DbHelper.COL_RECIPE_ID + ", " +
+                r + "." + DbHelper.COL_RECIPE_TITLE + ", " +
+                r + "." + DbHelper.COL_RECIPE_INSTRUCTIONS + ", " +
+                "group_concat(" + ri + "." + DbHelper.COL_RI_INGREDIENT_ID + ") as " + DbHelper.COL_RI_INGREDIENT_ID + ", " +
+                "group_concat(" + ri + "." + DbHelper.COL_RI_AMOUNT + ") as " + DbHelper.COL_RI_AMOUNT + ", " +
+                "group_concat(" + i + "." + DbHelper.COL_INGREDIENT_NAME + ") as " + DbHelper.COL_INGREDIENT_NAME + ", " +
+                "group_concat(" + i + "." + DbHelper.COL_INGREDIENT_UNIT + ") as " + DbHelper.COL_INGREDIENT_UNIT;
+
+        String sqlQuery =
+                "select " + chosenColumns + " from " + r +
+                " join " + ri + " on (" + r + "." + DbHelper.COL_RECIPE_ID + " = " + ri + "." + DbHelper.COL_RI_RECIPE_ID +
+                ") join " + i + " on (" + ri + "." + DbHelper.COL_RI_INGREDIENT_ID + " = " + i + "." + DbHelper.COL_INGREDIENT_ID +
+                ") group by " + r + "." + DbHelper.COL_RECIPE_ID + " order by random() limit " + days + ";";
+
+        System.out.println(sqlQuery);
         return fetchRecipes(sqlQuery);
     }
 
@@ -72,8 +93,8 @@ public class RecipeDAO {
 
         String exclude = "";
         for (int i = 0; i < exceptions.size(); i++) {
-            int id = exceptions.get(i).getId();
-            exclude = exclude.concat(Integer.toString(id) + ", ");
+            long id = exceptions.get(i).getId();
+            exclude = exclude.concat(Long.toString(id) + ", ");
         }
         exclude = exclude.substring(0, exclude.length()-2);
 
@@ -84,22 +105,29 @@ public class RecipeDAO {
 
     private void insertRelation(Recipe recipe) {
         SQLiteDatabase db = open();
+        System.out.println("db open");
+        System.out.println(recipe.getIngredients().entrySet());
+
         for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
             ContentValues values = new ContentValues();
-            values.put(DbHelper.COL_RI_ID, Integer.parseInt(Integer.toString(recipe.getId()) + Integer.toString(entry.getKey().getId())));
+            values.put(DbHelper.COL_RI_ID, Integer.parseInt(Long.toString(recipe.getId()) + Long.toString(entry.getKey().getId())));
             values.put(DbHelper.COL_RI_RECIPE_ID, recipe.getId());
             values.put(DbHelper.COL_RI_INGREDIENT_ID, entry.getKey().getId());
             values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
+            long result = db.insert(DbHelper.TABLE_RECIPES_INGREDIENTS, null, values);
+            System.out.println(result);
         }
         close();
     }
 
     private ArrayList<Recipe> fetchRecipes(String sqlQuery) {
+        System.out.println("fetchRecipes called");
         ArrayList<Recipe> recipes = new ArrayList<>();
 
         SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery(sqlQuery, null);
 
+        System.out.println(cursor.getCount());
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             recipes.add(getRecipeFromCursor(cursor));
@@ -111,11 +139,30 @@ public class RecipeDAO {
     }
 
     private Recipe getRecipeFromCursor(Cursor cursor) {
+        System.out.println("getRecipeFromCursor called");
         int id = cursor.getInt(0);
         String title = cursor.getString(1);
         String instructions = cursor.getString(2);
+        String[] ingredientIds = cursor.getString(3).split(",");
+        String[] ingredientAmounts = cursor.getString(4).split(",");
+        String[] ingredientNames = cursor.getString(5).split(",");
+        String[] ingredientUnits = cursor.getString(6).split(",");
+        System.out.println(ingredientIds);
+        System.out.println(ingredientAmounts);
+        System.out.println(ingredientNames);
+        System.out.println(ingredientUnits);
 
-        return new Recipe(id, title, instructions);
+        LinkedHashMap<Ingredient, Integer> ingredients = new LinkedHashMap<>();
+        for (int i = 0; i < ingredientIds.length; i++) {
+            long ingredientId = Long.parseLong(ingredientIds[i]);
+            String ingredientName = ingredientNames[i];
+            String ingredientUnit = ingredientUnits[i];
+            Ingredient ingredient = new Ingredient(ingredientId, ingredientName, ingredientUnit);
+            ingredients.put(ingredient, Integer.parseInt(ingredientAmounts[i]));
+        }
+        System.out.println(ingredients);
+
+        return new Recipe(id, title, ingredients, instructions);
     }
 
     private ContentValues prepareContentValues(Recipe recipe) {

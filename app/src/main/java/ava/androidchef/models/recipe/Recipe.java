@@ -9,20 +9,21 @@ import java.util.LinkedHashMap;
 import ava.androidchef.models.ingredient.Ingredient;
 
 public class Recipe implements Parcelable {
-    private int id;
+    private long id;
     private String title;
     private LinkedHashMap<Ingredient, Integer> ingredients;
     private String instructions;
 
-    public Recipe(String title, String instructions) {
-        this(-1, title, new LinkedHashMap<Ingredient, Integer>(), instructions);
+    public Recipe(String title, LinkedHashMap<Ingredient, Integer> ingredients, String instructions) {
+        this(-1, title, ingredients, instructions);
     }
 
-    public Recipe(int id, String title, String instructions) {
+    // TODO: see if usage can be eliminated
+    public Recipe(long id, String title, String instructions) {
         this(id, title, new LinkedHashMap<Ingredient, Integer>(), instructions);
     }
 
-    public Recipe(int id, String title, LinkedHashMap<Ingredient, Integer> ingredients, String instructions) {
+    public Recipe(long id, String title, LinkedHashMap<Ingredient, Integer> ingredients, String instructions) {
         this.id = id;
         this.title = title;
         this.ingredients = ingredients;
@@ -34,8 +35,12 @@ public class Recipe implements Parcelable {
         return title;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -64,15 +69,16 @@ public class Recipe implements Parcelable {
 
         Bundle ingredientsMap = new Bundle();
         ingredientsMap.putSerializable("ingredients_map", ingredients);
+        System.out.println("map: " + ingredientsMap.toString());
 
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(title);
         dest.writeBundle(ingredientsMap);
         dest.writeString(instructions);
     }
 
     private Recipe(Parcel in) {
-        this.id = in.readInt();
+        this.id = in.readLong();
         this.title = in.readString();
         this.ingredients = (LinkedHashMap<Ingredient, Integer>) in.readBundle().getSerializable("ingredients_map");
         this.instructions = in.readString();
