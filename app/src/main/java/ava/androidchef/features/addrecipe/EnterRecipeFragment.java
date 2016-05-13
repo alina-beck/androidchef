@@ -12,10 +12,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import ava.androidchef.R;
+import ava.androidchef.models.ingredient.Ingredient;
 
-public class EnterRecipeFragment extends Fragment implements View.OnClickListener {
+public class EnterRecipeFragment extends Fragment {
 
     private EnterRecipePresenter presenter;
 
@@ -27,15 +29,7 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_enter_recipe, container, false);
         this.presenter = new EnterRecipePresenter(this);
 
-        Button button = (Button) view.findViewById(R.id.button_save_recipe);
-        button.setOnClickListener(this);
-
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-                presenter.onButtonClick();
     }
 
     public String getTitleInput() {
@@ -46,6 +40,10 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
     public String getInstructionsInput() {
         EditText inputInstructions = (EditText) getView().findViewById(R.id.input_recipe_instructions);
         return inputInstructions.getText().toString();
+    }
+
+    public void onSaveButtonClick(LinkedHashMap<Ingredient, Integer> savedIngredients) {
+        presenter.onButtonClick(savedIngredients);
     }
 
     public void saveComplete(boolean didSave) {

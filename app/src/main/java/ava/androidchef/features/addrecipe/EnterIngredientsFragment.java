@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import ava.androidchef.R;
 import ava.androidchef.models.ingredient.Ingredient;
@@ -97,13 +98,17 @@ public class EnterIngredientsFragment extends Fragment
             Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
             EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
 
-            ArrayList<String> userIngredient1 = new ArrayList<>();
-            userIngredient1.add(inputName.getText().toString());
-            userIngredient1.add(inputUnit.getSelectedItem().toString());
-            userIngredient1.add(inputAmount.getText().toString());
-            userIngredientsInput.add(userIngredient1);
+            ArrayList<String> userIngredient = new ArrayList<>();
+            userIngredient.add(inputName.getText().toString());
+            userIngredient.add(inputUnit.getSelectedItem().toString());
+            userIngredient.add(inputAmount.getText().toString());
+            userIngredientsInput.add(userIngredient);
         }
 
         return userIngredientsInput;
+    }
+
+    public LinkedHashMap<Ingredient, Integer> onSaveButtonClick() {
+        return presenter.saveIngredients();
     }
 }
