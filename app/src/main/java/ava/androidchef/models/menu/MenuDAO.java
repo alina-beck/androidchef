@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,8 +30,9 @@ public class MenuDAO {
     public void saveMenu(Menu menu) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         String menuAsString = gson.toJson(menu);
+        System.out.println("this menu gets saved: " + menuAsString);
 
         editor.putString("current_menu", menuAsString);
         editor.apply();
@@ -38,8 +40,8 @@ public class MenuDAO {
 
     public Menu getMenu() {
         String json = sharedPreferences.getString("current_menu", "no menu");
+        System.out.println("this menu comes from sharedPrefs: " + json);
         Gson gson = new Gson();
-
         return gson.fromJson(json, Menu.class);
     }
 }

@@ -18,12 +18,12 @@ public class AllRecipesPresenter {
     }
 
     // TODO: include recipe instructions
-    public void onSaveButtonClick(int id, String newTitle) {
+    public void onSaveButtonClick(long id, String newTitle) {
         Recipe recipe = new Recipe(id, newTitle, "");
         fragment.displayToast(recipeDAO.updateRecipe(recipe));
     }
 
-    public void onDeleteButtonClick(int id) {
+    public void onDeleteButtonClick(long id) {
         fragment.displayToast(recipeDAO.deleteRecipe(id));
     }
 

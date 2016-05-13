@@ -33,10 +33,9 @@ public class DisplayRecipeFragment extends Fragment {
             TextView titleView = (TextView) view.findViewById(R.id.display_recipe_title);
             titleView.setText(recipe.getTitle());
 
-            ScrollView ingredientsList = (ScrollView) view.findViewById(R.id.display_recipe_ingredients);
+            LinearLayout ingredientsList = (LinearLayout) view.findViewById(R.id.display_recipe_ingredients);
 
             LinkedHashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
-            System.out.println(ingredients.size());
             for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
                 int amount = entry.getValue();
                 Ingredient ingredient = entry.getKey();
@@ -44,7 +43,7 @@ public class DisplayRecipeFragment extends Fragment {
                 LinearLayout ingredientDisplayLine = (LinearLayout) inflater.inflate(R.layout.list_item_display_ingredient, null);
 
                 TextView amountView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_amount);
-                amountView.setText(amount);
+                amountView.setText(Integer.toString(amount));
 
                 TextView unitView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_unit);
                 unitView.setText(ingredient.getUnit());

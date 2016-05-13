@@ -38,11 +38,11 @@ public class AllRecipesFragment extends ListFragment {
         }
     }
 
-    public void saveButtonClicked(int id, String newTitle) {
+    public void saveButtonClicked(long id, String newTitle) {
         presenter.onSaveButtonClick(id, newTitle);
     }
 
-    public void deleteButtonClicked(int id) {
+    public void deleteButtonClicked(long id) {
         presenter.onDeleteButtonClick(id);
     }
 
