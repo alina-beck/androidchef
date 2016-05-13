@@ -24,24 +24,22 @@ public class MenuDAO {
     }
 
     private MenuDAO(Context context) {
-        this.sharedPreferences = context.getSharedPreferences("currentMenu", Context.MODE_PRIVATE);
+        this.sharedPreferences = context.getSharedPreferences("menu_preferences", Context.MODE_PRIVATE);
     }
 
-    public void saveMenu(Menu menu) {
+    public void insertMenu(Menu menu) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-        String menuAsString = gson.toJson(menu);
-        System.out.println("this menu gets saved: " + menuAsString);
+        String menuAsJson = gson.toJson(menu);
 
-        editor.putString("current_menu", menuAsString);
+        editor.putString("current_menu", menuAsJson);
         editor.apply();
     }
 
     public Menu getMenu() {
-        String json = sharedPreferences.getString("current_menu", "no menu");
-        System.out.println("this menu comes from sharedPrefs: " + json);
+        String menuAsJson = sharedPreferences.getString("current_menu", "no menu");
         Gson gson = new Gson();
-        return gson.fromJson(json, Menu.class);
+        return gson.fromJson(menuAsJson, Menu.class);
     }
 }

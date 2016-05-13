@@ -23,7 +23,7 @@ public class DisplayMenuPresenter {
         switch (intent) {
             case "create_menu":
                 menu = createMenu();
-                menuDAO.saveMenu(menu);
+                menuDAO.insertMenu(menu);
                 break;
             case "display_menu":
                 menu = menuDAO.getMenu();
@@ -56,6 +56,6 @@ public class DisplayMenuPresenter {
         fragment.displayMenu(menu);
 
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
-        menuDAO.saveMenu(menu);
+        menuDAO.insertMenu(menu);
     }
 }

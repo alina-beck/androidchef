@@ -31,6 +31,7 @@ public class RecipeDAO {
     public long insertRecipe(Recipe recipe) {
         SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(recipe);
+
         long recipeId = db.insert(DbHelper.TABLE_RECIPES, null, values);
         close();
 
@@ -53,6 +54,7 @@ public class RecipeDAO {
     public boolean deleteRecipe(long id) {
         SQLiteDatabase db = open();
         String whereClause = DbHelper.COL_RECIPE_ID + "=" + id;
+
         int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
         close();
 
@@ -110,7 +112,7 @@ public class RecipeDAO {
             values.put(DbHelper.COL_RI_RECIPE_ID, recipe.getId());
             values.put(DbHelper.COL_RI_INGREDIENT_ID, entry.getKey().getId());
             values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
-            long result = db.insert(DbHelper.TABLE_RECIPES_INGREDIENTS, null, values);
+            db.insert(DbHelper.TABLE_RECIPES_INGREDIENTS, null, values);
         }
         close();
     }
@@ -123,7 +125,7 @@ public class RecipeDAO {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            recipes.add(getRecipeFromCursor(cursor));
+            recipes.add(readRecipeFromCursor(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -131,7 +133,7 @@ public class RecipeDAO {
         return recipes;
     }
 
-    private Recipe getRecipeFromCursor(Cursor cursor) {
+    private Recipe readRecipeFromCursor(Cursor cursor) {
         int id = cursor.getInt(0);
         String title = cursor.getString(1);
         String instructions = cursor.getString(2);
