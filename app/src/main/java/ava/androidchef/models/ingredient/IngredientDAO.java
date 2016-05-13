@@ -28,36 +28,47 @@ public class IngredientDAO {
     }
 
     public LinkedHashMap<Ingredient, Integer> insertIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
+        LinkedHashMap<Ingredient, Integer> ingredientsFromDatabase = new LinkedHashMap<>();
 
-        LinkedHashMap<Ingredient, Integer> newIngredients = new LinkedHashMap<>();
         for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
-            Ingredient ingredient = insertIngredient(entry.getKey());
-            newIngredients.put(ingredient, entry.getValue());
+            long ingredientId = insertIngredient(entry.getKey());
+            Ingredient ingredient = selectIngredientById(ingredientId);
+            ingredientsFromDatabase.put(ingredient, entry.getValue());
         }
-        return newIngredients;
+
+        return ingredientsFromDatabase;
     }
 
-    public Ingredient insertIngredient(Ingredient ingredient) {
+    public long insertIngredient(Ingredient ingredient) {
         SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(ingredient);
-        db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
 
-        Cursor cursor = db.rawQuery("select * from " + DbHelper.TABLE_INGREDIENTS +
-                " order by " + DbHelper.COL_INGREDIENT_ID + " desc limit 1", null);
-        cursor.moveToLast();
-        int id = cursor.getInt(0);
-        String name = cursor.getString(1);
-        String unit = cursor.getString(2);
-
-        cursor.close();
+        long ingredientId = db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
         close();
 
-        return new Ingredient(id, name, unit);
+        return ingredientId;
     }
 
     public ArrayList<Ingredient> selectAllIngredients() {
         String sqlQuery = "select * from " + DbHelper.TABLE_INGREDIENTS;
         return fetchIngredients(sqlQuery);
+    }
+
+    public Ingredient selectIngredientById(long ingredientId) {
+        String sqlQuery = "select * from " + DbHelper.TABLE_INGREDIENTS + " where " + DbHelper.COL_INGREDIENT_ID + " = " + ingredientId;
+        return fetchIngredient(sqlQuery);
+    }
+
+    private Ingredient fetchIngredient(String sqlQuery) {
+        SQLiteDatabase db = open();
+        Cursor cursor = db.rawQuery(sqlQuery, null);
+
+        cursor.moveToFirst();
+        Ingredient ingredient = readIngredientFromCursor(cursor);
+        cursor.close();
+        close();
+
+        return ingredient;
     }
 
     private ArrayList<Ingredient> fetchIngredients(String sqlQuery) {
@@ -68,7 +79,7 @@ public class IngredientDAO {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ingredients.add(getIngredientFromCursor(cursor));
+            ingredients.add(readIngredientFromCursor(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -77,7 +88,7 @@ public class IngredientDAO {
         return ingredients;
     }
 
-    private Ingredient getIngredientFromCursor(Cursor cursor) {
+    private Ingredient readIngredientFromCursor(Cursor cursor) {
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
         String unit = cursor.getString(2);

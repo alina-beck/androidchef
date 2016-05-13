@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Ingredient implements Parcelable {
 
-    private int id;
+    private long id;
     private String name;
     private String unit;
 
@@ -13,7 +13,7 @@ public class Ingredient implements Parcelable {
         this(-1, name, unit);
     }
 
-    public Ingredient(int id, String name, String unit) {
+    public Ingredient(long id, String name, String unit) {
         this.id = id;
         this.name = name;
         this.unit = unit;
@@ -24,7 +24,7 @@ public class Ingredient implements Parcelable {
         return name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -43,7 +43,7 @@ public class Ingredient implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(unit);
     }

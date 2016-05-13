@@ -17,15 +17,15 @@ public class EnterIngredientsPresenter {
         this.ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
     }
 
-    public LinkedHashMap<Ingredient, Integer> saveIngredients(Recipe recipe) {
-        LinkedHashMap<Ingredient, Integer> recipesIngredients = recipe.getIngredients();
+    public LinkedHashMap<Ingredient, Integer> saveIngredients() {
+        LinkedHashMap<Ingredient, Integer> ingredientsFromUser = new LinkedHashMap<>();
         ArrayList<ArrayList<String>> ingredients = fragment.getIngredientInput();
         for (int i = 0; i < ingredients.size(); i++) {
             Ingredient ingredient = new Ingredient(ingredients.get(i).get(0), ingredients.get(i).get(1));
-            recipesIngredients.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
+            ingredientsFromUser.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
         }
 
-        return ingredientDAO.insertIngredients(recipesIngredients);
+        return ingredientDAO.insertIngredients(ingredientsFromUser);
     }
 
     public ArrayList<Ingredient> getIngredients() {
