@@ -19,10 +19,8 @@ public class CreateMenuActivity extends FragmentActivity {
         transaction.add(R.id.fragment_container_menu, new CreateMenuFragment()).commit();
     }
 
-    public void createButtonClicked(String menuTitle, int menuLength) {
+    public void displayMenu() {
         Intent intent = new Intent(this, DisplayMenuActivity.class);
-        intent.putExtra("menu_title", menuTitle);
-        intent.putExtra("menu_length", menuLength);
         startActivity(intent);
     }
 }

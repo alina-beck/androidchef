@@ -12,12 +12,16 @@ import ava.androidchef.R;
 
 public class CreateMenuFragment extends Fragment implements View.OnClickListener {
 
+    private CreateMenuPresenter presenter;
+
     public CreateMenuFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_menu, container, false);
+
+        this.presenter = new CreateMenuPresenter(this);
 
         Button createMenuButton = (Button) view.findViewById(R.id.button_create_random_menu);
         createMenuButton.setOnClickListener(this);
@@ -33,6 +37,10 @@ public class CreateMenuFragment extends Fragment implements View.OnClickListener
         EditText menuLengthInput = (EditText) v.getRootView().findViewById(R.id.input_new_menu_days);
         int menuLength = Integer.parseInt(menuLengthInput.getText().toString());
 
-        ((CreateMenuActivity) getActivity()).createButtonClicked(menuTitle, menuLength);
+        presenter.onCreateButtonClicked(menuTitle, menuLength);
+    }
+
+    public void displayMenu() {
+        ((CreateMenuActivity) getActivity()).displayMenu();
     }
 }

@@ -15,37 +15,12 @@ public class DisplayMenuPresenter {
         this.fragment = fragment;
     }
 
-    public void onFragmentCreate(String intent) {
+    public void onFragmentCreate() {
 
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
-        Menu menu;
-
-        switch (intent) {
-            case "create_menu":
-                menu = createMenu();
-                menuDAO.insertMenu(menu);
-                break;
-            case "display_menu":
-                menu = menuDAO.getMenu();
-                break;
-            default:
-                menu = null;
+        Menu menu = menuDAO.getMenu();
+        fragment.displayMenu(menu);
         }
-
-        if (menu != null) {
-            fragment.displayMenu(menu);
-        }
-    }
-
-    public Menu createMenu() {
-        String menuTitle = fragment.readMenuTitle();
-        int menuLength = fragment.readMenuLength();
-
-        RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
-        ArrayList<Recipe> recipes = recipeDAO.selectRandomMenu(menuLength);
-
-        return new Menu(menuTitle, menuLength, recipes);
-    }
 
     public void onReplaceButtonClick(ArrayList<Recipe> currentRecipes, int index) {
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());

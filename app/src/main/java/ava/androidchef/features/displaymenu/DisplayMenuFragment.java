@@ -32,26 +32,7 @@ public class DisplayMenuFragment extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        Bundle args = getArguments();
-        String intent;
-
-        if (args != null) {
-            intent = "create_menu";
-        }
-
-        else {
-            intent = "display_menu";
-        }
-        presenter.onFragmentCreate(intent);
-    }
-
-    public String readMenuTitle() {
-        return getArguments().getString("menu_title");
-    }
-
-    public int readMenuLength() {
-        return getArguments().getInt("menu_length");
+        presenter.onFragmentCreate();
     }
 
     public void displayMenu(Menu menu) {
