@@ -26,11 +26,16 @@ public class DisplayMenuPresenter {
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
         Recipe newRecipe = recipeDAO.selectRandomRecipe(currentRecipes);
 
-        Menu menu = new Menu("newMenu", currentRecipes);
-        currentRecipes.set(index, newRecipe);
-        fragment.displayMenu(menu);
+        if (newRecipe != null) {
+            MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
+            Menu menu = menuDAO.getMenu();
+            currentRecipes.set(index, newRecipe);
+            menu.setRecipes(currentRecipes);
+            fragment.displayMenu(menu);
 
-        MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
-        menuDAO.insertMenu(menu);
+            menuDAO.insertMenu(menu);
+        }
+
+        else fragment.alertNoMoreRecipes();
     }
 }

@@ -117,9 +117,31 @@ public class RecipeDAO {
         }
         exclude = exclude.substring(0, exclude.length()-2);
 
-        String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " where " +
-                DbHelper.COL_RECIPE_ID + " not in ( " + exclude + " ) order by random() limit 1";
-        return fetchRecipes(sqlQuery).get(0);
+        final String r = DbHelper.TABLE_RECIPES;
+        final String ri = DbHelper.TABLE_RECIPES_INGREDIENTS;
+        final String i = DbHelper.TABLE_INGREDIENTS;
+
+        String chosenColumns =
+                r + "." + DbHelper.COL_RECIPE_ID + ", " +
+                        r + "." + DbHelper.COL_RECIPE_TITLE + ", " +
+                        r + "." + DbHelper.COL_RECIPE_INSTRUCTIONS + ", " +
+                        "group_concat(" + ri + "." + DbHelper.COL_RI_INGREDIENT_ID + ") as " + DbHelper.COL_RI_INGREDIENT_ID + ", " +
+                        "group_concat(" + ri + "." + DbHelper.COL_RI_AMOUNT + ") as " + DbHelper.COL_RI_AMOUNT + ", " +
+                        "group_concat(" + i + "." + DbHelper.COL_INGREDIENT_NAME + ") as " + DbHelper.COL_INGREDIENT_NAME + ", " +
+                        "group_concat(" + i + "." + DbHelper.COL_INGREDIENT_UNIT + ") as " + DbHelper.COL_INGREDIENT_UNIT;
+
+        String sqlQuery = "select " + chosenColumns + " from " + r +
+                " join " + ri + " on (" + r + "." + DbHelper.COL_RECIPE_ID + " = " + ri + "." + DbHelper.COL_RI_RECIPE_ID +
+                ") join " + i + " on (" + ri + "." + DbHelper.COL_RI_INGREDIENT_ID + " = " + i + "." + DbHelper.COL_INGREDIENT_ID +
+                ") where " + DbHelper.COL_RECIPE_ID + " not in ( " + exclude + " ) group by " + r + "." + DbHelper.COL_RECIPE_ID +
+                " order by random() limit 1";
+        ArrayList<Recipe> randomRecipe = fetchRecipes(sqlQuery);
+
+        if (randomRecipe.size() > 0) {
+            return randomRecipe.get(0);
+        }
+
+        else return null;
     }
 
     private void insertRelation(Recipe recipe) {

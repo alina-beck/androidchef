@@ -32,6 +32,10 @@ public class Menu {
         return recipes;
     }
 
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
     @Override
     public String toString() {
         return title;

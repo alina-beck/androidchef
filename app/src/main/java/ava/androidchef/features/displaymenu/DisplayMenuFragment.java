@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,5 +50,9 @@ public class DisplayMenuFragment extends ListFragment {
 
     public void recipeSelected(Recipe selectedRecipe) {
         ((DisplayMenuActivity) getActivity()).recipeSelected(selectedRecipe);
+    }
+
+    public void alertNoMoreRecipes() {
+        Toast.makeText(getActivity(), "No more recipes in database", Toast.LENGTH_LONG).show();
     }
 }
