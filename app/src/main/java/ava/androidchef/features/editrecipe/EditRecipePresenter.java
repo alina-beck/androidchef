@@ -16,9 +16,11 @@ public class EditRecipePresenter {
     }
 
     public void updateButtonClicked(Recipe recipe) {
+        recipe.setTitle(fragment.getTitleInput());
+        recipe.setInstructions(fragment.getInstructionsInput());
+
         LinkedHashMap<Ingredient, Integer> updatedIngredients = updateIngredients();
         recipe.setIngredients(updatedIngredients);
-        System.out.println(recipe.getIngredients());
 
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
 

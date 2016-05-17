@@ -42,6 +42,8 @@ public class RecipeDAO {
 
     public boolean updateRecipe(Recipe recipe) {
         SQLiteDatabase db = open();
+        System.out.println(recipe.getTitle());
+        System.out.println(recipe.getInstructions());
         ContentValues values = prepareContentValues(recipe);
         String whereClause = DbHelper.COL_RECIPE_ID + "=" + recipe.getId();
 

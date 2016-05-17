@@ -63,6 +63,10 @@ public class Recipe implements Parcelable {
         return instructions;
     }
 
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
     @Override
     public int describeContents() {
         return 0;

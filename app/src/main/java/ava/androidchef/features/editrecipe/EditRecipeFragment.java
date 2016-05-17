@@ -74,6 +74,16 @@ public class EditRecipeFragment extends Fragment implements View.OnClickListener
         presenter.updateButtonClicked(recipe);
     }
 
+    public String getTitleInput() {
+        EditText titleInput = (EditText) getView().findViewById(R.id.input_edit_recipe_title);
+        return titleInput.getText().toString();
+    }
+
+    public String getInstructionsInput() {
+        EditText instructionsInput = (EditText) getView().findViewById(R.id.input_edit_recipe_instructions);
+        return instructionsInput.getText().toString();
+    }
+
     public LinkedHashMap<Ingredient, Integer> getIngredientInput() {
         LinkedHashMap<Ingredient, Integer> ingredientsFromUser = new LinkedHashMap<>();
 
