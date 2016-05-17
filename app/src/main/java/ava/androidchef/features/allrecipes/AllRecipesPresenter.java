@@ -1,6 +1,5 @@
 package ava.androidchef.features.allrecipes;
 
-import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
 
 public class AllRecipesPresenter {
@@ -15,12 +14,6 @@ public class AllRecipesPresenter {
 
     public void onFragmentCreate() {
         fragment.displayAllRecipes(recipeDAO.selectAllRecipes());
-    }
-
-    // TODO: include recipe instructions
-    public void onSaveButtonClick(long id, String newTitle) {
-        Recipe recipe = new Recipe(id, newTitle, "");
-        fragment.displayToast(recipeDAO.updateRecipe(recipe));
     }
 
     public void onDeleteButtonClick(long id) {

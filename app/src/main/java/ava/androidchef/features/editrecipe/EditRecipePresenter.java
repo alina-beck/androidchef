@@ -33,7 +33,6 @@ public class EditRecipePresenter {
         LinkedHashMap<Ingredient, Integer> ingredientsFromUser = fragment.getIngredientInput();
 
         IngredientDAO ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
-        System.out.println(ingredientsFromUser);
 
         return ingredientDAO.updateIngredients(ingredientsFromUser);
     }

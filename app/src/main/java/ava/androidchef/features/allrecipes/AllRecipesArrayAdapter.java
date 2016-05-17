@@ -34,35 +34,12 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
             view = inflater.inflate(R.layout.list_item_editable_recipe, parent, false);
         }
 
-        final ViewSwitcher switcher = (ViewSwitcher) view.findViewById(R.id.list_item_view_switcher);
-
-        TextView listItemTitle = (TextView) switcher.getCurrentView().findViewById(R.id.list_item_text);
-        if (listItemTitle != null) {
-            listItemTitle.setText(recipes.get(position).getTitle());
-        }
-
-        Button editButton = (Button) view.findViewById(R.id.button_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        TextView listItemTitle = (TextView) view.findViewById(R.id.list_item_text);
+        listItemTitle.setText(recipes.get(position).getTitle());
+        listItemTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switcher.setDisplayedChild(1);
-
-                EditText updateTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
-                updateTitle.setText(recipes.get(position).getTitle());
-            }
-        });
-
-        Button saveButton = (Button) view.findViewById(R.id.button_update);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText newTitle = (EditText) switcher.getCurrentView().findViewById(R.id.list_item_edittext);
-                fragment.saveButtonClicked(recipes.get(position).getId(), newTitle.getText().toString());
-
-                switcher.setDisplayedChild(0);
-                recipes.get(position).setTitle(newTitle.getText().toString());
-                notifyDataSetChanged();
-
+                fragment.recipeClicked(recipes.get(position));
             }
         });
 
