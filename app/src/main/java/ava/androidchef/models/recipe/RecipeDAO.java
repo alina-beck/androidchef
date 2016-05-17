@@ -54,13 +54,27 @@ public class RecipeDAO {
     }
 
     public boolean deleteRecipe(long id) {
-        SQLiteDatabase db = open();
-        String whereClause = DbHelper.COL_RECIPE_ID + "=" + id;
+        if (deleteRelation(id)) {
+            SQLiteDatabase db = open();
+            String whereClause = DbHelper.COL_RECIPE_ID + "=" + id;
 
-        int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
+            int delete = db.delete(DbHelper.TABLE_RECIPES, whereClause, null);
+            close();
+
+            return (delete == 1);
+        }
+
+        else return false;
+    }
+
+    public boolean deleteRelation(long id) {
+        SQLiteDatabase db = open();
+        String whereClause = DbHelper.COL_RI_RECIPE_ID + "=" + id;
+
+        int delete = db.delete(DbHelper.TABLE_RECIPES_INGREDIENTS, whereClause, null);
         close();
 
-        return (delete == 1);
+        return (delete >= 1);
     }
 
     public ArrayList<Recipe> selectAllRecipes() {
