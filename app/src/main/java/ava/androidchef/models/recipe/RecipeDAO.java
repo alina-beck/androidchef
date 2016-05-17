@@ -48,7 +48,9 @@ public class RecipeDAO {
         int update = db.update(DbHelper.TABLE_RECIPES, values, whereClause, null);
         close();
 
-        return (update == 1);
+        boolean savedRelation = updateRelation(recipe);
+
+        return (update == 1 && savedRelation);
     }
 
     public boolean deleteRecipe(long id) {
@@ -132,6 +134,21 @@ public class RecipeDAO {
             db.insert(DbHelper.TABLE_RECIPES_INGREDIENTS, null, values);
         }
         close();
+    }
+
+    private boolean updateRelation(Recipe recipe) {
+        SQLiteDatabase db = open();
+        int update = 0;
+
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
+            ContentValues values = new ContentValues();
+            values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
+
+            String whereClause = DbHelper.COL_RI_ID + "=" +
+                    Integer.parseInt(Long.toString(recipe.getId()) + Long.toString(entry.getKey().getId()));
+            update += db.update(DbHelper.TABLE_RECIPES_INGREDIENTS, values, whereClause, null);
+        }
+        return (update == recipe.getIngredients().size());
     }
 
     private ArrayList<Recipe> fetchRecipes(String sqlQuery) {

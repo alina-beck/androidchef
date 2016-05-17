@@ -49,6 +49,28 @@ public class IngredientDAO {
         return ingredientId;
     }
 
+    public LinkedHashMap<Ingredient, Integer> updateIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
+        LinkedHashMap<Ingredient, Integer> updatedIngredients = new LinkedHashMap<>();
+
+        for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
+            updateIngredient(entry.getKey());
+            Ingredient updatedIngredient = selectIngredientById(entry.getKey().getId());
+            updatedIngredients.put(updatedIngredient, entry.getValue());
+        }
+
+        return updatedIngredients;
+    }
+
+    public boolean updateIngredient(Ingredient ingredient) {
+        SQLiteDatabase db = open();
+        ContentValues values = prepareContentValues(ingredient);
+        String whereClause = DbHelper.COL_INGREDIENT_ID + "=" + ingredient.getId();
+
+        int update = db.update(DbHelper.TABLE_INGREDIENTS, values, whereClause, null);
+        close();
+        return (update == 1);
+    }
+
     public ArrayList<Ingredient> selectAllIngredients() {
         String sqlQuery = "select * from " + DbHelper.TABLE_INGREDIENTS;
         return fetchIngredients(sqlQuery);

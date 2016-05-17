@@ -55,6 +55,10 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
+    public void setIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public String getInstructions() {
         return instructions;
     }
