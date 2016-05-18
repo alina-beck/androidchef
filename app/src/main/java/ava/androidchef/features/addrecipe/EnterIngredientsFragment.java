@@ -74,6 +74,9 @@ public class EnterIngredientsFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = (Ingredient) parent.getAdapter().getItem(position);
+
+        view.findViewById(R.id.list_item_enter_ingredient_id).setTag(selectedIngredient);
+
         Spinner unitSpinner = (Spinner) view.findViewById(R.id.spinner_unit);
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) unitSpinner.getAdapter();
         adapter.clear();
@@ -87,22 +90,37 @@ public class EnterIngredientsFragment extends Fragment
         showIngredientInputLine();
     }
 
-    public ArrayList<ArrayList<String>> getIngredientInput() {
-        ArrayList<ArrayList<String>> userIngredientsInput = new ArrayList<>();
+    public LinkedHashMap<Ingredient, Integer> getIngredientInput() {
+        LinkedHashMap<Ingredient, Integer> userIngredientsInput = new LinkedHashMap<>();
 
         LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
 
         for (int i = 0; i < (inputWrapper.getChildCount()-1); i++) {
             LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
-            EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
-            Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
+            System.out.println("position: " + i);
+            Ingredient enteredIngredient;
+
+            if (ll.getTag() == null) {
+                System.out.println("layout has no tag");
+
+                EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
+                Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
+
+                System.out.println(inputName.getText().toString());
+                enteredIngredient = new Ingredient(inputName.getText().toString(), inputUnit.getSelectedItem().toString());
+                System.out.println("ingredient without tag: " + enteredIngredient.getId() + enteredIngredient.toString());
+            }
+
+            else {
+                System.out.println("layout has tag");
+                enteredIngredient = (Ingredient) ll.getTag();
+                System.out.println("ingredient with tag: " + enteredIngredient.getId() + enteredIngredient.toString());
+            }
+
             EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
 
-            ArrayList<String> userIngredient = new ArrayList<>();
-            userIngredient.add(inputName.getText().toString());
-            userIngredient.add(inputUnit.getSelectedItem().toString());
-            userIngredient.add(inputAmount.getText().toString());
-            userIngredientsInput.add(userIngredient);
+            System.out.println("entered Ingredient: " + enteredIngredient);
+            userIngredientsInput.put(enteredIngredient, Integer.parseInt(inputAmount.getText().toString()));
         }
 
         return userIngredientsInput;

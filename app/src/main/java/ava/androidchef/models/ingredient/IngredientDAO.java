@@ -29,11 +29,17 @@ public class IngredientDAO {
 
     public LinkedHashMap<Ingredient, Integer> insertIngredients(LinkedHashMap<Ingredient, Integer> ingredients) {
         LinkedHashMap<Ingredient, Integer> ingredientsFromDatabase = new LinkedHashMap<>();
+        Ingredient ingredientFromDb;
 
         for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
-            long ingredientId = insertIngredient(entry.getKey());
-            Ingredient ingredient = selectIngredientById(ingredientId);
-            ingredientsFromDatabase.put(ingredient, entry.getValue());
+            if (entry.getKey().getId() == -1) {
+                long ingredientId = insertIngredient(entry.getKey());
+                ingredientFromDb = selectIngredientById(ingredientId);
+            }
+            else {
+                ingredientFromDb = entry.getKey();
+            }
+            ingredientsFromDatabase.put(ingredientFromDb, entry.getValue());
         }
 
         return ingredientsFromDatabase;
@@ -43,7 +49,9 @@ public class IngredientDAO {
         SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(ingredient);
 
-        long ingredientId = db.insert(DbHelper.TABLE_INGREDIENTS, null, values);
+        System.out.println("ingredientId before: " + ingredient.getId());
+        long ingredientId = db.insertWithOnConflict(DbHelper.TABLE_INGREDIENTS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        System.out.println("ingredientId after: " + ingredientId);
         close();
 
         return ingredientId;

@@ -18,13 +18,7 @@ public class EnterIngredientsPresenter {
     }
 
     public LinkedHashMap<Ingredient, Integer> saveIngredients() {
-        LinkedHashMap<Ingredient, Integer> ingredientsFromUser = new LinkedHashMap<>();
-        ArrayList<ArrayList<String>> ingredients = fragment.getIngredientInput();
-        for (int i = 0; i < ingredients.size(); i++) {
-            Ingredient ingredient = new Ingredient(ingredients.get(i).get(0), ingredients.get(i).get(1));
-            ingredientsFromUser.put(ingredient, Integer.parseInt(ingredients.get(i).get(2)));
-        }
-
+        LinkedHashMap<Ingredient, Integer> ingredientsFromUser = fragment.getIngredientInput();
         return ingredientDAO.insertIngredients(ingredientsFromUser);
     }
 
