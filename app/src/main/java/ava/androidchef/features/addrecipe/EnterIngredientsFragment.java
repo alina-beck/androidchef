@@ -61,7 +61,8 @@ public class EnterIngredientsFragment extends Fragment
     private void populateIngredientSuggestions(LinearLayout ingredientInputLine) {
         ArrayList<Ingredient> ingredients = presenter.getIngredients();
         AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) ingredientInputLine.findViewById(R.id.input_ingredient_name);
-        ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredients);
+
+        EnterIngredientsArrayAdapter ingredientAdapter = new EnterIngredientsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, ingredients);
         ingredientNameInput.setAdapter(ingredientAdapter);
         ingredientNameInput.setOnItemClickListener(new AutoCompleteOnItemClickListener(ingredientInputLine, this));
     }
@@ -79,7 +80,7 @@ public class EnterIngredientsFragment extends Fragment
 
         selectedLine.setTag(selectedIngredient);
 
-        EditText titleInput = (EditText) selectedLine.findViewById(R.id.input_ingredient_name);
+        AutoCompleteTextView titleInput = (AutoCompleteTextView) selectedLine.findViewById(R.id.input_ingredient_name);
         titleInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,32 +115,29 @@ public class EnterIngredientsFragment extends Fragment
         LinkedHashMap<Ingredient, Integer> userIngredientsInput = new LinkedHashMap<>();
 
         LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
+        AutoCompleteTextView inputIngredientName = (AutoCompleteTextView) getView().findViewById(R.id.input_ingredient_name);
+        EnterIngredientsArrayAdapter adapter = (EnterIngredientsArrayAdapter) inputIngredientName.getAdapter();
+        ArrayList<String> existingIngredientNames = adapter.getIngredientNames();
 
         for (int i = 0; i < (inputWrapper.getChildCount()-1); i++) {
             LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
-            System.out.println("position: " + i);
+            AutoCompleteTextView inputName = (AutoCompleteTextView) ll.findViewById(R.id.input_ingredient_name);
             Ingredient enteredIngredient;
 
-            if (ll.getTag() == null) {
-                System.out.println("layout has no tag");
+            if (ll.getTag() != null) {
+                enteredIngredient = (Ingredient) ll.getTag();
+            }
 
-                EditText inputName = (EditText) ll.findViewById(R.id.input_ingredient_name);
-                Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
-
-                System.out.println(inputName.getText().toString());
-                enteredIngredient = new Ingredient(inputName.getText().toString(), inputUnit.getSelectedItem().toString());
-                System.out.println("ingredient without tag: " + enteredIngredient.getId() + enteredIngredient.toString());
+            else if (existingIngredientNames.contains(inputName.getText().toString())) {
+                enteredIngredient = adapter.getIngredientByName(inputName.getText().toString());
             }
 
             else {
-                System.out.println("layout has tag");
-                enteredIngredient = (Ingredient) ll.getTag();
-                System.out.println("ingredient with tag: " + enteredIngredient.getId() + enteredIngredient.toString());
+                Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
+                enteredIngredient = new Ingredient(inputName.getText().toString(), inputUnit.getSelectedItem().toString());
             }
 
             EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
-
-            System.out.println("entered Ingredient: " + enteredIngredient);
             userIngredientsInput.put(enteredIngredient, Integer.parseInt(inputAmount.getText().toString()));
         }
 
