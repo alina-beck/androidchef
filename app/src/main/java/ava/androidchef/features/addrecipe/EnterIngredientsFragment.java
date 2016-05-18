@@ -2,6 +2,8 @@ package ava.androidchef.features.addrecipe;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,12 +74,30 @@ public class EnterIngredientsFragment extends Fragment
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, final View selectedLine, int position, long id) {
         Ingredient selectedIngredient = (Ingredient) parent.getAdapter().getItem(position);
 
-        view.findViewById(R.id.list_item_enter_ingredient_id).setTag(selectedIngredient);
+        selectedLine.setTag(selectedIngredient);
 
-        Spinner unitSpinner = (Spinner) view.findViewById(R.id.spinner_unit);
+        EditText titleInput = (EditText) selectedLine.findViewById(R.id.input_ingredient_name);
+        titleInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                selectedLine.setTag(null);
+                Spinner unitSpinner = (Spinner) selectedLine.findViewById(R.id.spinner_unit);
+                populateUnitSpinner(unitSpinner);
+            }
+        });
+
+        Spinner unitSpinner = (Spinner) selectedLine.findViewById(R.id.spinner_unit);
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) unitSpinner.getAdapter();
         adapter.clear();
         adapter.add(selectedIngredient.getUnit());
