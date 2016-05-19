@@ -89,12 +89,21 @@ public class IngredientDAO {
         return fetchIngredient(sqlQuery);
     }
 
+    public Ingredient selectIngredientByName(String ingredientName) {
+        String sqlQuery = "select * from " + DbHelper.TABLE_INGREDIENTS + " where " + DbHelper.COL_INGREDIENT_NAME + " = \"" + ingredientName + "\"";
+        return fetchIngredient(sqlQuery);
+    }
+
     private Ingredient fetchIngredient(String sqlQuery) {
         SQLiteDatabase db = open();
         Cursor cursor = db.rawQuery(sqlQuery, null);
+        Ingredient ingredient = null;
 
-        cursor.moveToFirst();
-        Ingredient ingredient = readIngredientFromCursor(cursor);
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            ingredient = readIngredientFromCursor(cursor);
+        }
+
         cursor.close();
         close();
 

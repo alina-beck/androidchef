@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,13 +21,14 @@ import java.util.LinkedHashMap;
 import ava.androidchef.R;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.utils.AutoCompleteOnItemClickListener;
+import ava.androidchef.utils.IngredientInputTextWatcher;
 import ava.androidchef.utils.Unit;
 
 public class EnterIngredientsFragment extends Fragment
         implements AdapterView.OnItemClickListener, View.OnFocusChangeListener {
 
     private EnterIngredientsPresenter presenter;
-    private LinearLayout rows;
+    private LinearLayout ingredientInputRows;
 
     public EnterIngredientsFragment() {
     }
@@ -36,38 +38,38 @@ public class EnterIngredientsFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_enter_ingredients, container, false);
 
         this.presenter = new EnterIngredientsPresenter(this);
-        this.rows = (LinearLayout) view.findViewById(R.id.ingredient_input_wrapper);
+        this.ingredientInputRows = (LinearLayout) view.findViewById(R.id.ingredient_input_rows);
 
-        showIngredientInputLine();
+        displayIngredientInputRow();
 
         return view;
     }
 
-    private void showIngredientInputLine() {
+    private void displayIngredientInputRow() {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        LinearLayout ingredientInputLine = (LinearLayout) inflater.inflate(R.layout.list_item_enter_ingredient, null);
+        LinearLayout ingredientInputRow = (LinearLayout) inflater.inflate(R.layout.list_item_enter_ingredient, null);
 
-        populateIngredientSuggestions(ingredientInputLine);
-
-        Spinner unitSpinner = (Spinner) ingredientInputLine.findViewById(R.id.spinner_unit);
-        populateUnitSpinner(unitSpinner);
-
-        AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) ingredientInputLine.findViewById(R.id.input_ingredient_name);
+        AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) ingredientInputRow.findViewById(R.id.input_ingredient_name);
+        populateIngredientNameDropdown(ingredientNameInput);
+        ingredientNameInput.setOnItemClickListener(new AutoCompleteOnItemClickListener(ingredientInputRow, this));
         ingredientNameInput.setOnFocusChangeListener(this);
 
-        rows.addView(ingredientInputLine);
+        Spinner unitSpinner = (Spinner) ingredientInputRow.findViewById(R.id.spinner_unit);
+        populateUnitSpinner(unitSpinner);
+
+        ingredientInputRows.addView(ingredientInputRow);
     }
 
-    private void populateIngredientSuggestions(LinearLayout ingredientInputLine) {
-        ArrayList<Ingredient> ingredients = presenter.getIngredients();
-        AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) ingredientInputLine.findViewById(R.id.input_ingredient_name);
-
-        EnterIngredientsArrayAdapter ingredientAdapter = new EnterIngredientsArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, ingredients);
-        ingredientNameInput.setAdapter(ingredientAdapter);
-        ingredientNameInput.setOnItemClickListener(new AutoCompleteOnItemClickListener(ingredientInputLine, this));
+    private void populateIngredientNameDropdown(AutoCompleteTextView ingredientNameInput) {
+        ArrayList<String> ingredientNames = presenter.getAllIngredientNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, ingredientNames);
+        ingredientNameInput.setAdapter(adapter);
     }
 
-    private void populateUnitSpinner(Spinner unitSpinner) {
+    public void populateUnitSpinner(Spinner unitSpinner) {
+        //TODO: try to get units from presenter - tried before, returned only one unit after first ingredient was chosen from dropdown
+        //TODO: make standard selection empty
+        //TODO: rebuild custom TextWatcher and set method to private again
         ArrayList<String> units = Unit.getUnits();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,76 +77,59 @@ public class EnterIngredientsFragment extends Fragment
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, final View selectedLine, int position, long id) {
-        Ingredient selectedIngredient = (Ingredient) parent.getAdapter().getItem(position);
+    public void onItemClick(AdapterView<?> parent, final View selectedRow, int position, long id) {
+        String selectedIngredientName = (String) parent.getAdapter().getItem(position);
 
-        selectedLine.setTag(selectedIngredient);
+        final AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) selectedRow.findViewById(R.id.input_ingredient_name);
+        ingredientNameInput.addTextChangedListener(new IngredientInputTextWatcher(this, selectedRow, ingredientNameInput));
 
-        AutoCompleteTextView titleInput = (AutoCompleteTextView) selectedLine.findViewById(R.id.input_ingredient_name);
-        titleInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                selectedLine.setTag(null);
-                Spinner unitSpinner = (Spinner) selectedLine.findViewById(R.id.spinner_unit);
-                populateUnitSpinner(unitSpinner);
-            }
-        });
-
-        Spinner unitSpinner = (Spinner) selectedLine.findViewById(R.id.spinner_unit);
+        Spinner unitSpinner = (Spinner) selectedRow.findViewById(R.id.spinner_unit);
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) unitSpinner.getAdapter();
         adapter.clear();
-        adapter.add(selectedIngredient.getUnit());
+        adapter.add(presenter.getUnit(selectedIngredientName));
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        v.setOnFocusChangeListener(null);
-        showIngredientInputLine();
+    public void onFocusChange(View view, boolean hasFocus) {
+        view.setOnFocusChangeListener(null);
+        displayIngredientInputRow();
     }
 
-    public LinkedHashMap<Ingredient, Integer> getIngredientInput() {
-        LinkedHashMap<Ingredient, Integer> userIngredientsInput = new LinkedHashMap<>();
-
-        LinearLayout inputWrapper = (LinearLayout) getView().findViewById(R.id.ingredient_input_wrapper);
-        AutoCompleteTextView inputIngredientName = (AutoCompleteTextView) getView().findViewById(R.id.input_ingredient_name);
-        EnterIngredientsArrayAdapter adapter = (EnterIngredientsArrayAdapter) inputIngredientName.getAdapter();
-        ArrayList<String> existingIngredientNames = adapter.getIngredientNames();
-
-        for (int i = 0; i < (inputWrapper.getChildCount()-1); i++) {
-            LinearLayout ll = (LinearLayout) inputWrapper.getChildAt(i);
-            AutoCompleteTextView inputName = (AutoCompleteTextView) ll.findViewById(R.id.input_ingredient_name);
-            Ingredient enteredIngredient;
-
-            if (ll.getTag() != null) {
-                enteredIngredient = (Ingredient) ll.getTag();
-            }
-
-            else if (existingIngredientNames.contains(inputName.getText().toString())) {
-                enteredIngredient = adapter.getIngredientByName(inputName.getText().toString());
-            }
-
-            else {
-                Spinner inputUnit = (Spinner) ll.findViewById(R.id.spinner_unit);
-                enteredIngredient = new Ingredient(inputName.getText().toString(), inputUnit.getSelectedItem().toString());
-            }
-
-            EditText inputAmount = (EditText) ll.findViewById(R.id.input_ingredient_amount);
-            userIngredientsInput.put(enteredIngredient, Integer.parseInt(inputAmount.getText().toString()));
-        }
-
-        return userIngredientsInput;
+    public void saveRecipeButtonClicked() {
+        presenter.saveRecipeButtonClicked();
     }
 
-    public LinkedHashMap<Ingredient, Integer> onSaveButtonClick() {
-        return presenter.saveIngredients();
+    public int getNumberOfIngredients() {
+        return ingredientInputRows.getChildCount();
     }
+
+    public String getIngredientNameAt(int position) {
+        LinearLayout requestedRow = (LinearLayout) ingredientInputRows.getChildAt(position);
+        AutoCompleteTextView ingredientName = (AutoCompleteTextView) requestedRow.findViewById(R.id.input_ingredient_name);
+        return ingredientName.getText().toString();
+    }
+
+    public String getIngredientUnitAt(int position) {
+        LinearLayout requestedRow = (LinearLayout) ingredientInputRows.getChildAt(position);
+        Spinner unitSpinner = (Spinner) requestedRow.findViewById(R.id.spinner_unit);
+
+        return unitSpinner.getSelectedItem().toString();
+    }
+
+    public String getAmountAt(int position) {
+        LinearLayout requestedRow = (LinearLayout) ingredientInputRows.getChildAt(position);
+        EditText amount = (EditText) requestedRow.findViewById(R.id.input_ingredient_amount);
+
+        return amount.getText().toString();
+    }
+
+    public void alert(String alertMessage) {
+        Toast.makeText(getActivity(), alertMessage, Toast.LENGTH_LONG).show();
+    }
+
+    public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> ingredients) {
+        ((AddRecipeActivity) getActivity()).ingredientsSaved(ingredients);
+    }
+
 }

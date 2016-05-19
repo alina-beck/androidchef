@@ -6,16 +6,16 @@ import android.widget.LinearLayout;
 
 public class AutoCompleteOnItemClickListener implements AdapterView.OnItemClickListener {
 
-    private LinearLayout selectedLine;
+    private LinearLayout selectedRow;
     private AdapterView.OnItemClickListener originalListener;
 
-    public AutoCompleteOnItemClickListener(LinearLayout selectedLine, AdapterView.OnItemClickListener originalListener) {
-        this.selectedLine = selectedLine;
+    public AutoCompleteOnItemClickListener(LinearLayout selectedRow, AdapterView.OnItemClickListener originalListener) {
+        this.selectedRow = selectedRow;
         this.originalListener = originalListener;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        originalListener.onItemClick(parent, selectedLine, position, id);
+        originalListener.onItemClick(parent, selectedRow, position, id);
     }
 }
