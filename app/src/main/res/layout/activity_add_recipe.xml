@@ -18,16 +18,5 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <FrameLayout
-        android:id="@+id/fragment_container_enter_ingredients"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/button_save_recipe"
-        android:text="@string/save"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

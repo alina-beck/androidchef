@@ -130,7 +130,7 @@ public class EnterIngredientsFragment extends Fragment
     }
 
     public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> ingredients) {
-        ((AddRecipeActivity) getActivity()).ingredientsSaved(ingredients);
+        ((EnterRecipeFragment) getParentFragment()).ingredientsSaved(ingredients);
     }
 
 }

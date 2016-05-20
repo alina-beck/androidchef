@@ -18,6 +18,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:text="@string/ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:id="@+id/nested_fragment_container"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
+
     <EditText
         android:id="@+id/input_recipe_instructions"
         android:hint="@string/enter_recipe_instructions"
@@ -27,5 +45,12 @@
         android:layout_height="wrap_content"
         android:lines="6"
         android:scrollbars="vertical"/>
+
+    <Button
+        android:id="@+id/button_save_recipe"
+        android:text="@string/save"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

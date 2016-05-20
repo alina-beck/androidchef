@@ -49,9 +49,7 @@ public class IngredientDAO {
         SQLiteDatabase db = open();
         ContentValues values = prepareContentValues(ingredient);
 
-        System.out.println("ingredientId before: " + ingredient.getId());
         long ingredientId = db.insertWithOnConflict(DbHelper.TABLE_INGREDIENTS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-        System.out.println("ingredientId after: " + ingredientId);
         close();
 
         return ingredientId;

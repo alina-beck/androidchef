@@ -15,8 +15,12 @@ public class EnterRecipePresenter {
         this.fragment = fragment;
     }
 
+    public void saveRecipeButtonClicked() {
+        fragment.saveIngredients();
+    }
+
     //TODO: split method into validateUserInput() and saveRecipe()
-    public void saveButtonClicked(LinkedHashMap<Ingredient, Integer> savedIngredients) {
+    public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> savedIngredients) {
         InputValidator validator = new InputValidator(fragment.getActivity());
 
         String recipeTitle = fragment.getRecipeTitle();

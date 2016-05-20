@@ -23,28 +23,8 @@ public class AddRecipeActivity extends FragmentActivity {
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        final EnterRecipeFragment enterRecipeFragment = new EnterRecipeFragment();
+        EnterRecipeFragment enterRecipeFragment = new EnterRecipeFragment();
         fragmentTransaction.add(R.id.fragment_container_enter_recipe, enterRecipeFragment);
-
-        final EnterIngredientsFragment enterIngredientsFragment = new EnterIngredientsFragment();
-        fragmentTransaction.add(R.id.fragment_container_enter_ingredients, enterIngredientsFragment);
-
         fragmentTransaction.commit();
-
-        Button button = (Button) findViewById(R.id.button_save_recipe);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enterIngredientsFragment.saveRecipeButtonClicked();
-            }
-        });
-
-    }
-
-    public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> ingredients) {
-        EnterRecipeFragment fragment =
-                (EnterRecipeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_enter_recipe);
-        fragment.saveButtonClicked(ingredients);
     }
 }
