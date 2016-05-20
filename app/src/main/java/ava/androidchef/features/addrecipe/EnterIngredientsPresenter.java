@@ -31,6 +31,10 @@ public class EnterIngredientsPresenter {
         return allIngredientNames;
     }
 
+    public ArrayList<String> getAllUnits() {
+        return Unit.getUnits();
+    }
+
     public String getUnit(String selectedIngredientName) {
         for (Ingredient i : ingredients) {
             if (selectedIngredientName.equals(i.getName())) {
@@ -48,7 +52,7 @@ public class EnterIngredientsPresenter {
             fragment.alert("Please enter ingredients for your recipe!");
             return;
         }
-
+//TODO: trim strings
         for (int i = 0; i < numberOfIngredientInputLines; i++) {
             String ingredientName = fragment.getIngredientNameAt(i);
             if (ingredientName.equals("")) {

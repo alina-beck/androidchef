@@ -4,7 +4,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import ava.androidchef.R;
