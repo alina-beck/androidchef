@@ -67,19 +67,21 @@ public class EnterIngredientsFragment extends Fragment
     }
 
     public void populateUnitSpinner(Spinner unitSpinner) {
-        //TODO: make standard selection empty
         //TODO: rebuild custom TextWatcher and set method to private again
         ArrayList<String> units = presenter.getAllUnits();
+        units.add(0, "Select a unit");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         unitSpinner.setAdapter(adapter);
+        unitSpinner.setSelection(0);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View selectedRow, int position, long id) {
         String selectedIngredientName = (String) parent.getAdapter().getItem(position);
 
-        final AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) selectedRow.findViewById(R.id.input_ingredient_name);
+        AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) selectedRow.findViewById(R.id.input_ingredient_name);
+        ingredientNameInput.setText(selectedIngredientName);
         ingredientNameInput.addTextChangedListener(new IngredientInputTextWatcher(this, selectedRow, ingredientNameInput));
 
         Spinner unitSpinner = (Spinner) selectedRow.findViewById(R.id.spinner_unit);
@@ -99,7 +101,7 @@ public class EnterIngredientsFragment extends Fragment
         presenter.saveRecipeButtonClicked();
     }
 
-    public int getNumberOfIngredients() {
+    public int getNumberOfIngredientInputRows() {
         return ingredientInputRows.getChildCount();
     }
 

@@ -158,6 +158,11 @@ public class RecipeDAO {
         else return null;
     }
 
+    public Recipe selectSimpleRecipeByName(String recipeName) {
+        String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " where " + DbHelper.COL_RECIPE_TITLE + " = \"" + recipeName + "\"";
+        return fetchRecipe(sqlQuery);
+    }
+
     private void insertRelation(Recipe recipe) {
         SQLiteDatabase db = open();
 
@@ -187,6 +192,21 @@ public class RecipeDAO {
         return (update == recipe.getIngredients().size());
     }
 
+    private Recipe fetchRecipe(String sqlQuery) {
+        SQLiteDatabase db = open();
+        Cursor cursor = db.rawQuery(sqlQuery, null);
+        Recipe recipe = null;
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            recipe = readSimpleRecipeFromCursor(cursor);
+        }
+        cursor.close();
+        close();
+
+        return recipe;
+    }
+
     private ArrayList<Recipe> fetchRecipes(String sqlQuery) {
         ArrayList<Recipe> recipes = new ArrayList<>();
 
@@ -201,6 +221,14 @@ public class RecipeDAO {
         cursor.close();
         close();
         return recipes;
+    }
+
+    private Recipe readSimpleRecipeFromCursor(Cursor cursor) {
+        int id = cursor.getInt(0);
+        String title = cursor.getString(1);
+        String instructions = cursor.getString(2);
+
+        return new Recipe(id, title, instructions);
     }
 
     private Recipe readRecipeFromCursor(Cursor cursor) {

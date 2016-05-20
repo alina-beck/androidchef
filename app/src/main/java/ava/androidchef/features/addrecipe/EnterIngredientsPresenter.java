@@ -43,59 +43,61 @@ public class EnterIngredientsPresenter {
         }
         return null;
     }
-
+    //TODO: split method into validateUserInput() and saveIngredients()
     public void saveRecipeButtonClicked() {
         LinkedHashMap<Ingredient, Integer> enteredIngredients = new LinkedHashMap<>();
         InputValidator validator = new InputValidator(fragment.getActivity());
-        int numberOfIngredientInputLines = fragment.getNumberOfIngredients();
-        if (numberOfIngredientInputLines <= 1) {
+
+        int numberOfIngredients = fragment.getNumberOfIngredientInputRows();
+        if (numberOfIngredients <= 1) {
             fragment.alert("Please enter ingredients for your recipe!");
             return;
         }
-//TODO: trim strings
-        for (int i = 0; i < numberOfIngredientInputLines; i++) {
+
+        for (int i = 0; i < numberOfIngredients; i++) {
             String ingredientName = fragment.getIngredientNameAt(i);
-            if (ingredientName.equals("")) {
-                continue;
-            }
-            //TODO: check if ingredient unit is empty or 0
             String ingredientUnit = fragment.getIngredientUnitAt(i);
             String amount = fragment.getAmountAt(i);
-            if (amount.equals("")) {
+
+            //TODO: make sure users did not only enter empty rows
+            if (ingredientName.trim().equals("")) {
+                continue;
+            }
+            if (ingredientUnit.equals("Select a unit")) {
+                fragment.alert("Please choose a unit for " + ingredientName);
+                return;
+            }
+            if (amount.trim().equals("")) {
                 fragment.alert("Please enter an amount for " + ingredientName);
                 return;
             }
 
-            //TODO: find more elegant solution to avoid duplicates
-            String ingredientHashMapAsString = enteredIngredients.toString();
-            if (ingredientHashMapAsString.toLowerCase().contains(ingredientName.toLowerCase())) {
+            if (validator.ingredientWasEnteredTwice(enteredIngredients, ingredientName)) {
                 fragment.alert("You cannot enter the same ingredient twice! Please replace " + ingredientName);
                 return;
             }
 
-            boolean existsInDatabase = validator.ingredientExistsInDatabase(ingredientName);
-
-            if (existsInDatabase) {
+            if (validator.ingredientExistsInDatabase(ingredientName)) {
                 Ingredient existingIngredient = ingredientDAO.selectIngredientByName(ingredientName);
-                boolean unitMatches = validator.ingredientUnitMatches(ingredientName, ingredientUnit);
 
-                if (unitMatches) {
+                if (validator.ingredientUnitMatches(ingredientName, ingredientUnit)) {
                     enteredIngredients.put(existingIngredient, Integer.parseInt(amount));
                 }
                 else {
-                    String alertMessage = ingredientName + " already exists, using " + existingIngredient.getUnit() + ". Please adapt your input!";
-                    fragment.alert(alertMessage);
+                    fragment.alert(ingredientName + " already exists, using " + existingIngredient.getUnit() + ". Please adapt your input!");
                     return;
                 }
             }
             else {
-                Ingredient newIngredient = new Ingredient(ingredientName, ingredientUnit);
-                long newIngredientId = ingredientDAO.insertIngredient(newIngredient);
-                Ingredient savedIngredient = ingredientDAO.selectIngredientById(newIngredientId);
-                enteredIngredients.put(savedIngredient, Integer.parseInt(amount));
+                Ingredient newIngredient = getNewIngredientFromDatabase(new Ingredient(ingredientName, ingredientUnit));
+                enteredIngredients.put(newIngredient, Integer.parseInt(amount));
             }
         }
-
         fragment.ingredientsSaved(enteredIngredients);
+    }
+
+    public Ingredient getNewIngredientFromDatabase(Ingredient ingredient) {
+        long newIngredientId = ingredientDAO.insertIngredient(ingredient);
+        return ingredientDAO.selectIngredientById(newIngredientId);
     }
 }

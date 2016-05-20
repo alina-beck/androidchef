@@ -5,13 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import ava.androidchef.R;
@@ -32,26 +28,21 @@ public class EnterRecipeFragment extends Fragment {
         return view;
     }
 
-    public String getTitleInput() {
+    public String getRecipeTitle() {
         EditText inputTitle = (EditText) getView().findViewById(R.id.input_recipe_title);
         return inputTitle.getText().toString();
     }
 
-    public String getInstructionsInput() {
+    public String getRecipeInstructions() {
         EditText inputInstructions = (EditText) getView().findViewById(R.id.input_recipe_instructions);
         return inputInstructions.getText().toString();
     }
 
-    public void onSaveButtonClick(LinkedHashMap<Ingredient, Integer> savedIngredients) {
-        presenter.onButtonClick(savedIngredients);
+    public void saveButtonClicked(LinkedHashMap<Ingredient, Integer> savedIngredients) {
+        presenter.saveButtonClicked(savedIngredients);
     }
 
-    public void saveComplete(boolean didSave) {
-        if (didSave) {
-            Toast.makeText(getContext(), "Recipe saved", Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(getContext(), "Unable to save", Toast.LENGTH_LONG).show();
-        }
+    public void alert(String alertMessage) {
+        Toast.makeText(getActivity(), alertMessage, Toast.LENGTH_LONG).show();
     }
 }

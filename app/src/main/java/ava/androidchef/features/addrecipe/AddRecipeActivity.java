@@ -2,7 +2,6 @@ package ava.androidchef.features.addrecipe;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +45,6 @@ public class AddRecipeActivity extends FragmentActivity {
     public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> ingredients) {
         EnterRecipeFragment fragment =
                 (EnterRecipeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_enter_recipe);
-        fragment.onSaveButtonClick(ingredients);
+        fragment.saveButtonClicked(ingredients);
     }
 }
