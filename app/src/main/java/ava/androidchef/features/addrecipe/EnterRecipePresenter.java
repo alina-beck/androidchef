@@ -5,9 +5,10 @@ import java.util.LinkedHashMap;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
+import ava.androidchef.utils.BaseRecipePresenter;
 import ava.androidchef.utils.InputValidator;
 
-public class EnterRecipePresenter {
+public class EnterRecipePresenter extends BaseRecipePresenter {
 
     private EnterRecipeFragment fragment;
 
@@ -15,11 +16,13 @@ public class EnterRecipePresenter {
         this.fragment = fragment;
     }
 
+    @Override
     public void saveRecipeButtonClicked() {
         fragment.saveIngredients();
     }
 
     //TODO: split method into validateUserInput() and saveRecipe()
+    @Override
     public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> savedIngredients) {
         InputValidator validator = new InputValidator(fragment.getActivity());
 
@@ -49,8 +52,14 @@ public class EnterRecipePresenter {
         }
     }
 
+    @Override
+    public void viewCreated() {
+        //TODO: avoid having empty method - now necessary because of inheritance
+    }
+
     public boolean saveRecipe(Recipe recipe) {
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
         return (recipeDAO.insertRecipe(recipe) != -1);
     }
+
 }

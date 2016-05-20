@@ -13,11 +13,14 @@ import android.widget.Toast;
 import java.util.LinkedHashMap;
 
 import ava.androidchef.R;
+import ava.androidchef.features.editrecipe.EditRecipePresenter;
 import ava.androidchef.models.ingredient.Ingredient;
+import ava.androidchef.models.recipe.Recipe;
+import ava.androidchef.utils.BaseRecipePresenter;
 
 public class EnterRecipeFragment extends Fragment {
 
-    private EnterRecipePresenter presenter;
+    private BaseRecipePresenter presenter;
 
     public EnterRecipeFragment() {
     }
@@ -25,9 +28,17 @@ public class EnterRecipeFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_enter_recipe, container, false);
-        this.presenter = new EnterRecipePresenter(this);
-
         EnterIngredientsFragment enterIngredientsFragment = new EnterIngredientsFragment();
+
+        if (getArguments() == null) {
+            this.presenter = new EnterRecipePresenter(this);
+        }
+        else {
+            enterIngredientsFragment.setArguments(getArguments());
+            Recipe recipe = getArguments().getParcelable("edited_recipe");
+            this.presenter = new EditRecipePresenter(this, recipe);
+        }
+
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.nested_fragment_container, enterIngredientsFragment);
         fragmentTransaction.commit();
@@ -43,14 +54,30 @@ public class EnterRecipeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.viewCreated();
+    }
+
     public String getRecipeTitle() {
         EditText inputTitle = (EditText) getView().findViewById(R.id.input_recipe_title);
         return inputTitle.getText().toString();
     }
 
+    public void setRecipeTitle(String recipeTitle) {
+        EditText inputTitle = (EditText) getView().findViewById(R.id.input_recipe_title);
+        inputTitle.setText(recipeTitle);
+    }
+
     public String getRecipeInstructions() {
         EditText inputInstructions = (EditText) getView().findViewById(R.id.input_recipe_instructions);
         return inputInstructions.getText().toString();
+    }
+
+    public void setRecipeInstructions(String recipeInstructions) {
+        EditText inputInstructions = (EditText) getView().findViewById(R.id.input_recipe_instructions);
+        inputInstructions.setText(recipeInstructions);
     }
 
     public void saveIngredients() {

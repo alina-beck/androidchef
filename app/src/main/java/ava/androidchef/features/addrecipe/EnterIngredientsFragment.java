@@ -19,15 +19,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import ava.androidchef.R;
+import ava.androidchef.features.editrecipe.EditIngredientsPresenter;
 import ava.androidchef.models.ingredient.Ingredient;
+import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.utils.AutoCompleteOnItemClickListener;
+import ava.androidchef.utils.BaseIngredientsPresenter;
 import ava.androidchef.utils.IngredientInputTextWatcher;
 import ava.androidchef.utils.Unit;
 
 public class EnterIngredientsFragment extends Fragment
         implements AdapterView.OnItemClickListener, View.OnFocusChangeListener {
 
-    private EnterIngredientsPresenter presenter;
+    private BaseIngredientsPresenter presenter;
     private LinearLayout ingredientInputRows;
 
     public EnterIngredientsFragment() {
@@ -36,13 +39,25 @@ public class EnterIngredientsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_enter_ingredients, container, false);
-
-        this.presenter = new EnterIngredientsPresenter(this);
         this.ingredientInputRows = (LinearLayout) view.findViewById(R.id.ingredient_input_rows);
+
+        if (getArguments() == null) {
+            this.presenter = new EnterIngredientsPresenter(this);
+        }
+
+        else {
+            this.presenter = new EditIngredientsPresenter(this, (Recipe) getArguments().getParcelable("edited_recipe"));
+        }
 
         displayIngredientInputRow();
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.viewCreated();
     }
 
     private void displayIngredientInputRow() {
@@ -74,6 +89,22 @@ public class EnterIngredientsFragment extends Fragment
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         unitSpinner.setAdapter(adapter);
         unitSpinner.setSelection(0);
+    }
+
+    public void fillIngredientRow(String name, String unit, String amount, int position) {
+        LinearLayout filledRow = (LinearLayout) ingredientInputRows.getChildAt(position);
+        AutoCompleteTextView nameInput = (AutoCompleteTextView) filledRow.findViewById(R.id.input_ingredient_name);
+        nameInput.setText(name);
+        nameInput.setOnFocusChangeListener(null);
+
+        Spinner unitSpinner = (Spinner) filledRow.findViewById(R.id.spinner_unit);
+        int positionOfUnit = ((ArrayAdapter<String>) unitSpinner.getAdapter()).getPosition(unit);
+        unitSpinner.setSelection(positionOfUnit);
+
+        EditText amountInput = (EditText) filledRow.findViewById(R.id.input_ingredient_amount);
+        amountInput.setText(amount);
+
+        displayIngredientInputRow();
     }
 
     @Override

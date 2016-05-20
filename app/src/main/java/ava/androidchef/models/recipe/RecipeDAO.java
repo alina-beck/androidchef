@@ -50,6 +50,7 @@ public class RecipeDAO {
         close();
 
         boolean savedRelation = updateRelation(recipe);
+        System.out.println("saved relation: " + savedRelation);
 
         return (update == 1 && savedRelation);
     }
@@ -168,6 +169,7 @@ public class RecipeDAO {
         String sqlQuery = "select count(*) from " + DbHelper.TABLE_RECIPES;
         SQLiteDatabase db = open();
         SQLiteStatement statement = db.compileStatement(sqlQuery);
+        close();
         return (int) statement.simpleQueryForLong();
     }
 
@@ -186,18 +188,10 @@ public class RecipeDAO {
     }
 
     private boolean updateRelation(Recipe recipe) {
-        SQLiteDatabase db = open();
-        int update = 0;
-
-        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
-            ContentValues values = new ContentValues();
-            values.put(DbHelper.COL_RI_AMOUNT, entry.getValue());
-
-            String whereClause = DbHelper.COL_RI_ID + "=" +
-                    Integer.parseInt(Long.toString(recipe.getId()) + Long.toString(entry.getKey().getId()));
-            update += db.update(DbHelper.TABLE_RECIPES_INGREDIENTS, values, whereClause, null);
-        }
-        return (update == recipe.getIngredients().size());
+        boolean clearedRelation = deleteRelation(recipe.getId());
+        insertRelation(recipe);
+        //TODO: ensure that new relation has been saved, too
+        return (clearedRelation);
     }
 
     private Recipe fetchRecipe(String sqlQuery) {

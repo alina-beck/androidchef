@@ -1,33 +1,46 @@
-package ava.androidchef.features.addrecipe;
+package ava.androidchef.features.editrecipe;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
+import ava.androidchef.features.addrecipe.EnterIngredientsFragment;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.ingredient.IngredientDAO;
+import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.utils.BaseIngredientsPresenter;
 import ava.androidchef.utils.InputValidator;
 
-public class EnterIngredientsPresenter extends BaseIngredientsPresenter {
+public class EditIngredientsPresenter extends BaseIngredientsPresenter {
 
-    private EnterIngredientsFragment fragment;
+    EnterIngredientsFragment fragment;
+    Recipe recipe;
 
-    public EnterIngredientsPresenter(EnterIngredientsFragment fragment) {
+    public EditIngredientsPresenter(EnterIngredientsFragment fragment, Recipe recipe) {
         super(fragment.getActivity());
         this.fragment = fragment;
+        this.recipe = recipe;
     }
 
-    //TODO: split method into validateUserInput() and saveIngredients()
-    //TODO: split method so that most part can be reused in EditIngredientsPresenter & EnterIngredientsPresenter
+    @Override
+    public void viewCreated() {
+        int position = 0;
+
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
+            String ingredientName = entry.getKey().getName();
+            String ingredientUnit = entry.getKey().getUnit();
+            String amount = entry.getValue().toString();
+
+            fragment.fillIngredientRow(ingredientName, ingredientUnit, amount, position);
+            position++;
+        }
+    }
+
     @Override
     public void saveRecipeButtonClicked() {
         LinkedHashMap<Ingredient, Integer> enteredIngredients = new LinkedHashMap<>();
         InputValidator validator = new InputValidator(fragment.getActivity());
 
         int numberOfIngredients = fragment.getNumberOfIngredientInputRows();
-        if (numberOfIngredients <= 1) {
-            fragment.alert("Please enter ingredients for your recipe!");
-            return;
-        }
 
         for (int i = 0; i < numberOfIngredients; i++) {
             String ingredientName = fragment.getIngredientNameAt(i);
@@ -51,7 +64,6 @@ public class EnterIngredientsPresenter extends BaseIngredientsPresenter {
                 fragment.alert("You cannot enter the same ingredient twice! Please replace " + ingredientName);
                 return;
             }
-
             if (validator.ingredientExistsInDatabase(ingredientName)) {
                 IngredientDAO ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
                 Ingredient existingIngredient = ingredientDAO.selectIngredientByName(ingredientName);
@@ -76,10 +88,5 @@ public class EnterIngredientsPresenter extends BaseIngredientsPresenter {
         IngredientDAO ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
         long newIngredientId = ingredientDAO.insertIngredient(ingredient);
         return ingredientDAO.selectIngredientById(newIngredientId);
-    }
-
-    @Override
-    public void viewCreated() {
-        //TODO: avoid empty method just because other subclass needs it
     }
 }
