@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ava.androidchef.R;
 
@@ -31,13 +32,21 @@ public class CreateMenuFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        EditText menuTitleInput = (EditText) v.getRootView().findViewById(R.id.input_new_menu_title);
-        String menuTitle = menuTitleInput.getText().toString();
+        presenter.createMenuButtonClicked();
+    }
 
-        EditText menuLengthInput = (EditText) v.getRootView().findViewById(R.id.input_new_menu_days);
-        int menuLength = Integer.parseInt(menuLengthInput.getText().toString());
+    public String getMenuTitle() {
+        EditText menuTitleInput = (EditText) getView().findViewById(R.id.input_new_menu_title);
+        return menuTitleInput.getText().toString();
+    }
 
-        presenter.onCreateButtonClicked(menuTitle, menuLength);
+    public String getMenuLength() {
+        EditText menuLengthInput = (EditText) getView().findViewById(R.id.input_new_menu_days);
+        return menuLengthInput.getText().toString();
+    }
+
+    public void alert(String alertMessage) {
+        Toast.makeText(getActivity(), alertMessage, Toast.LENGTH_LONG).show();
     }
 
     public void displayMenu() {

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -161,6 +162,13 @@ public class RecipeDAO {
     public Recipe selectSimpleRecipeByName(String recipeName) {
         String sqlQuery = "select * from " + DbHelper.TABLE_RECIPES + " where " + DbHelper.COL_RECIPE_TITLE + " = \"" + recipeName + "\"";
         return fetchRecipe(sqlQuery);
+    }
+
+    public int getNumberOfRecipes() {
+        String sqlQuery = "select count(*) from " + DbHelper.TABLE_RECIPES;
+        SQLiteDatabase db = open();
+        SQLiteStatement statement = db.compileStatement(sqlQuery);
+        return (int) statement.simpleQueryForLong();
     }
 
     private void insertRelation(Recipe recipe) {

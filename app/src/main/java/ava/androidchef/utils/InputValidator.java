@@ -41,4 +41,8 @@ public class InputValidator {
         return (recipeDAO.selectSimpleRecipeByName(recipeTitle) != null);
     }
 
+    public boolean menuLengthExceedsExistingRecipes(int menuLength) {
+        return (recipeDAO.getNumberOfRecipes() < menuLength);
+    }
+
 }
