@@ -34,4 +34,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/button_goto_shopping_list"
+        android:text="@string/show_shopping_list"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

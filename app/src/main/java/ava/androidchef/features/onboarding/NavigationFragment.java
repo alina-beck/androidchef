@@ -13,6 +13,7 @@ import ava.androidchef.features.addrecipe.AddRecipeActivity;
 import ava.androidchef.features.allrecipes.AllRecipesActivity;
 import ava.androidchef.features.createmenu.CreateMenuActivity;
 import ava.androidchef.features.displaymenu.DisplayMenuActivity;
+import ava.androidchef.features.shoppinglist.ShoppingListActivity;
 
 public class NavigationFragment extends Fragment implements View.OnClickListener {
 
@@ -35,6 +36,9 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         Button goToAllRecipes = (Button) view.findViewById(R.id.button_goto_all_recipes);
         goToAllRecipes.setOnClickListener(this);
 
+        Button goToShoppingList = (Button) view.findViewById(R.id.button_goto_shopping_list);
+        goToShoppingList.setOnClickListener(this);
+
         return view;
     }
 
@@ -53,6 +57,9 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.button_goto_all_recipes:
                 i = new Intent(getActivity(), AllRecipesActivity.class);
+                break;
+            case R.id.button_goto_shopping_list:
+                i = new Intent(getActivity(), ShoppingListActivity.class);
                 break;
             default:
                 i = null;

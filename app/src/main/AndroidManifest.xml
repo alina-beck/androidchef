@@ -25,7 +25,8 @@
             android:name=".features.allrecipes.AllRecipesActivity"
             android:label="@string/my_recipes"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".features.displaymenu.DisplayMenuActivity"></activity>
+        <activity android:name=".features.displaymenu.DisplayMenuActivity" />
+        <activity android:name=".features.shoppinglist.ShoppingListActivity"></activity>
     </application>
 
 </manifest>
