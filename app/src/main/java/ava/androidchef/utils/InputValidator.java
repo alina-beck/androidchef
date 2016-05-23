@@ -19,6 +19,10 @@ public class InputValidator {
         this.recipeDAO = RecipeDAO.getInstance(context);
     }
 
+    public boolean isEmptyString(String input) {
+        return (input.trim().equals(""));
+    }
+
     public boolean ingredientExistsInDatabase(String ingredientName) {
         return (ingredientDAO.selectIngredientByName(ingredientName) != null);
     }

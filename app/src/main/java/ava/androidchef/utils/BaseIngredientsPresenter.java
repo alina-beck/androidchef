@@ -9,14 +9,13 @@ import ava.androidchef.models.ingredient.IngredientDAO;
 
 public abstract class BaseIngredientsPresenter {
 
-    private Context context;
+    private IngredientDAO ingredientDAO;
 
     public BaseIngredientsPresenter(Context context) {
-        this.context = context;
+        this.ingredientDAO = IngredientDAO.getInstance(context);
     }
 
     public ArrayList<String> getAllIngredientNames() {
-        IngredientDAO ingredientDAO = IngredientDAO.getInstance(context);
         ArrayList<Ingredient> allIngredients = ingredientDAO.selectAllIngredients();
         ArrayList<String> allIngredientNames = new ArrayList<>();
 
@@ -32,7 +31,6 @@ public abstract class BaseIngredientsPresenter {
     }
 
     public String getUnit(String selectedIngredientName) {
-        IngredientDAO ingredientDAO = IngredientDAO.getInstance(context);
         ArrayList<Ingredient> allIngredients = ingredientDAO.selectAllIngredients();
         for (Ingredient i : allIngredients) {
             if (selectedIngredientName.equals(i.getName())) {

@@ -14,11 +14,13 @@ public class EditIngredientsPresenter extends BaseIngredientsPresenter {
 
     EnterIngredientsFragment fragment;
     Recipe recipe;
+    IngredientDAO ingredientDAO;
 
     public EditIngredientsPresenter(EnterIngredientsFragment fragment, Recipe recipe) {
         super(fragment.getActivity());
         this.fragment = fragment;
         this.recipe = recipe;
+        this.ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
     }
 
     @Override
@@ -37,35 +39,48 @@ public class EditIngredientsPresenter extends BaseIngredientsPresenter {
 
     @Override
     public void saveRecipeButtonClicked() {
+        LinkedHashMap<Ingredient, Integer> enteredIngredients = getEnteredIngredients();
+        if (enteredIngredients == null) {
+            return;
+        }
+        fragment.ingredientsSaved(enteredIngredients);
+    }
+
+    //TODO: split method into validateUserInput() and saveIngredients()
+    //TODO: split method so that most part can be reused in EditIngredientsPresenter & EnterIngredientsPresenter
+    private LinkedHashMap<Ingredient, Integer> getEnteredIngredients() {
         LinkedHashMap<Ingredient, Integer> enteredIngredients = new LinkedHashMap<>();
         InputValidator validator = new InputValidator(fragment.getActivity());
 
-        int numberOfIngredients = fragment.getNumberOfIngredientInputRows();
+        int numberOfIngredientRows = fragment.getNumberOfIngredientInputRows();
+        if (numberOfIngredientRows <= 1) {
+            fragment.alert("Please enter ingredients for your recipe!");
+            return null;
+        }
 
-        for (int i = 0; i < numberOfIngredients; i++) {
+        for (int i = 0; i < numberOfIngredientRows; i++) {
             String ingredientName = fragment.getIngredientNameAt(i);
             String ingredientUnit = fragment.getIngredientUnitAt(i);
             String amount = fragment.getAmountAt(i);
 
-            //TODO: make sure users did not only enter empty rows
-            if (ingredientName.trim().equals("")) {
+            if (validator.isEmptyString(ingredientName)) {
                 continue;
             }
-            if (ingredientUnit.equals("Select a unit")) {
+            if (validator.isEmptyString(ingredientUnit)) {
                 fragment.alert("Please choose a unit for " + ingredientName);
-                return;
+                return null;
             }
-            if (amount.trim().equals("")) {
+            if (validator.isEmptyString(amount)) {
                 fragment.alert("Please enter an amount for " + ingredientName);
-                return;
+                return null;
             }
 
             if (validator.ingredientWasEnteredTwice(enteredIngredients, ingredientName)) {
                 fragment.alert("You cannot enter the same ingredient twice! Please replace " + ingredientName);
-                return;
+                return null;
             }
+
             if (validator.ingredientExistsInDatabase(ingredientName)) {
-                IngredientDAO ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
                 Ingredient existingIngredient = ingredientDAO.selectIngredientByName(ingredientName);
 
                 if (validator.ingredientUnitMatches(ingredientName, ingredientUnit)) {
@@ -73,20 +88,19 @@ public class EditIngredientsPresenter extends BaseIngredientsPresenter {
                 }
                 else {
                     fragment.alert(ingredientName + " already exists, using " + existingIngredient.getUnit() + ". Please adapt your input!");
-                    return;
+                    return null;
                 }
             }
             else {
-                Ingredient newIngredient = getNewIngredientFromDatabase(new Ingredient(ingredientName, ingredientUnit));
-                enteredIngredients.put(newIngredient, Integer.parseInt(amount));
+                long newIngredientId = ingredientDAO.insertIngredient(new Ingredient(ingredientName, ingredientUnit));
+                Ingredient savedIngredient = ingredientDAO.selectIngredientById(newIngredientId);
+                enteredIngredients.put(savedIngredient, Integer.parseInt(amount));
             }
         }
-        fragment.ingredientsSaved(enteredIngredients);
-    }
-
-    public Ingredient getNewIngredientFromDatabase(Ingredient ingredient) {
-        IngredientDAO ingredientDAO = IngredientDAO.getInstance(fragment.getActivity());
-        long newIngredientId = ingredientDAO.insertIngredient(ingredient);
-        return ingredientDAO.selectIngredientById(newIngredientId);
+        if (enteredIngredients.size() == 0) {
+            fragment.alert("Please enter ingredients for your recipe!");
+            return null;
+        }
+        return enteredIngredients;
     }
 }
