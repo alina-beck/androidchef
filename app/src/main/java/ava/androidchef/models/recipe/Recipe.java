@@ -30,6 +30,13 @@ public class Recipe implements Parcelable {
         this.instructions = instructions;
     }
 
+    public Recipe(Recipe copiedRecipe) {
+        this.id = copiedRecipe.getId();
+        this.title = copiedRecipe.getTitle();
+        this.ingredients = copiedRecipe.getIngredients();
+        this.instructions = copiedRecipe.getInstructions();
+    }
+
     @Override
     public String toString() {
         return title;

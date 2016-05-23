@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 
 import ava.androidchef.features.addrecipe.EnterRecipeFragment;
 import ava.androidchef.models.ingredient.Ingredient;
+import ava.androidchef.models.menu.MenuDAO;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
 import ava.androidchef.utils.BaseRecipePresenter;
@@ -37,30 +38,33 @@ public class EditRecipePresenter extends BaseRecipePresenter {
         String recipeTitle = fragment.getRecipeTitle();
         String recipeInstructions = fragment.getRecipeInstructions();
 
-        if (recipeTitle.trim().equals("")) {
+        if (validator.isEmptyString(recipeTitle)) {
             fragment.alert("Please enter a title for your recipe.");
             return;
         }
 
-        if (recipeInstructions.trim().equals("")) {
+        if (validator.isEmptyString(recipeInstructions)) {
             fragment.alert("Please enter instructions for your recipe.");
             return;
         }
 
-        if (!recipe.getTitle().toLowerCase().equals(recipeTitle.toLowerCase()) && validator.recipeExistsInDatabase(recipeTitle)) {
+        if (validator.isRecipeTitleInvalid(recipeTitle, recipe.getTitle())) {
             fragment.alert("You already entered another recipe with that title.");
             return;
         }
 
-        Recipe updatedRecipe = recipe;
+        Recipe updatedRecipe = new Recipe(recipe);
 
         updatedRecipe.setTitle(recipeTitle);
         updatedRecipe.setInstructions(recipeInstructions);
         updatedRecipe.setIngredients(ingredients);
 
+        MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
+        menuDAO.updateMenuWithRecipe(recipe, updatedRecipe);
+
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
 
-        if (recipeDAO.updateRecipe(recipe)) {
+        if (recipeDAO.updateRecipe(updatedRecipe)) {
             fragment.alert("Recipe updated!");
         }
     }

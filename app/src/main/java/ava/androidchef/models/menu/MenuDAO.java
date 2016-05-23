@@ -42,4 +42,16 @@ public class MenuDAO {
         Gson gson = new Gson();
         return gson.fromJson(menuAsJson, Menu.class);
     }
+
+    public void updateMenuWithRecipe(Recipe originalRecipe, Recipe updatedRecipe) {
+        Menu updatingMenu = getMenu();
+        ArrayList<Recipe> recipes = updatingMenu.getRecipes();
+        for (Recipe r : recipes) {
+            if (r.getId() == originalRecipe.getId()) {
+                recipes.set(recipes.indexOf(r), updatedRecipe);
+                updatingMenu.setRecipes(recipes);
+                insertMenu(updatingMenu);
+            }
+        }
+    }
 }

@@ -41,6 +41,10 @@ public class InputValidator {
         return false;
     }
 
+    public boolean isRecipeTitleInvalid(String recipeTitle, String originalTitle) {
+        return (!originalTitle.toLowerCase().equals(recipeTitle.toLowerCase()) && recipeExistsInDatabase(recipeTitle));
+    }
+
     public boolean recipeExistsInDatabase(String recipeTitle) {
         return (recipeDAO.selectSimpleRecipeByName(recipeTitle) != null);
     }

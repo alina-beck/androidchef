@@ -169,8 +169,9 @@ public class RecipeDAO {
         String sqlQuery = "select count(*) from " + DbHelper.TABLE_RECIPES;
         SQLiteDatabase db = open();
         SQLiteStatement statement = db.compileStatement(sqlQuery);
+        int numberOfRecipes = (int) statement.simpleQueryForLong();
         close();
-        return (int) statement.simpleQueryForLong();
+        return numberOfRecipes;
     }
 
     private void insertRelation(Recipe recipe) {
