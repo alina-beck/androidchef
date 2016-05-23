@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import ava.androidchef.models.recipe.Recipe;
+import ava.androidchef.models.shoppinglist.ShoppingList;
+import ava.androidchef.models.shoppinglist.ShoppingListDAO;
 
 public class MenuDAO {
 
@@ -43,7 +45,7 @@ public class MenuDAO {
         return gson.fromJson(menuAsJson, Menu.class);
     }
 
-    public void updateMenuWithRecipe(Recipe originalRecipe, Recipe updatedRecipe) {
+    public void updateRecipeInMenu(Recipe originalRecipe, Recipe updatedRecipe) {
         Menu updatingMenu = getMenu();
         ArrayList<Recipe> recipes = updatingMenu.getRecipes();
         for (Recipe r : recipes) {

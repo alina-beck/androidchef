@@ -6,6 +6,7 @@ import ava.androidchef.models.menu.Menu;
 import ava.androidchef.models.menu.MenuDAO;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
+import ava.androidchef.models.shoppinglist.ShoppingListDAO;
 
 public class DisplayMenuPresenter {
 
@@ -34,6 +35,8 @@ public class DisplayMenuPresenter {
             fragment.displayMenu(menu);
 
             menuDAO.insertMenu(menu);
+            ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
+            shoppingListDAO.updateShoppingList(menu);
         }
 
         else fragment.alertNoMoreRecipes();

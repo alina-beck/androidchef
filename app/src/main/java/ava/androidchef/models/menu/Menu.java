@@ -3,6 +3,7 @@ package ava.androidchef.models.menu;
 import java.util.ArrayList;
 
 import ava.androidchef.models.recipe.Recipe;
+import ava.androidchef.models.shoppinglist.ShoppingListItem;
 
 public class Menu {
 

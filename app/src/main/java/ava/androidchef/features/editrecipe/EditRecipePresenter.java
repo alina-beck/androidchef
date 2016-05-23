@@ -60,7 +60,9 @@ public class EditRecipePresenter extends BaseRecipePresenter {
         updatedRecipe.setIngredients(ingredients);
 
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
-        menuDAO.updateMenuWithRecipe(recipe, updatedRecipe);
+        menuDAO.updateRecipeInMenu(recipe, updatedRecipe);
+
+        //TODO: also update shopping list
 
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
 
