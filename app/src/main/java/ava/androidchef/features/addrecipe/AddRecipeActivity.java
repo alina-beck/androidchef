@@ -1,17 +1,12 @@
 package ava.androidchef.features.addrecipe;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.widget.Button;
-
-import java.util.LinkedHashMap;
+import android.support.v7.app.AppCompatActivity;
 
 import ava.androidchef.R;
-import ava.androidchef.models.ingredient.Ingredient;
 
-public class AddRecipeActivity extends FragmentActivity {
+public class AddRecipeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

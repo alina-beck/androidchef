@@ -1,11 +1,37 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ChefTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
+        <item name="actionBarStyle">@style/ChefTheme.ActionBar</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ChefTheme.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="titleTextStyle">@style/ChefTheme.ActionBar.Text</item>
+    </style>
+
+    <style name="ChefTheme.ActionBar.Text" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+
+    <style name="ChefTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="ChefTheme.Button.Navigation" parent="ChefTheme.Button">
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_gravity">left|top</item>
+        <item name="android:layout_margin">12dp</item>
+    </style>
+
+    <style name="ChefTheme.Button.Navigation.Double" parent="ChefTheme.Button.Navigation">
+        <item name="android:layout_columnSpan">2</item>
+        <item name="android:layout_gravity">fill</item>
+    </style>
 </resources>

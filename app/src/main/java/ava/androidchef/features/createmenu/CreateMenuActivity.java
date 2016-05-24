@@ -1,14 +1,14 @@
 package ava.androidchef.features.createmenu;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import ava.androidchef.R;
 import ava.androidchef.features.displaymenu.DisplayMenuActivity;
 
-public class CreateMenuActivity extends FragmentActivity {
+public class CreateMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

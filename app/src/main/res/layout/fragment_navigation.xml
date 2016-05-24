@@ -1,44 +1,41 @@
-<LinearLayout
+<GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:columnCount="2"
+    android:rowCount="3"
     tools:context=".features.onboarding.NavigationFragment">
-
-    <Button
-        android:id="@+id/button_goto_add_recipe"
-        android:text="@string/new_recipe"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/button_goto_create_menu"
-        android:text="@string/create_random_menu"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/button_goto_current_menu"
-        android:text="@string/show_current_menu"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/button_goto_all_recipes"
         android:text="@string/show_all_recipes"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        style="@style/ChefTheme.Button.Navigation"/>
+
+    <Button
+        android:id="@+id/button_goto_add_recipe"
+        android:text="@string/new_recipe"
+
+        style="@style/ChefTheme.Button.Navigation"/>
+
+    <Button
+        android:id="@+id/button_goto_current_menu"
+        android:text="@string/show_current_menu"
+
+        style="@style/ChefTheme.Button.Navigation"/>
+
+    <Button
+        android:id="@+id/button_goto_create_menu"
+        android:text="@string/create_random_menu"
+
+        style="@style/ChefTheme.Button.Navigation"/>
 
     <Button
         android:id="@+id/button_goto_shopping_list"
         android:text="@string/show_shopping_list"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/ChefTheme.Button.Navigation"/>
 
-</LinearLayout>
+</GridLayout>

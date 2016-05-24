@@ -1,11 +1,11 @@
 package ava.androidchef.features.onboarding;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import ava.androidchef.R;
 
-public class OnboardingActivity extends FragmentActivity {
+public class OnboardingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
