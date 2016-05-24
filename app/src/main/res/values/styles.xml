@@ -32,6 +32,7 @@
 
     <style name="ChefTheme.Button.Navigation.Double" parent="ChefTheme.Button.Navigation">
         <item name="android:layout_columnSpan">2</item>
-        <item name="android:layout_gravity">fill</item>
+        <item name="android:layout_gravity">fill_horizontal|top</item>
+        <item name="android:layout_height">60dp</item>
     </style>
 </resources>

@@ -10,32 +10,22 @@
 
     <Button
         android:id="@+id/button_goto_all_recipes"
-        android:text="@string/show_all_recipes"
-
         style="@style/ChefTheme.Button.Navigation"/>
 
     <Button
         android:id="@+id/button_goto_add_recipe"
-        android:text="@string/new_recipe"
-
         style="@style/ChefTheme.Button.Navigation"/>
 
     <Button
         android:id="@+id/button_goto_current_menu"
-        android:text="@string/show_current_menu"
-
         style="@style/ChefTheme.Button.Navigation"/>
 
     <Button
         android:id="@+id/button_goto_create_menu"
-        android:text="@string/create_random_menu"
-
         style="@style/ChefTheme.Button.Navigation"/>
 
     <Button
         android:id="@+id/button_goto_shopping_list"
-        android:text="@string/show_shopping_list"
-
-        style="@style/ChefTheme.Button.Navigation"/>
+        style="@style/ChefTheme.Button.Navigation.Double"/>
 
 </GridLayout>
