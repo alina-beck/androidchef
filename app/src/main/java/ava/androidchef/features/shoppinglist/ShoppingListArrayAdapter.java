@@ -15,15 +15,17 @@ public class ShoppingListArrayAdapter extends ArrayAdapter {
 
     private Context context;
     private ShoppingList shoppingList;
+    private ShoppingListFragment fragment;
 
-    public ShoppingListArrayAdapter(Context context, int resource, ShoppingList shoppingList) {
+    public ShoppingListArrayAdapter(Context context, int resource, ShoppingList shoppingList, ShoppingListFragment fragment) {
         super(context, resource, shoppingList);
         this.context = context;
         this.shoppingList = shoppingList;
+        this.fragment = fragment;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -32,7 +34,13 @@ public class ShoppingListArrayAdapter extends ArrayAdapter {
 
         CheckBox bought = (CheckBox) view.findViewById(R.id.checkbox_isbought);
         boolean isBought = shoppingList.get(position).isBought();
-        bought.setActivated(isBought);
+        bought.setChecked(isBought);
+        bought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment.checkboxClicked(shoppingList.get(position));
+            }
+        });
 
         TextView amount = (TextView) view.findViewById(R.id.textview_amount);
         String amountString = Integer.toString(shoppingList.get(position).getAmount());

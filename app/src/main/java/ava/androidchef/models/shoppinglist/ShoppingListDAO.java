@@ -101,4 +101,23 @@ public class ShoppingListDAO {
         insertShoppingList(createShoppingListFromMenu(menu));
     }
 
+    public void updateItemInShoppingList(ShoppingListItem item) {
+        ShoppingList shoppingList = getShoppingList();
+        ShoppingListItem updatedItem = new ShoppingListItem(item);
+        if (item.isBought()) {
+            updatedItem.setBought(false);
+        }
+        else {
+            updatedItem.setBought(true);
+        }
+
+        for (ShoppingListItem listItem : shoppingList) {
+            if (listItem.getIngredient().getName().equals(item.getIngredient().getName())) {
+                shoppingList.add(shoppingList.indexOf(listItem), updatedItem);
+                break;
+            }
+        }
+        insertShoppingList(shoppingList);
+    }
+
 }

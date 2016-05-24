@@ -14,6 +14,12 @@ public class ShoppingListItem {
         this.isBought = isBought;
     }
 
+    public ShoppingListItem(ShoppingListItem copiedItem) {
+        this.ingredient = copiedItem.getIngredient();
+        this.amount = copiedItem.getAmount();
+        this.isBought = copiedItem.isBought();
+    }
+
     public Ingredient getIngredient() {
         return ingredient;
     }
@@ -24,5 +30,9 @@ public class ShoppingListItem {
 
     public boolean isBought() {
         return isBought;
+    }
+
+    public void setBought(boolean isBought) {
+        this.isBought = isBought;
     }
 }

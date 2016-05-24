@@ -2,6 +2,7 @@ package ava.androidchef.features.shoppinglist;
 
 import ava.androidchef.models.shoppinglist.ShoppingList;
 import ava.androidchef.models.shoppinglist.ShoppingListDAO;
+import ava.androidchef.models.shoppinglist.ShoppingListItem;
 
 public class ShoppingListPresenter {
 
@@ -15,5 +16,10 @@ public class ShoppingListPresenter {
         ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
         ShoppingList shoppingList = shoppingListDAO.getShoppingList();
         fragment.displayShoppingList(shoppingList);
+    }
+
+    public void checkboxClicked(ShoppingListItem item) {
+        ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
+        shoppingListDAO.updateItemInShoppingList(item);
     }
 }
