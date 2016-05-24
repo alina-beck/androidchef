@@ -35,4 +35,23 @@ public class ShoppingListItem {
     public void setBought(boolean isBought) {
         this.isBought = isBought;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ShoppingListItem that = (ShoppingListItem) o;
+
+        return !(ingredient != null ? !ingredient.equals(that.ingredient) : that.ingredient != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return ingredient != null ? ingredient.hashCode() : 0;
+    }
 }

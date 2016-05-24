@@ -64,32 +64,24 @@ public class ShoppingListDAO {
 
     private ShoppingList createShoppingListFromMenu(Menu menu) {
         ShoppingList shoppingList = new ShoppingList();
-        LinkedHashMap<String, Integer> ingredientsWithoutDuplicates = new LinkedHashMap<>();
+        LinkedHashMap<Ingredient, Integer> ingredientsWithoutDuplicates = new LinkedHashMap<>();
         ArrayList<Recipe> recipes = menu.getRecipes();
 
         for (Recipe recipe : recipes) {
             LinkedHashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
-            System.out.println("ingredients in recipe: " + ingredients);
             for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
-                System.out.println("ingredient: " + entry.getKey() + " und amount: " + entry.getValue());
-                if (ingredientsWithoutDuplicates.containsKey(entry.getKey().getName())) {
-                    System.out.println("ingredient is already in list");
-                    int updatedValue = ingredientsWithoutDuplicates.get(entry.getKey().getName()) + entry.getValue();
-                    System.out.println("new value: " + updatedValue);
-                    ingredientsWithoutDuplicates.remove(entry.getKey().getName());
-                    ingredientsWithoutDuplicates.put(entry.getKey().getName(), updatedValue);
+                if (ingredientsWithoutDuplicates.containsKey(entry.getKey())) {
+                    int updatedValue = ingredientsWithoutDuplicates.get(entry.getKey()) + entry.getValue();
+                    ingredientsWithoutDuplicates.put(entry.getKey(), updatedValue);
                 }
                 else {
-                    System.out.println("ingredient not yet in list, putting it now");
-                    ingredientsWithoutDuplicates.put(entry.getKey().getName(), entry.getValue());
+                    ingredientsWithoutDuplicates.put(entry.getKey(), entry.getValue());
                 }
             }
         }
 
-        for (Map.Entry<String, Integer> entry : ingredientsWithoutDuplicates.entrySet()) {
-            IngredientDAO ingredientDAO = IngredientDAO.getInstance(context);
-            Ingredient ingredient = ingredientDAO.selectIngredientByName(entry.getKey());
-            ShoppingListItem item = new ShoppingListItem(ingredient, entry.getValue(), false);
+        for (Map.Entry<Ingredient, Integer> entry : ingredientsWithoutDuplicates.entrySet()) {
+            ShoppingListItem item = new ShoppingListItem(entry.getKey(), entry.getValue(), false);
             shoppingList.add(item);
         }
 
@@ -104,16 +96,11 @@ public class ShoppingListDAO {
     public void updateItemInShoppingList(ShoppingListItem item) {
         ShoppingList shoppingList = getShoppingList();
         ShoppingListItem updatedItem = new ShoppingListItem(item);
-        if (item.isBought()) {
-            updatedItem.setBought(false);
-        }
-        else {
-            updatedItem.setBought(true);
-        }
+        updatedItem.setBought(!item.isBought());
 
         for (ShoppingListItem listItem : shoppingList) {
-            if (listItem.getIngredient().getName().equals(item.getIngredient().getName())) {
-                shoppingList.add(shoppingList.indexOf(listItem), updatedItem);
+            if (listItem.equals(item)) {
+                shoppingList.set(shoppingList.indexOf(listItem), updatedItem);
                 break;
             }
         }

@@ -40,10 +40,6 @@ public class Ingredient implements Parcelable {
         return unit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -70,4 +66,25 @@ public class Ingredient implements Parcelable {
             return new Ingredient[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Ingredient that = (Ingredient) o;
+
+        return name.equals(that.name) && unit.equals(that.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + unit.hashCode();
+        return result;
+    }
 }
