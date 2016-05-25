@@ -21,5 +21,7 @@
     <string name="enter_number">Enter a number</string>
     <string name="enter_recipe_instructions">Enter instructions for your recipe</string>
     <string name="show_shopping_list">Show shopping list</string>
+    <string name="my_menu">My Menu</string>
+    <string name="shopping_list">My shopping list</string>
 
 </resources>

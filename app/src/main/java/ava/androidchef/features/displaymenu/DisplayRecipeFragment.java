@@ -1,9 +1,17 @@
 package ava.androidchef.features.displaymenu;
 
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +26,7 @@ import ava.androidchef.R;
 import ava.androidchef.features.allrecipes.AllRecipesActivity;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.recipe.Recipe;
+import ava.androidchef.utils.IconTypefaceSpan;
 
 public class DisplayRecipeFragment extends Fragment implements View.OnClickListener {
 
@@ -31,10 +40,9 @@ public class DisplayRecipeFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_display_recipe, container, false);
 
         this.recipe = getArguments().getParcelable("selected_recipe");
+        setHasOptionsMenu(true);
 
         if (recipe != null) {
-            TextView titleView = (TextView) view.findViewById(R.id.display_recipe_title);
-            titleView.setText(recipe.getTitle());
 
             LinearLayout ingredientsList = (LinearLayout) view.findViewById(R.id.display_recipe_ingredients);
 
@@ -46,10 +54,10 @@ public class DisplayRecipeFragment extends Fragment implements View.OnClickListe
                 LinearLayout ingredientDisplayLine = (LinearLayout) inflater.inflate(R.layout.list_item_display_ingredient, null);
 
                 TextView amountView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_amount);
-                amountView.setText(Integer.toString(amount));
+                amountView.setText(Integer.toString(amount) + " ");
 
                 TextView unitView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_unit);
-                unitView.setText(ingredient.getUnit());
+                unitView.setText(ingredient.getUnit() + " ");
 
                 TextView ingredientTitleView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_title);
                 ingredientTitleView.setText(ingredient.getName());
@@ -62,10 +70,27 @@ public class DisplayRecipeFragment extends Fragment implements View.OnClickListe
 
         }
 
-        Button editButton = (Button) view.findViewById(R.id.button_edit_recipe);
-        editButton.setOnClickListener(this);
-
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.action_bar_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_edit);
+        Button editIcon = (Button) item.getActionView();
+
+        Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "Flaticon.ttf");
+        editIcon.setTypeface(iconfont);
+        editIcon.setText(R.string.icon_edit);
+        editIcon.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        editIcon.setBackgroundColor(Color.TRANSPARENT);
+        editIcon.setOnClickListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle(recipe.getTitle());
     }
 
     @Override
@@ -78,5 +103,4 @@ public class DisplayRecipeFragment extends Fragment implements View.OnClickListe
             ((AllRecipesActivity) getActivity()).editRecipeButtonClicked(recipe);
         }
     }
-
 }
