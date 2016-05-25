@@ -8,6 +8,8 @@
 
     <TextView
         android:text="@string/title"
+
+        style="@style/ChefTheme.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -20,6 +22,8 @@
 
     <TextView
         android:text="@string/ingredients"
+
+        style="@style/ChefTheme.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

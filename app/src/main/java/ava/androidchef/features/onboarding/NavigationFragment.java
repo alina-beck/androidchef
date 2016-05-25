@@ -56,7 +56,7 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
 
     public void addIcon(Button button, int iconResource, int stringResource) {
         //TODO: don't break lines for shopping list button
-        SpannableStringBuilder spannable = new SpannableStringBuilder(getString(iconResource) + "\n" + getString(stringResource).toUpperCase());
+        SpannableStringBuilder spannable = new SpannableStringBuilder(getString(iconResource) + "\n\n" + getString(stringResource).toUpperCase());
         spannable.setSpan(new IconTypefaceSpan(iconfont), 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         button.setAllCaps(false);
         button.setText(spannable);

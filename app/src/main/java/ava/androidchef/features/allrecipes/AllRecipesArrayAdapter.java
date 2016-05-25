@@ -1,6 +1,7 @@
 package ava.androidchef.features.allrecipes;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
         });
 
         Button deleteButton = (Button) view.findViewById(R.id.button_delete);
+        Typeface iconfont = Typeface.createFromAsset(fragment.getActivity().getAssets(), "Flaticon.ttf");
+        deleteButton.setTypeface(iconfont);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
