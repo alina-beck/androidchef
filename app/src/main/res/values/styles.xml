@@ -53,10 +53,10 @@
     </style>
 
     <style name="ChefTheme.Button.Navigation" parent="ChefTheme.Button">
-        <item name="android:layout_height">120dp</item>
-        <item name="android:layout_width">120dp</item>
-        <item name="android:layout_gravity">left|top</item>
+        <item name="android:columnCount">1</item>
+        <item name="android:rowCount">1</item>
         <item name="android:layout_margin">12dp</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="ChefTheme.Button.Navigation.Double" parent="ChefTheme.Button.Navigation">
