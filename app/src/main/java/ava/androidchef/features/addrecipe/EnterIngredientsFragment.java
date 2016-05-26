@@ -2,8 +2,6 @@ package ava.androidchef.features.addrecipe;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,7 @@ import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.utils.AutoCompleteOnItemClickListener;
 import ava.androidchef.utils.BaseIngredientsPresenter;
 import ava.androidchef.utils.IngredientInputTextWatcher;
-import ava.androidchef.utils.Unit;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class EnterIngredientsFragment extends Fragment
         implements AdapterView.OnItemClickListener, View.OnFocusChangeListener {
@@ -69,7 +67,7 @@ public class EnterIngredientsFragment extends Fragment
         ingredientNameInput.setOnItemClickListener(new AutoCompleteOnItemClickListener(ingredientInputRow, this));
         ingredientNameInput.setOnFocusChangeListener(this);
 
-        Spinner unitSpinner = (Spinner) ingredientInputRow.findViewById(R.id.spinner_unit);
+        MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) ingredientInputRow.findViewById(R.id.spinner_unit);
         populateUnitSpinner(unitSpinner);
 
         ingredientInputRows.addView(ingredientInputRow);
@@ -81,14 +79,12 @@ public class EnterIngredientsFragment extends Fragment
         ingredientNameInput.setAdapter(adapter);
     }
 
-    public void populateUnitSpinner(Spinner unitSpinner) {
+    public void populateUnitSpinner(MaterialBetterSpinner unitSpinner) {
         //TODO: rebuild custom TextWatcher and set method to private again
         ArrayList<String> units = presenter.getAllUnits();
-        units.add(0, "");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         unitSpinner.setAdapter(adapter);
-        unitSpinner.setSelection(0);
     }
 
     public void fillIngredientRow(String name, String unit, String amount, int position) {
@@ -97,7 +93,7 @@ public class EnterIngredientsFragment extends Fragment
         nameInput.setText(name);
         nameInput.setOnFocusChangeListener(null);
 
-        Spinner unitSpinner = (Spinner) filledRow.findViewById(R.id.spinner_unit);
+        MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) filledRow.findViewById(R.id.spinner_unit);
         int positionOfUnit = ((ArrayAdapter<String>) unitSpinner.getAdapter()).getPosition(unit);
         unitSpinner.setSelection(positionOfUnit);
 
@@ -115,11 +111,13 @@ public class EnterIngredientsFragment extends Fragment
         ingredientNameInput.setText(selectedIngredientName);
         ingredientNameInput.addTextChangedListener(new IngredientInputTextWatcher(this, selectedRow, ingredientNameInput));
 
-        Spinner unitSpinner = (Spinner) selectedRow.findViewById(R.id.spinner_unit);
+        MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) selectedRow.findViewById(R.id.spinner_unit);
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) unitSpinner.getAdapter();
+        String matchingUnit = presenter.getUnit(selectedIngredientName);
         adapter.clear();
-        adapter.add(presenter.getUnit(selectedIngredientName));
+        adapter.add(matchingUnit);
         adapter.notifyDataSetChanged();
+        unitSpinner.setText(matchingUnit);
     }
 
     @Override
@@ -144,9 +142,9 @@ public class EnterIngredientsFragment extends Fragment
 
     public String getIngredientUnitAt(int position) {
         LinearLayout requestedRow = (LinearLayout) ingredientInputRows.getChildAt(position);
-        Spinner unitSpinner = (Spinner) requestedRow.findViewById(R.id.spinner_unit);
+        MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) requestedRow.findViewById(R.id.spinner_unit);
 
-        return unitSpinner.getSelectedItem().toString();
+        return unitSpinner.getText().toString();
     }
 
     public String getAmountAt(int position) {

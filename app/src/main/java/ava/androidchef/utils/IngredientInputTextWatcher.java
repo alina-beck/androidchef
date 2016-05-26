@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
 import ava.androidchef.R;
 import ava.androidchef.features.addrecipe.EnterIngredientsFragment;
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class IngredientInputTextWatcher implements TextWatcher {
 
@@ -34,7 +37,7 @@ public class IngredientInputTextWatcher implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         // reset content of input fields when chosen ingredient is deselected by typing
-        Spinner unitSpinner = (Spinner) selectedRow.findViewById(R.id.spinner_unit);
+        MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) selectedRow.findViewById(R.id.spinner_unit);
         fragment.populateUnitSpinner(unitSpinner);
         ingredientNameInput.removeTextChangedListener(this);
     }
