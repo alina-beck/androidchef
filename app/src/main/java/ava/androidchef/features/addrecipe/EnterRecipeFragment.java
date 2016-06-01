@@ -7,14 +7,18 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedHashMap;
@@ -25,7 +29,7 @@ import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.utils.BaseRecipePresenter;
 
-public class EnterRecipeFragment extends Fragment implements View.OnClickListener {
+public class EnterRecipeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
     private BaseRecipePresenter presenter;
 
@@ -53,6 +57,9 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.nested_fragment_container, enterIngredientsFragment);
         fragmentTransaction.commit();
+
+        EditText titleInput = (EditText) view.findViewById(R.id.input_recipe_title);
+        titleInput.setOnEditorActionListener(this);
 
         return view;
     }
@@ -114,5 +121,19 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
 
     public void alert(String alertMessage) {
         Toast.makeText(getActivity(), alertMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+            AutoCompleteTextView ingredientTitle = (AutoCompleteTextView) getView().findViewById(R.id.input_ingredient_name);
+            handled = ingredientTitle.requestFocus();
+        }
+        return handled;
+    }
+
+    public void resetInputFields() {
+        ((AddRecipeActivity) getActivity()).resetInputFields();
     }
 }

@@ -46,6 +46,7 @@ public class EnterRecipePresenter extends BaseRecipePresenter {
         Recipe recipe = new Recipe (recipeTitle, savedIngredients, recipeInstructions);
         if (saveRecipe(recipe)) {
             fragment.alert("Save successful!");
+            fragment.resetInputFields();
         }
         else {
             fragment.alert("Error when saving.");

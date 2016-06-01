@@ -17,23 +17,13 @@
             android:hint="@string/ingredient"
             android:completionThreshold="1"
             android:inputType="textNoSuggestions|textCapWords"
+            android:imeOptions="actionNext"
 
             style="@style/ChefTheme.EditText"
             android:layout_width="match_parent"
             android:minEms="6"
             android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
-
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/spinner_unit"
-        android:prompt="@string/choose_unit"
-        android:hint="@string/unit"
-        app:met_floatingLabel="normal"
-
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="wrap_content" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="0dp"
@@ -43,11 +33,25 @@
         <EditText
             android:id="@+id/input_ingredient_amount"
             android:hint="@string/amount"
+            android:inputType="number"
+            android:imeOptions="actionNext"
 
             style="@style/ChefTheme.EditText"
             android:layout_width="match_parent"
             android:minEms="3"
             android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spinner_unit"
+        android:hint="@string/unit"
+        app:met_floatingLabel="normal"
+
+        style="@style/ChefTheme.EditText"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

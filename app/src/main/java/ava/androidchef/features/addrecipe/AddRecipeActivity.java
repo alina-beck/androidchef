@@ -22,4 +22,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragment_container_enter_recipe, enterRecipeFragment);
         fragmentTransaction.commit();
     }
+
+    public void resetInputFields() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        EnterRecipeFragment enterRecipeFragment = new EnterRecipeFragment();
+        fragmentTransaction.replace(R.id.fragment_container_enter_recipe, enterRecipeFragment);
+        fragmentTransaction.commit();
+    }
 }

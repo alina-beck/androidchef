@@ -4,13 +4,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import ava.androidchef.R;
 import ava.androidchef.features.addrecipe.EnterIngredientsFragment;
-import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class IngredientInputTextWatcher implements TextWatcher {
 

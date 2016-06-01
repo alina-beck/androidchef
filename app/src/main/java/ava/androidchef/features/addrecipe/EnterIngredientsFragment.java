@@ -1,17 +1,23 @@
 package ava.androidchef.features.addrecipe;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,7 +29,6 @@ import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.utils.AutoCompleteOnItemClickListener;
 import ava.androidchef.utils.BaseIngredientsPresenter;
 import ava.androidchef.utils.IngredientInputTextWatcher;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class EnterIngredientsFragment extends Fragment
         implements AdapterView.OnItemClickListener, View.OnFocusChangeListener {
@@ -60,14 +65,40 @@ public class EnterIngredientsFragment extends Fragment
 
     private void displayIngredientInputRow() {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        LinearLayout ingredientInputRow = (LinearLayout) inflater.inflate(R.layout.list_item_enter_ingredient, null);
+        final LinearLayout ingredientInputRow = (LinearLayout) inflater.inflate(R.layout.list_item_enter_ingredient, null);
 
         AutoCompleteTextView ingredientNameInput = (AutoCompleteTextView) ingredientInputRow.findViewById(R.id.input_ingredient_name);
         populateIngredientNameDropdown(ingredientNameInput);
         ingredientNameInput.setOnItemClickListener(new AutoCompleteOnItemClickListener(ingredientInputRow, this));
         ingredientNameInput.setOnFocusChangeListener(this);
+        ingredientNameInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    EditText inputAmount = (EditText) ingredientInputRow.findViewById(R.id.input_ingredient_amount);
+                    handled = inputAmount.requestFocus();
+                }
+                return handled;
+            }
+        });
 
-        MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) ingredientInputRow.findViewById(R.id.spinner_unit);
+        EditText inputAmount = (EditText) ingredientInputRow.findViewById(R.id.input_ingredient_amount);
+        inputAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) ingredientInputRow.findViewById(R.id.spinner_unit);
+                    unitSpinner.requestFocus();
+                    unitSpinner.showDropDown();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+        final MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) ingredientInputRow.findViewById(R.id.spinner_unit);
         populateUnitSpinner(unitSpinner);
 
         ingredientInputRows.addView(ingredientInputRow);
@@ -81,6 +112,7 @@ public class EnterIngredientsFragment extends Fragment
 
     public void populateUnitSpinner(MaterialBetterSpinner unitSpinner) {
         //TODO: rebuild custom TextWatcher and set method to private again
+        //TODO: style dropdown items & selected item
         ArrayList<String> units = presenter.getAllUnits();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -118,6 +150,9 @@ public class EnterIngredientsFragment extends Fragment
         adapter.add(matchingUnit);
         adapter.notifyDataSetChanged();
         unitSpinner.setText(matchingUnit);
+
+        EditText inputAmount = (EditText) selectedRow.findViewById(R.id.input_ingredient_amount);
+        inputAmount.requestFocus();
     }
 
     @Override
@@ -161,5 +196,4 @@ public class EnterIngredientsFragment extends Fragment
     public void ingredientsSaved(LinkedHashMap<Ingredient, Integer> ingredients) {
         ((EnterRecipeFragment) getParentFragment()).ingredientsSaved(ingredients);
     }
-
 }
