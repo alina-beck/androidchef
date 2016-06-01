@@ -20,7 +20,7 @@
             android:label="@string/new_recipe" />
         <activity
             android:name=".features.createmenu.CreateMenuActivity"
-            android:label="@string/weekly_menu" />
+            android:label="@string/create_menu" />
         <activity
             android:name=".features.allrecipes.AllRecipesActivity"
             android:label="@string/my_recipes"
@@ -30,7 +30,7 @@
             android:label="@string/my_menu"/>
         <activity
             android:name=".features.shoppinglist.ShoppingListActivity"
-            android:label="@string/shopping_list"/>
+            android:label="@string/my_shopping_list"/>
     </application>
 
 </manifest>

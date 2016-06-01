@@ -26,7 +26,7 @@ public class DisplayMenuActivity extends AppCompatActivity {
         DisplayRecipeFragment displayRecipeFragment = new DisplayRecipeFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable("selected_recipe", selectedRecipe);
+        args.putParcelable(getString(R.string.selected_recipe), selectedRecipe);
         displayRecipeFragment.setArguments(args);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -38,7 +38,7 @@ public class DisplayMenuActivity extends AppCompatActivity {
         EnterRecipeFragment enterRecipeFragment = new EnterRecipeFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable("edited_recipe", recipe);
+        args.putParcelable(getString(R.string.editing_recipe), recipe);
         enterRecipeFragment.setArguments(args);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

@@ -48,10 +48,10 @@ public class AllRecipesFragment extends ListFragment {
 
     public void displayToast(boolean update) {
         if (update) {
-            Toast.makeText(getActivity(), "updated in database", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.recipe_deleted, Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(getActivity(), "error when saving", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.saving_error, Toast.LENGTH_LONG).show();
         }
     }
 

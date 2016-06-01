@@ -53,7 +53,7 @@ public class DisplayMenuFragment extends ListFragment {
     }
 
     public void alertNoMoreRecipes() {
-        Toast.makeText(getActivity(), "No more recipes in database", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.no_more_recipes, Toast.LENGTH_LONG).show();
     }
 
     public void displayNoMenu() {

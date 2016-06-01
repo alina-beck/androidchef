@@ -1,6 +1,5 @@
 package ava.androidchef.features.addrecipe;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -49,7 +47,7 @@ public class EnterIngredientsFragment extends Fragment
         }
 
         else {
-            this.presenter = new EditIngredientsPresenter(this, (Recipe) getArguments().getParcelable("edited_recipe"));
+            this.presenter = new EditIngredientsPresenter(this, (Recipe) getArguments().getParcelable(getString(R.string.editing_recipe)));
         }
 
         displayIngredientInputRow();

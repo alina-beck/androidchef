@@ -36,19 +36,19 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         goToAddRecipe.setOnClickListener(this);
 
         Button goToCreateMenu = (Button) view.findViewById(R.id.button_goto_create_menu);
-        addIcon(goToCreateMenu, R.string.icon_createmenu, R.string.create_random_menu);
+        addIcon(goToCreateMenu, R.string.icon_createmenu, R.string.create_menu);
         goToCreateMenu.setOnClickListener(this);
 
         Button goToCurrentMenu = (Button) view.findViewById(R.id.button_goto_current_menu);
-        addIcon(goToCurrentMenu, R.string.icon_menu, R.string.show_current_menu);
+        addIcon(goToCurrentMenu, R.string.icon_menu, R.string.current_menu);
         goToCurrentMenu.setOnClickListener(this);
 
         Button goToAllRecipes = (Button) view.findViewById(R.id.button_goto_all_recipes);
-        addIcon(goToAllRecipes, R.string.icon_recipes, R.string.show_all_recipes);
+        addIcon(goToAllRecipes, R.string.icon_recipes, R.string.my_recipes);
         goToAllRecipes.setOnClickListener(this);
 
         Button goToShoppingList = (Button) view.findViewById(R.id.button_goto_shopping_list);
-        addIcon(goToShoppingList, R.string.icon_shopping, R.string.show_shopping_list);
+        addIcon(goToShoppingList, R.string.icon_shopping, R.string.my_shopping_list);
         goToShoppingList.setOnClickListener(this);
 
         return view;

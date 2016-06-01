@@ -23,7 +23,7 @@ public class AllRecipesActivity extends AppCompatActivity {
         DisplayRecipeFragment displayRecipeFragment = new DisplayRecipeFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable("selected_recipe", recipe);
+        args.putParcelable(getString(R.string.selected_recipe), recipe);
         displayRecipeFragment.setArguments(args);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -35,7 +35,7 @@ public class AllRecipesActivity extends AppCompatActivity {
         EnterRecipeFragment enterRecipeFragment = new EnterRecipeFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable("edited_recipe", recipe);
+        args.putParcelable(getString(R.string.editing_recipe), recipe);
         enterRecipeFragment.setArguments(args);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

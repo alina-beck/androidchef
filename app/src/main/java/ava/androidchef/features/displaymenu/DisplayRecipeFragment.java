@@ -39,7 +39,7 @@ public class DisplayRecipeFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_recipe, container, false);
 
-        this.recipe = getArguments().getParcelable("selected_recipe");
+        this.recipe = getArguments().getParcelable(getString(R.string.selected_recipe));
         setHasOptionsMenu(true);
 
         if (recipe != null) {
@@ -54,10 +54,12 @@ public class DisplayRecipeFragment extends Fragment implements View.OnClickListe
                 LinearLayout ingredientDisplayLine = (LinearLayout) inflater.inflate(R.layout.list_item_display_ingredient, null);
 
                 TextView amountView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_amount);
-                amountView.setText(Integer.toString(amount) + " ");
+                String amountString = Integer.toString(amount) + " ";
+                amountView.setText(amountString);
 
                 TextView unitView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_unit);
-                unitView.setText(ingredient.getUnit() + " ");
+                String unitString = ingredient.getUnit() + " ";
+                unitView.setText(unitString);
 
                 TextView ingredientTitleView = (TextView) ingredientDisplayLine.findViewById(R.id.display_ingredient_title);
                 ingredientTitleView.setText(ingredient.getName());

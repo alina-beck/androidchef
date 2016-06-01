@@ -21,11 +21,9 @@ public class DisplayMenuPresenter {
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
         Menu menu = menuDAO.getMenu();
         if (menu != null) {
-            System.out.println("menu is not null");
             fragment.displayMenu(menu);
         }
         else {
-            System.out.println("menu is null");
             fragment.displayNoMenu();
         }
     }

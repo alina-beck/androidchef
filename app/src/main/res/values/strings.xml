@@ -1,30 +1,35 @@
 <resources>
     <string name="app_name">AndroidChef</string>
 
-    <string name="title">Title</string>
-    <string name="enter_title">Enter a title for your recipe</string>
-    <string name="save">Save</string>
-    <string name="new_recipe">New Recipe</string>
-    <string name="create_random_menu">Create random Menu</string>
-    <string name="weekly_menu">Weekly Menu</string>
-    <string name="show_all_recipes">Show all Recipes</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
     <string name="my_recipes">My Recipes</string>
-    <string name="show_current_menu">Show current menu</string>
-    <string name="replace">Replace</string>
-    <string name="ingredients">Ingredients</string>
-    <string name="choose_unit">Choose Unit</string>
+
+    <string name="new_recipe">New Recipe</string>
+    <string name="edit_recipe">Edit Recipe</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="recipe_instructions">Instructions</string>
+
     <string name="ingredient">Ingredient</string>
     <string name="amount">Amount</string>
-    <string name="how_many_days">How many days?</string>
-    <string name="enter_number">Enter a number</string>
-    <string name="enter_recipe_instructions">Enter instructions for your recipe</string>
-    <string name="show_shopping_list">Show shopping list</string>
-    <string name="my_menu">My Menu</string>
-    <string name="shopping_list">My shopping list</string>
     <string name="unit">Unit</string>
-    <string name="no_recipes">You have no recipes yet. Add one now!</string>
-    <string name="no_menu">You haven\'t saved a menu yet. Create one now!</string>
+
+    <string name="my_menu">My Menu</string>
+    <string name="current_menu">Current Menu</string>
+
+    <string name="create_menu">Create Menu</string>
+    <string name="menu_title">Menu Title</string>
+    <string name="number_of_recipes">Number of Recipes</string>
+
+    <string name="my_shopping_list">My Shopping List</string>
+
+    <string name="replace">Replace</string>
+
+    <string name="no_recipes">You have no Recipes yet. Add one now!</string>
+    <string name="no_more_recipes">There are no more Recipes.</string>
+    <string name="no_menu">You haven\'t saved a Menu yet. Create one now!</string>
+    <string name="recipe_deleted">Recipe deleted!</string>
+    <string name="saving_error">Could not save.</string>
+
+    <string name="editing_recipe">editing recipe</string>
+    <string name="selected_recipe">selected recipe</string>
 
 </resources>

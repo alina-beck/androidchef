@@ -3,7 +3,6 @@ package ava.androidchef.features.addrecipe;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.TypedValue;
@@ -24,6 +23,8 @@ import android.widget.Toast;
 import java.util.LinkedHashMap;
 
 import ava.androidchef.R;
+import ava.androidchef.features.allrecipes.AllRecipesActivity;
+import ava.androidchef.features.displaymenu.DisplayMenuActivity;
 import ava.androidchef.features.editrecipe.EditRecipePresenter;
 import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.recipe.Recipe;
@@ -49,9 +50,9 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
         }
         else {
             enterIngredientsFragment.setArguments(getArguments());
-            Recipe recipe = getArguments().getParcelable("edited_recipe");
+            Recipe recipe = getArguments().getParcelable(getString(R.string.editing_recipe));
             this.presenter = new EditRecipePresenter(this, recipe);
-            getActivity().setTitle(R.string.edit);
+            getActivity().setTitle(R.string.edit_recipe);
         }
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
