@@ -68,6 +68,7 @@ public class EditRecipePresenter extends BaseRecipePresenter {
 
         if (recipeDAO.updateRecipe(updatedRecipe)) {
             fragment.alert("Recipe updated!");
+            fragment.displayRecipe(updatedRecipe);
         }
     }
 

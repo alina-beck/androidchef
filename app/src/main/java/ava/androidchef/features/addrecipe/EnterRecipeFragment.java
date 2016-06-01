@@ -137,4 +137,14 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
     public void resetInputFields() {
         ((AddRecipeActivity) getActivity()).resetInputFields();
     }
+
+    public void displayRecipe(Recipe recipe) {
+        // TODO: implement interface to be independent from Activities
+        if (getActivity() instanceof DisplayMenuActivity) {
+            ((DisplayMenuActivity) getActivity()).recipeSelected(recipe);
+        }
+        else if (getActivity() instanceof AllRecipesActivity) {
+            ((AllRecipesActivity) getActivity()).onRecipeSelected(recipe);
+        }
+    }
 }
