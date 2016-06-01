@@ -126,8 +126,11 @@ public class EnterIngredientsFragment extends Fragment
         nameInput.setOnFocusChangeListener(null);
 
         MaterialBetterSpinner unitSpinner = (MaterialBetterSpinner) filledRow.findViewById(R.id.spinner_unit);
-        int positionOfUnit = ((ArrayAdapter<String>) unitSpinner.getAdapter()).getPosition(unit);
-        unitSpinner.setSelection(positionOfUnit);
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) unitSpinner.getAdapter();
+        adapter.clear();
+        adapter.add(unit);
+        adapter.notifyDataSetChanged();
+        unitSpinner.setText(unit);
 
         EditText amountInput = (EditText) filledRow.findViewById(R.id.input_ingredient_amount);
         amountInput.setText(amount);

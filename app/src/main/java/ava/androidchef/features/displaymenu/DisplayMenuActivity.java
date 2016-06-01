@@ -31,7 +31,6 @@ public class DisplayMenuActivity extends AppCompatActivity {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_display_menu, displayRecipeFragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
