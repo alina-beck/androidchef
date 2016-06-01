@@ -13,6 +13,9 @@ public class AllRecipesPresenter {
     }
 
     public void onFragmentCreate() {
+        if (recipeDAO.getNumberOfRecipes() == 0) {
+            fragment.displayNoRecipes();
+        }
         fragment.displayAllRecipes(recipeDAO.selectAllRecipes());
     }
 

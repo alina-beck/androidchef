@@ -41,8 +41,13 @@ public class MenuDAO {
 
     public Menu getMenu() {
         String menuAsJson = sharedPreferences.getString("current_menu", "no menu");
+        if (menuAsJson.equals("no menu")) {
+            return null;
+        }
+        else {
         Gson gson = new Gson();
         return gson.fromJson(menuAsJson, Menu.class);
+        }
     }
 
     public void updateRecipeInMenu(Recipe originalRecipe, Recipe updatedRecipe) {

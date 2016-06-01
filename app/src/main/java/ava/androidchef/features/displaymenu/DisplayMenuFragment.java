@@ -5,6 +5,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +38,7 @@ public class DisplayMenuFragment extends ListFragment {
     }
 
     public void displayMenu(Menu menu) {
-        TextView menuTitle = (TextView) getView().findViewById(R.id.text_menu_title);
-        menuTitle.setText(menu.getTitle());
+        getActivity().setTitle(menu.getTitle());
 
         DisplayMenuArrayAdapter adapter = new DisplayMenuArrayAdapter(getActivity(), R.layout.list_item_replaceable_recipe, menu.getRecipes(), this);
         setListAdapter(adapter);
@@ -54,5 +54,10 @@ public class DisplayMenuFragment extends ListFragment {
 
     public void alertNoMoreRecipes() {
         Toast.makeText(getActivity(), "No more recipes in database", Toast.LENGTH_LONG).show();
+    }
+
+    public void displayNoMenu() {
+        TextView noRecipes = (TextView) getView().findViewById(R.id.text_menu_title);
+        noRecipes.setText(R.string.no_menu);
     }
 }

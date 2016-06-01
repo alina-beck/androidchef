@@ -24,5 +24,7 @@
     <string name="my_menu">My Menu</string>
     <string name="shopping_list">My shopping list</string>
     <string name="unit">Unit</string>
+    <string name="no_recipes">You have no recipes yet. Add one now!</string>
+    <string name="no_menu">You haven\'t saved a menu yet. Create one now!</string>
 
 </resources>

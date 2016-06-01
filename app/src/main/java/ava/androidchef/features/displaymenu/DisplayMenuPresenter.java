@@ -20,8 +20,15 @@ public class DisplayMenuPresenter {
 
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
         Menu menu = menuDAO.getMenu();
-        fragment.displayMenu(menu);
+        if (menu != null) {
+            System.out.println("menu is not null");
+            fragment.displayMenu(menu);
         }
+        else {
+            System.out.println("menu is null");
+            fragment.displayNoMenu();
+        }
+    }
 
     public void onReplaceButtonClick(ArrayList<Recipe> currentRecipes, int index) {
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
