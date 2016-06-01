@@ -1,34 +1,46 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="ava.androidchef.features.createmenu.CreateMenuFragment">
 
-    <TextView
-        android:text="@string/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <EditText
         android:id="@+id/input_new_menu_title"
-        android:hint="@string/enter_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:hint="@string/menu_title"
+        android:inputType="textNoSuggestions|textCapWords"
 
-    <TextView
-        android:text="@string/how_many_days"
-        android:layout_width="wrap_content"
+        style="@style/ChefTheme.EditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <EditText
         android:id="@+id/input_new_menu_days"
-        android:hint="@string/enter_number"
-        android:layout_width="wrap_content"
+        android:hint="@string/number_of_recipes"
+        android:inputType="number"
+
+        style="@style/ChefTheme.EditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/button_create_random_menu"
-        android:text="@string/create_random_menu"
+        android:text="@string/create_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
