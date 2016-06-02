@@ -25,6 +25,6 @@ public class ShoppingListPresenter {
 
     public void checkboxClicked(ShoppingListItem item) {
         ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
-        shoppingListDAO.updateItemInShoppingList(item);
+        shoppingListDAO.updateItemStatusInShoppingList(item);
     }
 }

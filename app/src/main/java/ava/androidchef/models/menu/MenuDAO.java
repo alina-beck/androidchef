@@ -61,4 +61,8 @@ public class MenuDAO {
             }
         }
     }
+
+    public boolean menuContainsRecipe(Recipe recipe) {
+        return (getMenu().getRecipes().contains(recipe));
+    }
 }

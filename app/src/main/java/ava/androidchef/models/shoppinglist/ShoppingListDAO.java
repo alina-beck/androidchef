@@ -6,12 +6,10 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import ava.androidchef.models.ingredient.Ingredient;
-import ava.androidchef.models.ingredient.IngredientDAO;
 import ava.androidchef.models.menu.Menu;
 import ava.androidchef.models.menu.MenuDAO;
 import ava.androidchef.models.recipe.Recipe;
@@ -99,7 +97,7 @@ public class ShoppingListDAO {
         LinkedHashMap<Ingredient, Integer> newIngredients = newRecipe.getIngredients();
 
         for (Map.Entry<Ingredient, Integer> entry : newIngredients.entrySet()) {
-            ShoppingListItem correspondingItem = findIngredientOnShoppingList(entry.getKey(), shoppingList);
+            ShoppingListItem correspondingItem = findIngredientInShoppingList(entry.getKey(), shoppingList);
 
             if (correspondingItem != null) {
                 int newAmount = correspondingItem.getAmount() + entry.getValue();
@@ -115,7 +113,7 @@ public class ShoppingListDAO {
         insertShoppingList(shoppingList);
     }
 
-    public ShoppingListItem findIngredientOnShoppingList(Ingredient ingredient, ShoppingList shoppingList) {
+    public ShoppingListItem findIngredientInShoppingList(Ingredient ingredient, ShoppingList shoppingList) {
         for (ShoppingListItem item : shoppingList) {
             if (item.getIngredient().equals(ingredient)) {
                 return item;
@@ -124,7 +122,7 @@ public class ShoppingListDAO {
         return null;
     }
 
-    public void updateItemInShoppingList(ShoppingListItem item) {
+    public void updateItemStatusInShoppingList(ShoppingListItem item) {
         ShoppingList shoppingList = getShoppingList();
         ShoppingListItem updatedItem = new ShoppingListItem(item);
         updatedItem.setBought(!item.isBought());

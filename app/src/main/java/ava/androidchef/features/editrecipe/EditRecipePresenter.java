@@ -7,6 +7,7 @@ import ava.androidchef.models.ingredient.Ingredient;
 import ava.androidchef.models.menu.MenuDAO;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
+import ava.androidchef.models.shoppinglist.ShoppingListDAO;
 import ava.androidchef.utils.BaseRecipePresenter;
 import ava.androidchef.utils.InputValidator;
 
@@ -62,7 +63,10 @@ public class EditRecipePresenter extends BaseRecipePresenter {
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
         menuDAO.updateRecipeInMenu(recipe, updatedRecipe);
 
-        //TODO: also update shopping list
+        if (menuDAO.menuContainsRecipe(recipe)) {
+            ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
+            shoppingListDAO.updateShoppingListWithRecipe(recipe, updatedRecipe);
+        }
 
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
 
