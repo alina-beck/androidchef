@@ -107,4 +107,23 @@ public class Recipe implements Parcelable {
             return new Recipe[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Recipe that = (Recipe) o;
+
+        return title.equals(that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return title != null ? title.hashCode() : 0;
+    }
 }
