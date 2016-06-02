@@ -15,7 +15,12 @@ public class ShoppingListPresenter {
     public void fragmentCreated() {
         ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
         ShoppingList shoppingList = shoppingListDAO.getShoppingList();
-        fragment.displayShoppingList(shoppingList);
+        if (shoppingList != null) {
+            fragment.displayShoppingList(shoppingList);
+        }
+        else {
+            fragment.displayNoShoppingList();
+        }
     }
 
     public void checkboxClicked(ShoppingListItem item) {

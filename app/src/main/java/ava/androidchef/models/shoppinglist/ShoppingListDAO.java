@@ -50,9 +50,15 @@ public class ShoppingListDAO {
 
         if (shoppingListAsJson.equals("no list")) {
             MenuDAO menuDAO = MenuDAO.getInstance(context);
+            Menu menu = menuDAO.getMenu();
 
-            shoppingList = createShoppingListFromMenu(menuDAO.getMenu());
-            insertShoppingList(shoppingList);
+            if (menu != null) {
+                shoppingList = createShoppingListFromMenu(menuDAO.getMenu());
+                insertShoppingList(shoppingList);
+            }
+            else {
+                shoppingList = null;
+            }
         }
         else {
             Gson gson = new Gson();
