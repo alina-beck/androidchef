@@ -8,29 +8,35 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/ChefTheme">
-        <activity android:name=".features.onboarding.OnboardingActivity">
+        <activity
+            android:name=".features.onboarding.OnboardingActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".features.addrecipe.AddRecipeActivity"
-            android:label="@string/new_recipe" />
+            android:label="@string/new_recipe"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".features.createmenu.CreateMenuActivity"
-            android:label="@string/create_menu" />
+            android:label="@string/create_menu"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".features.allrecipes.AllRecipesActivity"
             android:label="@string/my_recipes"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".features.displaymenu.DisplayMenuActivity"
-            android:label="@string/my_menu"/>
+            android:label="@string/my_menu"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".features.shoppinglist.ShoppingListActivity"
-            android:label="@string/my_shopping_list"/>
+            android:label="@string/my_shopping_list"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
