@@ -47,6 +47,8 @@
         android:id="@+id/spinner_unit"
         android:hint="@string/unit"
         app:met_floatingLabel="normal"
+        app:met_primaryColor="@color/colorAccent"
+        app:met_textColor="@color/colorPrimaryDark"
 
         style="@style/ChefTheme.EditText"
         android:layout_width="0dp"

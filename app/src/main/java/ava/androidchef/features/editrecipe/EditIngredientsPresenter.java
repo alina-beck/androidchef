@@ -46,8 +46,7 @@ public class EditIngredientsPresenter extends BaseIngredientsPresenter {
         fragment.ingredientsSaved(enteredIngredients);
     }
 
-    //TODO: split method into validateUserInput() and saveIngredients()
-    //TODO: split method so that most part can be reused in EditIngredientsPresenter & EnterIngredientsPresenter
+    //TODO: split method into validateUserInput() and saveIngredients() so that parts can be reused in EditIngredientsPresenter & EnterIngredientsPresenter
     private LinkedHashMap<Ingredient, Integer> getEnteredIngredients() {
         LinkedHashMap<Ingredient, Integer> enteredIngredients = new LinkedHashMap<>();
         InputValidator validator = new InputValidator(fragment.getActivity());

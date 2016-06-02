@@ -22,5 +22,6 @@ public class CreateMenuActivity extends AppCompatActivity {
     public void displayMenu() {
         Intent intent = new Intent(this, DisplayMenuActivity.class);
         startActivity(intent);
+        this.finish();
     }
 }

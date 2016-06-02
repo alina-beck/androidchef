@@ -55,7 +55,7 @@ public class EnterRecipePresenter extends BaseRecipePresenter {
 
     @Override
     public void viewCreated() {
-        //TODO: avoid having empty method - now necessary because of inheritance
+        //TODO: avoid empty method just because other subclass needs it
     }
 
     public boolean saveRecipe(Recipe recipe) {

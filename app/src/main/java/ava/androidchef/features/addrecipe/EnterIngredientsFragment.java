@@ -109,8 +109,6 @@ public class EnterIngredientsFragment extends Fragment
     }
 
     public void populateUnitSpinner(MaterialBetterSpinner unitSpinner) {
-        //TODO: rebuild custom TextWatcher and set method to private again
-        //TODO: style dropdown items & selected item
         ArrayList<String> units = presenter.getAllUnits();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, units);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
