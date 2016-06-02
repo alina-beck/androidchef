@@ -1,6 +1,7 @@
 package ava.androidchef.features.displaymenu;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class DisplayMenuArrayAdapter extends ArrayAdapter<Recipe> {
         });
 
         Button replaceButton = (Button) view.findViewById(R.id.button_replace);
+        Typeface iconfont = Typeface.createFromAsset(fragment.getActivity().getAssets(), "Flaticon.ttf");
+        replaceButton.setTypeface(iconfont);
         replaceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

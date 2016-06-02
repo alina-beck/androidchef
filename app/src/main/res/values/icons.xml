@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="icon_androidchef">&#xf101;</string>
-    <string name="icon_edit">&#xf103;</string>
-    <string name="icon_trash">&#xf107;</string>
-    <string name="icon_recipes">&#xf105;</string>
+    <string name="icon_androidchef">&#xf102;</string>
+    <string name="icon_edit">&#xf106;</string>
+    <string name="icon_trash">&#xf104;</string>
+    <string name="icon_recipes">&#xf108;</string>
     <string name="icon_addrecipe">&#xf100;</string>
-    <string name="icon_menu">&#xf104;</string>
-    <string name="icon_createmenu">&#xf102;</string>
-    <string name="icon_shopping">&#xf106;</string>
+    <string name="icon_menu">&#xf107;</string>
+    <string name="icon_createmenu">&#xf103;</string>
+    <string name="icon_shopping">&#xf10a;</string>
+    <string name="icon_save">&#xf105;</string>
+    <string name="icon_replace">&#xf109;</string>
 </resources>

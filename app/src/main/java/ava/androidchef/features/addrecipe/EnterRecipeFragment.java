@@ -79,7 +79,7 @@ public class EnterRecipeFragment extends Fragment implements View.OnClickListene
 
         Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "Flaticon.ttf");
         editIcon.setTypeface(iconfont);
-        editIcon.setText(R.string.icon_edit);
+        editIcon.setText(R.string.icon_save);
         editIcon.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         editIcon.setBackgroundColor(Color.TRANSPARENT);
         editIcon.setOnClickListener(this);
