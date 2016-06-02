@@ -1,8 +1,14 @@
 package ava.androidchef.features.createmenu;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,13 +27,24 @@ public class CreateMenuFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_menu, container, false);
-
+        setHasOptionsMenu(true);
         this.presenter = new CreateMenuPresenter(this);
 
-        Button createMenuButton = (Button) view.findViewById(R.id.button_create_random_menu);
-        createMenuButton.setOnClickListener(this);
-
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.action_bar_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_edit);
+        Button editIcon = (Button) item.getActionView();
+
+        Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "Flaticon.ttf");
+        editIcon.setTypeface(iconfont);
+        editIcon.setText(R.string.icon_save);
+        editIcon.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        editIcon.setBackgroundColor(Color.TRANSPARENT);
+        editIcon.setOnClickListener(this);
     }
 
     @Override
