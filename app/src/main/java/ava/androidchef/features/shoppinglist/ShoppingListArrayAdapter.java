@@ -43,8 +43,12 @@ public class ShoppingListArrayAdapter extends ArrayAdapter {
         });
 
         TextView amount = (TextView) view.findViewById(R.id.textview_amount);
-        String amountString = Integer.toString(shoppingList.get(position).getAmount());
+        String amountString = Integer.toString(shoppingList.get(position).getAmount()) + " ";
         amount.setText(amountString);
+
+        TextView unit = (TextView) view.findViewById(R.id.textview_unit);
+        String unitString = shoppingList.get(position).getIngredient().getUnit() + " ";
+        unit.setText(unitString);
 
         TextView ingredient = (TextView) view.findViewById(R.id.textview_ingredient);
         String ingredientName = shoppingList.get(position).getIngredient().getName();
