@@ -28,12 +28,21 @@ public class ShoppingListItem {
         return amount;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public boolean isBought() {
         return isBought;
     }
 
     public void setBought(boolean isBought) {
         this.isBought = isBought;
+    }
+
+    @Override
+    public String toString() {
+        return ingredient.toString();
     }
 
     @Override

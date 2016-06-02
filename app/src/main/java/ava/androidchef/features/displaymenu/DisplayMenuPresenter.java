@@ -31,17 +31,18 @@ public class DisplayMenuPresenter {
     public void onReplaceButtonClick(ArrayList<Recipe> currentRecipes, int index) {
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
         Recipe newRecipe = recipeDAO.selectRandomRecipe(currentRecipes);
+        Recipe oldRecipe = currentRecipes.get(index);
 
         if (newRecipe != null) {
             MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
             Menu menu = menuDAO.getMenu();
             currentRecipes.set(index, newRecipe);
             menu.setRecipes(currentRecipes);
+            menuDAO.insertMenu(menu);
             fragment.displayMenu(menu);
 
-            menuDAO.insertMenu(menu);
             ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
-            shoppingListDAO.updateShoppingList(menu);
+            shoppingListDAO.updateShoppingListWithRecipe(oldRecipe, newRecipe);
         }
 
         else fragment.alertNoMoreRecipes();

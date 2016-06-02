@@ -53,7 +53,7 @@ public class ShoppingListDAO {
             Menu menu = menuDAO.getMenu();
 
             if (menu != null) {
-                shoppingList = createShoppingListFromMenu(menuDAO.getMenu());
+                shoppingList = ShoppingList.createShoppingListFromMenu(menuDAO.getMenu());
                 insertShoppingList(shoppingList);
             }
             else {
@@ -68,35 +68,60 @@ public class ShoppingListDAO {
         return shoppingList;
     }
 
-    private ShoppingList createShoppingListFromMenu(Menu menu) {
-        ShoppingList shoppingList = new ShoppingList();
-        LinkedHashMap<Ingredient, Integer> ingredientsWithoutDuplicates = new LinkedHashMap<>();
-        ArrayList<Recipe> recipes = menu.getRecipes();
+    public void updateShoppingListWithRecipe(Recipe oldRecipe, Recipe newRecipe) {
+        removeOldIngredients(oldRecipe);
+        addNewIngredients(newRecipe);
+    }
 
-        for (Recipe recipe : recipes) {
-            LinkedHashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
-            for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
-                if (ingredientsWithoutDuplicates.containsKey(entry.getKey())) {
-                    int updatedValue = ingredientsWithoutDuplicates.get(entry.getKey()) + entry.getValue();
-                    ingredientsWithoutDuplicates.put(entry.getKey(), updatedValue);
-                }
-                else {
-                    ingredientsWithoutDuplicates.put(entry.getKey(), entry.getValue());
+    private void removeOldIngredients(Recipe oldRecipe) {
+        ShoppingList shoppingList = getShoppingList();
+        LinkedHashMap<Ingredient, Integer> oldIngredients = oldRecipe.getIngredients();
+
+        for (Map.Entry<Ingredient, Integer> entry : oldIngredients.entrySet()) {
+            for (ShoppingListItem item : shoppingList) {
+                if (item.getIngredient().equals(entry.getKey())) {
+                    int newAmount = item.getAmount() - entry.getValue();
+                    if (newAmount != 0) {
+                        item.setAmount(newAmount);
+                    }
+                    else {
+                        shoppingList.remove(item);
+                    }
+                    break;
                 }
             }
         }
-
-        for (Map.Entry<Ingredient, Integer> entry : ingredientsWithoutDuplicates.entrySet()) {
-            ShoppingListItem item = new ShoppingListItem(entry.getKey(), entry.getValue(), false);
-            shoppingList.add(item);
-        }
-
-        return shoppingList;
+        insertShoppingList(shoppingList);
     }
 
-    public void updateShoppingList(Menu menu) {
-        //TODO: check for existing values so that shopping list is not overwritten when recipe is replaced
-        insertShoppingList(createShoppingListFromMenu(menu));
+    private void addNewIngredients(Recipe newRecipe) {
+        ShoppingList shoppingList = getShoppingList();
+        LinkedHashMap<Ingredient, Integer> newIngredients = newRecipe.getIngredients();
+
+        for (Map.Entry<Ingredient, Integer> entry : newIngredients.entrySet()) {
+            ShoppingListItem correspondingItem = findIngredientOnShoppingList(entry.getKey(), shoppingList);
+
+            if (correspondingItem != null) {
+                int newAmount = correspondingItem.getAmount() + entry.getValue();
+                correspondingItem.setAmount(newAmount);
+                correspondingItem.setBought(false);
+            }
+
+            else {
+                correspondingItem = new ShoppingListItem(entry.getKey(), entry.getValue(), false);
+                shoppingList.add(correspondingItem);
+            }
+        }
+        insertShoppingList(shoppingList);
+    }
+
+    public ShoppingListItem findIngredientOnShoppingList(Ingredient ingredient, ShoppingList shoppingList) {
+        for (ShoppingListItem item : shoppingList) {
+            if (item.getIngredient().equals(ingredient)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public void updateItemInShoppingList(ShoppingListItem item) {

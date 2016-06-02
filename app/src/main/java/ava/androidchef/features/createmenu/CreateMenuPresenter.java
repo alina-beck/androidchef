@@ -6,6 +6,7 @@ import ava.androidchef.models.menu.Menu;
 import ava.androidchef.models.menu.MenuDAO;
 import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
+import ava.androidchef.models.shoppinglist.ShoppingList;
 import ava.androidchef.models.shoppinglist.ShoppingListDAO;
 import ava.androidchef.utils.InputValidator;
 
@@ -42,7 +43,7 @@ public class CreateMenuPresenter {
         }
     }
 
-    public void saveMenu(String title, int length) {
+    private void saveMenu(String title, int length) {
         RecipeDAO recipeDAO = RecipeDAO.getInstance(fragment.getActivity());
         ArrayList<Recipe> recipes = recipeDAO.selectRandomMenu(length);
 
@@ -50,11 +51,15 @@ public class CreateMenuPresenter {
         MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
         menuDAO.insertMenu(newMenu);
 
-        ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
-        //TODO: write/use correct method for creating new shopping list
-        shoppingListDAO.updateShoppingList(newMenu);
+        saveShoppingList(newMenu);
 
         fragment.displayMenu();
+    }
+
+    private void saveShoppingList(Menu menu) {
+        ShoppingList shoppingList = ShoppingList.createShoppingListFromMenu(menu);
+        ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
+        shoppingListDAO.insertShoppingList(shoppingList);
     }
 
 }
