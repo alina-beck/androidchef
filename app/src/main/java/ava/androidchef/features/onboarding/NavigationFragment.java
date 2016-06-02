@@ -48,14 +48,16 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
         goToAllRecipes.setOnClickListener(this);
 
         Button goToShoppingList = (Button) view.findViewById(R.id.button_goto_shopping_list);
-        addIcon(goToShoppingList, R.string.icon_shopping, R.string.my_shopping_list);
+        SpannableStringBuilder spannable = new SpannableStringBuilder(getString(R.string.icon_shopping) + " " + getString(R.string.my_shopping_list).toUpperCase());
+        spannable.setSpan(new IconTypefaceSpan(iconfont), 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        goToShoppingList.setAllCaps(false);
+        goToShoppingList.setText(spannable);
         goToShoppingList.setOnClickListener(this);
 
         return view;
     }
 
     public void addIcon(Button button, int iconResource, int stringResource) {
-        //TODO: don't break lines for shopping list button
         SpannableStringBuilder spannable = new SpannableStringBuilder(getString(iconResource) + "\n\n" + getString(stringResource).toUpperCase());
         spannable.setSpan(new IconTypefaceSpan(iconfont), 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         button.setAllCaps(false);
