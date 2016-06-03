@@ -59,8 +59,8 @@ public class AllRecipesFragment extends ListFragment {
         ((AllRecipesActivity) getActivity()).onRecipeSelected(recipe);
     }
 
-    public void deleteButtonClicked(long id) {
-        presenter.onDeleteButtonClick(id);
+    public void deleteButtonClicked(Recipe recipe) {
+        presenter.onDeleteButtonClick(recipe);
     }
 
 }

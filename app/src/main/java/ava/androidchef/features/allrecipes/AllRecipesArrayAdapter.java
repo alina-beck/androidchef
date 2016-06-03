@@ -50,7 +50,7 @@ public class AllRecipesArrayAdapter extends ArrayAdapter<Recipe> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.deleteButtonClicked(recipes.get(position).getId());
+                fragment.deleteButtonClicked(recipes.get(position));
 
                 remove(recipes.get(position));
                 notifyDataSetChanged();

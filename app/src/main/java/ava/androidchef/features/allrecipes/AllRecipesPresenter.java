@@ -1,6 +1,9 @@
 package ava.androidchef.features.allrecipes;
 
+import ava.androidchef.models.menu.MenuDAO;
+import ava.androidchef.models.recipe.Recipe;
 import ava.androidchef.models.recipe.RecipeDAO;
+import ava.androidchef.models.shoppinglist.ShoppingListDAO;
 
 public class AllRecipesPresenter {
 
@@ -19,8 +22,17 @@ public class AllRecipesPresenter {
         fragment.displayAllRecipes(recipeDAO.selectAllRecipes());
     }
 
-    public void onDeleteButtonClick(long id) {
-        fragment.displayToast(recipeDAO.deleteRecipe(id));
+    public void onDeleteButtonClick(Recipe recipe) {
+        boolean isDeleted = recipeDAO.deleteRecipe(recipe.getId());
+
+        MenuDAO menuDAO = MenuDAO.getInstance(fragment.getActivity());
+        if (menuDAO.menuContainsRecipe(recipe)) {
+            menuDAO.deleteRecipeFromMenu(recipe);
+            ShoppingListDAO shoppingListDAO = ShoppingListDAO.getInstance(fragment.getActivity());
+            shoppingListDAO.removeOldIngredients(recipe);
+        }
+
+        fragment.displayToast(isDeleted);
     }
 
 

@@ -62,6 +62,14 @@ public class MenuDAO {
         }
     }
 
+    public void deleteRecipeFromMenu(Recipe recipe) {
+        Menu menu = getMenu();
+        ArrayList<Recipe> recipes = menu.getRecipes();
+        recipes.remove(recipe);
+        menu.setRecipes(recipes);
+        insertMenu(menu);
+    }
+
     public boolean menuContainsRecipe(Recipe recipe) {
         return (getMenu().getRecipes().contains(recipe));
     }

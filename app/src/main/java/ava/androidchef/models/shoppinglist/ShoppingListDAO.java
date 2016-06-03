@@ -71,7 +71,7 @@ public class ShoppingListDAO {
         addNewIngredients(newRecipe);
     }
 
-    private void removeOldIngredients(Recipe oldRecipe) {
+    public void removeOldIngredients(Recipe oldRecipe) {
         ShoppingList shoppingList = getShoppingList();
         LinkedHashMap<Ingredient, Integer> oldIngredients = oldRecipe.getIngredients();
 
